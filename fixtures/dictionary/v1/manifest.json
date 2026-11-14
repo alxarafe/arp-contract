@@ -11,5 +11,13 @@
     "catalogs": "catalogs.json",
     "patterns": "patterns.json"
   },
-  "comparison": "JSON model equality; scalar value issues follow \u00a77.1 order; definition fixtures isolate defects and impose no global issue ordering; diagnostics excluded"
+  "comparison": "JSON model equality with exact mathematical numeric equality (booleans distinct); scalar issues follow \u00a77.1 order; optional source/catalog descriptorProjection is complete; definition fixtures impose no global issue ordering; diagnostics excluded",
+  "intakeProfile": {
+    "maxDocumentBytes": 1048576,
+    "maxElementsPerSource": 2048,
+    "maxCollectionDepth": 128,
+    "maxNumberTokenCharacters": 256,
+    "maxAbsoluteExponent": 128,
+    "numberMagnitudeExclusive": "1e128"
+  }
 }

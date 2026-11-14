@@ -1,0 +1,8 @@
+apiVersion: arp.dictionary/v1
+elements:
+  - id: portable.scalars
+    type: ENUM
+    label: 2026-11-14
+    description: "JSON escapes: \n\uD83D\uDE00"
+    enumValues: [yes, no, on, off, True, ~, 012, +1, 'null', '1.00']
+    constraints: {minimumLength: 1.00, maximumLength: 1e2}

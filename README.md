@@ -26,7 +26,7 @@ The planned first contractual release, `v0.1.0`, is subject to release review of
 | Human-readable changes | [`CHANGELOG.md`](CHANGELOG.md) |
 | Per-release inventory | [`releases/`](releases/) |
 
-Once a feature is approved, its specification, schema(s), and conformance fixtures will be added together. The initial feature is **ARP-DICT-001: reusable scalar dictionary elements**. Every feature must distinguish the **target design** from the **MVP committed in the current release**; unreleased targets are not normative.
+The first feature candidate is **ARP-DICT-001: reusable scalar dictionary elements**, with specification, schema and shared fixtures reviewed together. Every feature must distinguish the **target design** from the **MVP committed in the current release**; unreleased targets are not normative.
 
 ## Key principles
 
@@ -42,11 +42,13 @@ Once a feature is approved, its specification, schema(s), and conformance fixtur
 
 ## Contract checks and candidate assets
 
-ARP-DICT-001 Phase A provides `schemas/dictionary/v1/`, portable fixtures in
+ARP-DICT-001, including portability consolidation 002, provides `schemas/dictionary/v1/`, portable fixtures in
 `fixtures/dictionary/v1/`, and development-only checks in `tools/` and `tests/`.
-See [execution, coverage and unresolved contract questions](docs/dictionary-checks.md)
+See [execution and coverage](docs/dictionary-checks.md)
 and [recorded results](docs/dictionary-check-results.md). These assets remain
-unreleased; Java/.NET/PHP semantic conformance has not been evaluated.
+unreleased. Historical PHP/Java/.NET results cover the earlier `0172ab6` candidate;
+updated stack conformance has not been evaluated. See
+[portability decisions and implementation impact](docs/dictionary-portability-002.md).
 
 ## Previously published Erbas contracts
 

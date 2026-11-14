@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Offline schema and fixture integrity checks, never a production semantic runtime."""
 import json
+from decimal import Decimal
+from jsonschema import validators
 from pathlib import Path
 from jsonschema import Draft202012Validator
 import yaml
+from source_profile import (parse_source, unique, unicode_scalars, IntakeInvalid, IntakeLimit,
+                            MAX_BYTES, MAX_ELEMENTS, MAX_DEPTH, MAX_NUMBER_CHARS, MAX_EXPONENT, MAX_LENGTH)
 from portable_pattern import parse as parse_pattern, matches, PatternInvalid, PatternLimit
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -11,60 +15,18 @@ CODES = {'DICTIONARY_' + x for x in ['DOCUMENT_INVALID', 'FORMAT_UNSUPPORTED', '
 ORDER = ['typeRange', 'minimum', 'maximum', 'multipleOf', 'precision', 'scale', 'minimumLength', 'maximumLength', 'pattern', 'enumValues']
 
 
-def unique(pairs):
-    result = {}
-    for key, value in pairs:
-        if key in result:
-            raise ValueError('duplicate mapping key')
-        result[key] = value
-    return result
-
-
-def unicode_scalars(value):
-    if isinstance(value, str):
-        value.encode('utf-8', errors='strict')
-    elif isinstance(value, dict):
-        for k, v in value.items():
-            unicode_scalars(k)
-            unicode_scalars(v)
-    elif isinstance(value, list):
-        for item in value:
-            unicode_scalars(item)
-
-
 def load(path):
     return json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=unique,
+                      parse_float=Decimal,
                       parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
 
 
-def parse_source(path, encoding):
-    """Check parser restrictions only. No source registration or scalar validation."""
-    text = path.read_bytes().decode('utf-8', errors='strict')
-    if encoding == 'json':
-        model = json.loads(text, object_pairs_hook=unique,
-                           parse_constant=lambda x: (_ for _ in ()).throw(ValueError(x)))
-    else:
-        # BaseLoader avoids YAML 1.1 timestamps and booleans. This tooling profile
-        # only parses the simple string-valued YAML fixtures; not a YAML runtime.
-        for token in yaml.scan(text):
-            if isinstance(token, (yaml.tokens.AliasToken, yaml.tokens.AnchorToken,
-                                  yaml.tokens.TagToken, yaml.tokens.DirectiveToken)):
-                raise ValueError('forbidden YAML token')
-        docs = list(yaml.compose_all(text, Loader=yaml.BaseLoader))
-        if len(docs) != 1:
-            raise ValueError('multiple documents')
-        def convert(node):
-            if isinstance(node, yaml.ScalarNode):
-                return node.value
-            if isinstance(node, yaml.SequenceNode):
-                return [convert(n) for n in node.value]
-            pairs = [(convert(k), convert(v)) for k, v in node.value]
-            if any(k == '<<' for k, _ in pairs):
-                raise ValueError('merge key')
-            return unique(pairs)
-        model = convert(docs[0])
-    unicode_scalars(model)
-    return model
+def contract_validator(schema):
+    # JSON mathematical integer model, without converting Decimal through float.
+    integer = Draft202012Validator.TYPE_CHECKER.redefine('integer',
+        lambda checker, value: type(value) is int or
+        isinstance(value, Decimal) and value.is_finite() and value == value.to_integral_value())
+    return validators.extend(Draft202012Validator, type_checker=integer)(schema)
 
 
 def outcome(expected, element_id=None):
@@ -107,6 +69,14 @@ def isolated_source_verdict(model, validator):
             or not isinstance(model['elements'], list) or not model['elements']
             or any(not isinstance(e, dict) for e in model['elements'])):
         return 'DICTIONARY_DOCUMENT_INVALID'
+    for element in model['elements']:
+        constraints = element.get('constraints', {}) if isinstance(element, dict) else {}
+        if isinstance(constraints, dict):
+            for name in ('minimumLength', 'maximumLength'):
+                number = constraints.get(name)
+                if type(number) is int or isinstance(number, Decimal):
+                    if (number.copy_abs() if isinstance(number, Decimal) else abs(number)) >= MAX_LENGTH + 1:
+                        return 'DICTIONARY_LIMIT_EXCEEDED'
     if not validator.is_valid(model):
         return 'DICTIONARY_ELEMENT_INVALID'
     return None
@@ -131,7 +101,7 @@ def check(root=ROOT):
         if isinstance(x, list):
             for v in x: refs(v)
     refs(schema)
-    validator = Draft202012Validator(schema)
+    validator = contract_validator(schema)
     folder = root / 'fixtures/dictionary/v1'
     manifest = load(folder / 'manifest.json')
     assert manifest['apiVersion'] == 'arp.dictionary/v1'
@@ -144,6 +114,19 @@ def check(root=ROOT):
     declared = {e['type'] for e in catalog['elements']}
     ids = set()
     counts = {}
+    assert manifest['intakeProfile'] == {
+        'maxDocumentBytes':MAX_BYTES, 'maxElementsPerSource':MAX_ELEMENTS,
+        'maxCollectionDepth':MAX_DEPTH, 'maxNumberTokenCharacters':MAX_NUMBER_CHARS,
+        'maxAbsoluteExponent':MAX_EXPONENT, 'numberMagnitudeExclusive':'1e128'}
+    def length_bounds(node):
+        if isinstance(node, dict):
+            for key in ('minimumLength', 'maximumLength'):
+                if key in node:
+                    assert node[key]['maximum'] == MAX_LENGTH
+            for child in node.values(): length_bounds(child)
+        elif isinstance(node, list):
+            for child in node: length_bounds(child)
+    length_bounds(schema)
     def identity(case):
         assert case['id'] not in ids, case['id']
         ids.add(case['id'])
@@ -183,25 +166,36 @@ def check(root=ROOT):
                     assert case['expected']['issues'] == [{'code':code}], case['id']
     counts['definition vectors'] = len(definitions)
     sources = load(folder / 'sources.json')
-    models = []
+    models = {}
+    source_projections = 0
     for case in sources:
         identity(case)
         path = (root / case['path']).resolve()
         assert path.is_relative_to(folder.resolve()) and path.is_file()
         try:
             model = parse_source(path, case['encoding'])
+        except IntakeLimit:
+            assert case['expected']['issues'][0]['code'] == 'DICTIONARY_LIMIT_EXCEEDED', case['id']
+            assert case['schemaValid'] is None
         except (ValueError, UnicodeError, yaml.YAMLError):
-            assert case['expected']['issues'][0]['code'] == 'DICTIONARY_DOCUMENT_INVALID'
+            assert case['expected']['issues'][0]['code'] == 'DICTIONARY_DOCUMENT_INVALID', case['id']
             assert case['schemaValid'] is None
         else:
             assert validator.is_valid(model) == case['schemaValid'], case['id']
             code = isolated_source_verdict(model, validator)
             assert case['expected']['valid'] == (code is None), case['id']
             if code: assert case['expected']['issues'] == [{'code':code}], case['id']
-            if case['expected']['valid']: models.append(model)
+            if case['expected']['valid']:
+                models[case['id']] = model
+                if 'descriptorProjection' in case:
+                    projection = case['descriptorProjection']
+                    declaration = next(e for e in model['elements'] if e['id'] == projection['id'])
+                    assert projection == descriptor_projection(declaration), case['id']
+                    source_projections += 1
         outcome(case['expected'])
-    assert len(models) == 2 and models[0] == models[1]
+    assert models['valid.yaml'] == models['valid.json']
     counts['source vectors'] = len(sources)
+    counts['source descriptor projections'] = source_projections
     catalogs = load(folder / 'catalogs.json')
     for case in catalogs:
         identity(case)
@@ -236,6 +230,10 @@ def check(root=ROOT):
         for sample in case['samples']:
             assert matches(case['pattern'], sample['value']) == sample['matches'], case['id']
     counts['pattern grammar vectors'] = len(patterns)
+    counts['shared runtime assertions inventoried'] = (1 + len(values) + len(definitions) + len(sources)
+        + source_projections + len(patterns) + sum(len(p['samples']) for p in patterns)
+        + sum(len(c['steps']) for c in catalogs)
+        + sum('descriptorProjection' in step for c in catalogs for step in c['steps']))
     return counts
 
 
@@ -245,6 +243,6 @@ def main():
     counts = check()
     print('PASS: Draft 2020-12 schema and fixture integrity')
     for name, count in counts.items(): print(f'  {name}: {count}')
-    print('NOT EXECUTED: semantic conformance; Java/.NET/PHP remain NOT_EVALUATED')
+    print('NOT EXECUTED: stack semantic conformance for this candidate; prior 0172ab6 evidence does not establish updated support')
 
 if __name__ == '__main__': main()

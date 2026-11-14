@@ -1,4 +1,37 @@
-# Phase A local validation results — approved incident closure
+# Portability consolidation 002 — contract-only validation results
+
+Date: 2026-11-14. Branch: `feature/arp-dict-001-portability-002`.
+Base commit: `0172ab64742218b9f64a6ae96c43ebdfe690f4c6` (merged main).
+Environment: Python 3.14.4, jsonschema 4.19.2, PyYAML 6.0.3.
+
+| Check | Actual result |
+| --- | --- |
+| `PYTHONDONTWRITEBYTECODE=1 python3 tools/check_contract.py` | PASS: metaschema, structural verdicts, fixture integrity, portable intake/pattern and projection coherence |
+| `PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v` | PASS: 27 tests, 0 failures/errors/skips (12 retained + 15 focused profile regressions) |
+| Base comparison using `git show 0172ab6:<path>` | PASS: all original vector JSON models retained; 21 raw sources and unchanged base catalog/catalog scenarios/pattern set retained byte-for-byte |
+| Mandatory merged-main references | PASS: five local file blob hashes equal GitHub main blobs; exact refs recorded in consolidation report |
+| `git diff --check` | PASS |
+| `git check-ignore .openidea/test` | PASS |
+
+Inventory: 136 values, 36 definitions, 40 sources, 45 pattern grammar cases,
+21 matching samples, 32 catalog steps, 12 catalog descriptor projections, four
+source descriptor projections and one base catalog: **327 shared runtime
+assertions inventoried**, preserving the original 298 and adding 25 directed
+vectors / 29 assertions. No shared set or checker test is omitted.
+
+These are structural/integrity and focused development intake checks. **Native
+PHP/Java/.NET semantic execution against this updated candidate was not run**:
+the task explicitly keeps implementation repositories unchanged. Historical
+298-case runs against 0172ab6 do not establish updated conformance. No failing
+native execution is hidden as a checker pass; each stack needs adaptation and
+a new pinned run. See [per-stack follow-up](dictionary-portability-002.md).
+
+No tag, release, push, merge, PR or publication. The local commit containing this
+report is identified in the delivery and Git history, avoiding a self-referential SHA.
+
+---
+
+# Historical Phase A local validation results — before portability consolidation
 
 Date: 2026-11-14. Branch: `feature/arp-dict-001-contract`.
 Starting commit: `baf79735990140e8172a994a40707aa4ab808ca0`.
