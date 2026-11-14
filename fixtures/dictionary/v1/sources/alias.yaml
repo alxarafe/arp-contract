@@ -1,0 +1,2 @@
+apiVersion: arp.dictionary/v1
+elements: &items [*items]

@@ -1,0 +1,10 @@
+{
+  "apiVersion": "arp.dictionary/v1",
+  "elements": [
+    {
+      "id": "test.x",
+      "type": "STRING",
+      "extra": true
+    }
+  ]
+}

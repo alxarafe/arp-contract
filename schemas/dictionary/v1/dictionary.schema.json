@@ -1,0 +1,592 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ARP dictionary v1 source document",
+  "description": "Structural validation only; see ARP-DICT-001 for semantic and parser checks.",
+  "type": "object",
+  "required": [
+    "apiVersion",
+    "elements"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "apiVersion": {
+      "const": "arp.dictionary/v1"
+    },
+    "elements": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "type"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "maxLength": 128,
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)+$(?![\\s\\S])"
+          },
+          "type": {
+            "enum": [
+              "BOOLEAN",
+              "STRING",
+              "TEXT",
+              "INT8",
+              "UINT8",
+              "INT16",
+              "UINT16",
+              "INT32",
+              "UINT32",
+              "INT64",
+              "DECIMAL",
+              "UUID",
+              "DATE",
+              "TIME",
+              "DATETIME",
+              "ENUM",
+              "BINARY"
+            ]
+          },
+          "label": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "constraints": {
+            "type": "object"
+          },
+          "enumValues": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          }
+        },
+        "oneOf": [
+          {
+            "properties": {
+              "type": {
+                "const": "BOOLEAN"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "STRING"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "maximumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "maxLength": 512,
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "TEXT"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "maximumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "maxLength": 512,
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "INT8"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "UINT8"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "INT16"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "UINT16"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "INT32"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "UINT32"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "INT64"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "DECIMAL"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$(?![\\s\\S])"
+                  },
+                  "maximum": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$(?![\\s\\S])"
+                  },
+                  "multipleOf": {
+                    "type": "string",
+                    "pattern": "^-?(0|[1-9][0-9]*)(\\.[0-9]+)?$(?![\\s\\S])"
+                  },
+                  "exclusiveMinimum": {
+                    "type": "boolean"
+                  },
+                  "exclusiveMaximum": {
+                    "type": "boolean"
+                  },
+                  "precision": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 4096
+                  },
+                  "scale": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 4096
+                  }
+                },
+                "additionalProperties": false,
+                "dependentRequired": {
+                  "precision": [
+                    "scale"
+                  ],
+                  "scale": [
+                    "precision"
+                  ]
+                }
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "UUID"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "DATE"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "TIME"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "DATETIME"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {},
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "ENUM"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "maximumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "pattern": {
+                    "type": "string",
+                    "maxLength": 512,
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "enumValues"
+            ]
+          },
+          {
+            "properties": {
+              "type": {
+                "const": "BINARY"
+              },
+              "constraints": {
+                "type": "object",
+                "properties": {
+                  "minimumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "maximumLength": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "not": {
+              "required": [
+                "enumValues"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  }
+}

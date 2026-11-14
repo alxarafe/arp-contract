@@ -1,0 +1,536 @@
+[
+  {
+    "id": "grammar-product",
+    "pattern": "^[A-Z0-9-]+$",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "AB-12",
+        "matches": true
+      },
+      {
+        "value": "aAB",
+        "matches": false
+      },
+      {
+        "value": "AB\n",
+        "matches": false
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-literal",
+    "pattern": "hello world",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "hello world",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-escaped",
+    "pattern": "\\^\\$\\.\\[\\]\\\\",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "^$.[]\\",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-hyphens",
+    "pattern": "[-a-z-]+",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "-az-",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-escaped-hyphen",
+    "pattern": "[\\-]+",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "--",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-same-range",
+    "pattern": "[a-a]",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "a",
+        "matches": true
+      },
+      {
+        "value": "b",
+        "matches": false
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-punctuation",
+    "pattern": "[.!?]+",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": ".!?",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-star",
+    "pattern": "a*",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "",
+        "matches": true
+      },
+      {
+        "value": "aaa",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-question",
+    "pattern": "ab?",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "a",
+        "matches": true
+      },
+      {
+        "value": "abb",
+        "matches": false
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-counts",
+    "pattern": "a{0}b{2,3}",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "bb",
+        "matches": true
+      },
+      {
+        "value": "bbb",
+        "matches": true
+      },
+      {
+        "value": "bbbb",
+        "matches": false
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-count-limit",
+    "pattern": "a{1024}",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-length-limit",
+    "pattern": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-hyphen-only",
+    "pattern": "[-]",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "-",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-escaped-caret",
+    "pattern": "[\\^]",
+    "expected": {
+      "valid": true
+    },
+    "samples": [
+      {
+        "value": "^",
+        "matches": true
+      }
+    ],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-empty",
+    "pattern": "",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-anchor-only",
+    "pattern": "^$",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-empty-class",
+    "pattern": "[]",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-range-inverted",
+    "pattern": "[z-a]",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-control-nul",
+    "pattern": "a\u0000",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-control-newline",
+    "pattern": "a\n",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-control-tab",
+    "pattern": "\t",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-control-del",
+    "pattern": "\u007f",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-escaped-control",
+    "pattern": "\\\n",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-unicode",
+    "pattern": "\u00e9",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": false
+  },
+  {
+    "id": "grammar-shorthand",
+    "pattern": "\\d",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-lookaround",
+    "pattern": "(?=a)a",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-groups",
+    "pattern": "(a)",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-alternation",
+    "pattern": "a|b",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-dot",
+    "pattern": ".",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-negative",
+    "pattern": "[^a]",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-range-reuse",
+    "pattern": "[a-b-c]",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-class-open",
+    "pattern": "[a",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-nested-class",
+    "pattern": "[[a]",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-bad-escape",
+    "pattern": "\\q",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-letter-escape",
+    "pattern": "\\n",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-dangling-escape",
+    "pattern": "a\\",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-bad-anchor",
+    "pattern": "a^b",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-bad-dollar",
+    "pattern": "a$b",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-repeated",
+    "pattern": "a++",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-quantifier-open",
+    "pattern": "a{1",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-quantifier-unbounded",
+    "pattern": "a{1,}",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-quantifier-reversed",
+    "pattern": "a{2,1}",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-quantifier-leading",
+    "pattern": "a{01}",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-quantifier-high",
+    "pattern": "a{1025}",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_ELEMENT_INVALID"
+    },
+    "samples": [],
+    "schemaValid": true
+  },
+  {
+    "id": "grammar-length-excess",
+    "pattern": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected": {
+      "valid": false,
+      "code": "DICTIONARY_LIMIT_EXCEEDED"
+    },
+    "samples": [],
+    "schemaValid": false
+  }
+]

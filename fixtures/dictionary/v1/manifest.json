@@ -1,0 +1,15 @@
+{
+  "feature": "ARP-DICT-001",
+  "apiVersion": "arp.dictionary/v1",
+  "status": "unreleased-review-candidate",
+  "schema": "schemas/dictionary/v1/dictionary.schema.json",
+  "sets": {
+    "catalog": "catalog.json",
+    "sources": "sources.json",
+    "definitions": "definitions.json",
+    "values": "values.json",
+    "catalogs": "catalogs.json",
+    "patterns": "patterns.json"
+  },
+  "comparison": "JSON model equality; scalar value issues follow \u00a77.1 order; definition fixtures isolate defects and impose no global issue ordering; diagnostics excluded"
+}

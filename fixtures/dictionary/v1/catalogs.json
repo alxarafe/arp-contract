@@ -1,0 +1,771 @@
+[
+  {
+    "id": "providers-order-a",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.b",
+            "sourceId": "package.b",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.b",
+                  "type": "INT64"
+                },
+                {
+                  "id": "test.A",
+                  "type": "BOOLEAN"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.b",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.b",
+          "type": "INT64",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.a",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.a",
+          "type": "STRING",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.A",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.A",
+          "type": "BOOLEAN",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.missing",
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_ELEMENT_NOT_FOUND",
+              "elementId": "test.missing"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "providers-order-b",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.b",
+            "sourceId": "package.b",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.b",
+                  "type": "INT64"
+                },
+                {
+                  "id": "test.A",
+                  "type": "BOOLEAN"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.b",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.b",
+          "type": "INT64",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.a",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.a",
+          "type": "STRING",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.A",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.A",
+          "type": "BOOLEAN",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "duplicate-provider",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.other",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_DUPLICATE_ELEMENT"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "duplicate-source",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.other",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_DUPLICATE_ELEMENT"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "duplicate-within",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                },
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_DUPLICATE_ELEMENT"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "atomic-rejection",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.b",
+            "sourceId": "package.b",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.b",
+                  "type": "INT64"
+                },
+                {
+                  "id": "test.A",
+                  "type": "BOOLEAN"
+                }
+              ]
+            }
+          },
+          {
+            "providerId": "provider.b",
+            "sourceId": "package.b",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.b",
+                  "type": "INT64"
+                },
+                {
+                  "id": "test.A",
+                  "type": "BOOLEAN"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_DUPLICATE_ELEMENT"
+            }
+          ]
+        }
+      },
+      {
+        "operation": "assertRejectedGeneration",
+        "context": "one",
+        "expected": {
+          "published": false
+        }
+      }
+    ]
+  },
+  {
+    "id": "isolated-contexts",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [
+          {
+            "providerId": "provider.a",
+            "sourceId": "memory.a",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.a",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "buildCatalog",
+        "context": "two",
+        "sources": [
+          {
+            "providerId": "provider.b",
+            "sourceId": "package.b",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "test.b",
+                  "type": "INT64"
+                },
+                {
+                  "id": "test.A",
+                  "type": "BOOLEAN"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.a",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "test.a",
+          "type": "STRING",
+          "constraints": {}
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "two",
+        "elementId": "test.a",
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_ELEMENT_NOT_FOUND",
+              "elementId": "test.a"
+            }
+          ]
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.b",
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_ELEMENT_NOT_FOUND",
+              "elementId": "test.b"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "zero-providers",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "one",
+        "sources": [],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "one",
+        "elementId": "test.a",
+        "expected": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "DICTIONARY_ELEMENT_NOT_FOUND",
+              "elementId": "test.a"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-plain",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.plain",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.plain",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.plain",
+          "type": "STRING",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-empty",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.empty",
+                  "type": "STRING",
+                  "constraints": {}
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.empty",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.empty",
+          "type": "STRING",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-constrained",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.constrained",
+                  "type": "DECIMAL",
+                  "constraints": {
+                    "minimum": "1.00"
+                  },
+                  "label": "Amount"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.constrained",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.constrained",
+          "type": "DECIMAL",
+          "constraints": {
+            "minimum": "1.00"
+          },
+          "label": "Amount"
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-enum",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.enum",
+                  "type": "ENUM",
+                  "enumValues": [
+                    "z",
+                    "A",
+                    "middle"
+                  ],
+                  "description": "Ordered literals"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.enum",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.enum",
+          "type": "ENUM",
+          "enumValues": [
+            "z",
+            "A",
+            "middle"
+          ],
+          "description": "Ordered literals",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-texts",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.texts",
+                  "type": "TEXT",
+                  "label": " e\\u0301 ",
+                  "description": "Descriptive text"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.texts",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.texts",
+          "type": "TEXT",
+          "label": " e\\u0301 ",
+          "description": "Descriptive text",
+          "constraints": {}
+        }
+      }
+    ]
+  }
+]

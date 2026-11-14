@@ -12,7 +12,7 @@ The target is to let applications combine a portable dictionary, logical structu
 
 **Initial architecture and governance — no ARP contract release has been published from this repository yet.** `ARP-CONTRACT-001` established the versioning and release policy; `ARP-ARCH-001` documents the architecture direction without publishing a runtime contract.
 
-The planned first contractual release, `v0.1.0`, is contingent on approval of the ARP-DICT-001 MVP specification and its normative schemas and conformance fixtures. Until that release exists, examples of `v0.1.0` or `dictionary/v1` are illustrative, not supported-version claims.
+The planned first contractual release, `v0.1.0`, is subject to release review of the ARP-DICT-001 design approved for implementation, its schemas and conformance fixtures. Until that release exists, examples of `v0.1.0` or `dictionary/v1` are illustrative, not supported-version claims.
 
 ## Sources of truth
 
@@ -40,24 +40,13 @@ Once a feature is approved, its specification, schema(s), and conformance fixtur
 - Actual conformance requires running the released fixtures in the relevant implementation and recording evidence. Proposed, partial, or untested support is not conformance.
 - Pre-1.0 development favors deliberate evolution. Breaking changes remain explicit and versioned, rather than hidden behind silent schema or behavior edits.
 
-## Repository layout
+## Contract checks and candidate assets
 
-```text
-arp-contract/
-├── README.md
-├── LICENSE
-├── .gitignore
-├── CHANGELOG.md
-├── docs/
-│   ├── architecture.md
-│   ├── versioning.md
-│   ├── compatibility.md
-│   └── release-process.md
-└── releases/
-    └── README.md
-```
-
-The `schemas/`, `fixtures/`, and `docs/features/` directories are intentionally **not created** until a real feature needs them. They will be introduced with ARP-DICT-001, together with clearly versioned format rules.
+ARP-DICT-001 Phase A provides `schemas/dictionary/v1/`, portable fixtures in
+`fixtures/dictionary/v1/`, and development-only checks in `tools/` and `tests/`.
+See [execution, coverage and unresolved contract questions](docs/dictionary-checks.md)
+and [recorded results](docs/dictionary-check-results.md). These assets remain
+unreleased; Java/.NET/PHP semantic conformance has not been evaluated.
 
 ## Previously published Erbas contracts
 
