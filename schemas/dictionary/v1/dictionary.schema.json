@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "title": "ARP dictionary v1 source document",
-  "description": "Structural validation only; see ARP-DICT-001 for semantic and parser checks.",
+  "description": "Structural validation and mathematical metadata bounds; source token/depth limits, YAML profile and error classification are specified by ARP-DICT-001.",
   "type": "object",
   "required": [
     "apiVersion",
@@ -98,11 +98,13 @@
                 "properties": {
                   "minimumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "maximumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "pattern": {
                     "type": "string",
@@ -131,11 +133,13 @@
                 "properties": {
                   "minimumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "maximumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "pattern": {
                     "type": "string",
@@ -538,11 +542,13 @@
                 "properties": {
                   "minimumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "maximumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "pattern": {
                     "type": "string",
@@ -569,11 +575,13 @@
                 "properties": {
                   "minimumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   },
                   "maximumLength": {
                     "type": "integer",
-                    "minimum": 0
+                    "minimum": 0,
+                    "maximum": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
                   }
                 },
                 "additionalProperties": false

@@ -1,0 +1,7 @@
+apiVersion: arp.dictionary/v1
+elements:
+  - id: portable.invalid
+    type: TEXT
+    description: "text
+%YAML 1.2
+end"

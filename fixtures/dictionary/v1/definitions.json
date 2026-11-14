@@ -833,5 +833,51 @@
         }
       ]
     }
+  },
+  {
+    "id": "metadata-length-largest",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "portable.length",
+          "type": "TEXT",
+          "constraints": {
+            "maximumLength": 99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    }
+  },
+  {
+    "id": "metadata-length-above-limit",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "portable.length",
+          "type": "TEXT",
+          "constraints": {
+            "maximumLength": 100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
   }
 ]

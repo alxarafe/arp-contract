@@ -2306,5 +2306,65 @@
         }
       ]
     }
+  },
+  {
+    "id": "utc-lower-tick",
+    "operation": "validate",
+    "element": {
+      "id": "portable.datetime",
+      "type": "DATETIME"
+    },
+    "value": "0001-01-01T14:00:00.0000001+14:00",
+    "expected": {
+      "valid": true,
+      "issues": [],
+      "normalizedValue": "0001-01-01T00:00:00.0000001Z"
+    }
+  },
+  {
+    "id": "utc-upper-tick",
+    "operation": "validate",
+    "element": {
+      "id": "portable.datetime",
+      "type": "DATETIME"
+    },
+    "value": "9999-12-31T09:59:59.9999999-14:00",
+    "expected": {
+      "valid": true,
+      "issues": [],
+      "normalizedValue": "9999-12-31T23:59:59.9999999Z"
+    }
+  },
+  {
+    "id": "utc-upper-overflow",
+    "operation": "validate",
+    "element": {
+      "id": "portable.datetime",
+      "type": "DATETIME"
+    },
+    "value": "9999-12-31T23:59:59-00:01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "portable.datetime"
+        }
+      ]
+    }
+  },
+  {
+    "id": "literal-replacement-character",
+    "operation": "validate",
+    "element": {
+      "id": "portable.string",
+      "type": "STRING"
+    },
+    "value": "\ufffd",
+    "expected": {
+      "valid": true,
+      "issues": [],
+      "normalizedValue": "\ufffd"
+    }
   }
 ]

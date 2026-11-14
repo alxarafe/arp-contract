@@ -1,0 +1,1 @@
+{"apiVersion":"arp.dictionary/v1","elements":[{"id":"portable.equivalent","type":"TEXT","constraints":{"minimumLength":0.1e1,"maximumLength":1e127}}]}

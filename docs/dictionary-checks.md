@@ -1,119 +1,93 @@
-# ARP-DICT-001 — Phase A checks and handoff
+# ARP-DICT-001 — Contract checks and implementation handoff
 
-Implementation of the approved design, including approved Phase A clarifications; no tag or stack support claim.
-ARP owns these expectations. ERP integration results cannot redefine them.
+The specification includes [portability consolidation 002](dictionary-portability-002.md).
+It remains an unpublished candidate; no release or updated stack adoption is inferred.
 
 ## Execute offline
 
-Python 3.10+ is required. Development dependencies only:
+Python 3.10+ and the development-only pinned requirements are used:
 
 ```sh
 python3 -m venv /tmp/arp-contract-venv
 /tmp/arp-contract-venv/bin/pip install -r tools/requirements.txt
-/tmp/arp-contract-venv/bin/python tools/check_contract.py
-/tmp/arp-contract-venv/bin/python -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 /tmp/arp-contract-venv/bin/python tools/check_contract.py
+PYTHONDONTWRITEBYTECODE=1 /tmp/arp-contract-venv/bin/python -m unittest discover -s tests -v
 ```
 
-Installing dependencies requires package access; subsequent checks perform no
-network access. Existing environments with the pinned packages can run
-`python3 tools/check_contract.py` and `python3 -m unittest discover -s tests -v`.
-No framework, ORM, database or production runtime is imported.
+Existing environments with these packages can run the same commands with
+`python3`. After dependency installation, checks use no network. No framework,
+database, ERP, native runtime library or production validator is imported.
 
-## Three distinct validation layers
+## Distinct verification layers
 
-1. **Structural:** Draft 2020-12 metaschema check; closed source/element/constraint
-   objects, 17 types, identity, numeric lexemes, ENUM arrays, constraint applicability,
-   paired precision/scale. Regex end assertions also reject a final newline.
-2. **Integrity:** unique fixture IDs and mapping keys, local source paths and refs,
-   explicit outcomes, error vocabulary, ordered scalar constraints, absence of normalized
-   output on failure, coverage of 17 successful types, source parsing restrictions,
-   JSON/YAML sample equivalence and declared structural verdicts. Independent checks
-   also verify the formal pattern grammar and sample matches, complete `typeRange`
-   errors and resolved descriptor projections against their declarations.
-3. **Semantic:** future implementations must execute build/resolve/validate against
-   the vectors. Beyond the focused pattern checks, the checker does **not** validate
-   general scalar semantics, mathematical contradictions, registration, atomicity
-   or cache isolation.
-   A successful integrity run proves no runtime conformant.
+1. **Structural:** Draft 2020-12 metaschema, closed shapes, 17 types, applicability,
+   lexical strings, paired geometry and mathematical metadata maxima. Integer
+   validation includes exact integral Decimal nodes (`1.00`), never floats or
+   booleans. Numeric token spellings and parser/resource errors are outside schema.
+2. **Integrity/focused intake:** fixture identities/refs/outcomes/error order,
+   successful type coverage, complete descriptor projections, independent portable
+   pattern grammar/matching, explicit YAML styles/resolution, strict Unicode,
+   duplicate/forbidden constructs, exact numeric source budgets and depth. The
+   manifest profile and schema mathematical bounds are checked against tool constants.
+3. **Stack semantics:** each implementation still has to run build/resolve/validate
+   against this exact candidate. General value validation, definition semantics,
+   catalog registration, concurrency and snapshot guarantees are not implemented by
+   the development checker. It is not a production reference implementation.
 
-The YAML parser helper is deliberately restricted to the supplied string-valued
-sample and malformed source fixtures. BaseLoader avoids implicit YAML 1.1 scalar
-conversion. This is not a general YAML 1.2 implementation or runtime parser.
-Invalid UTF-8 is intentionally stored as a binary negative fixture. Unpaired
-surrogates are escaped in JSON value vectors.
+`tools/source_profile.py` replaces the old simple-string-only YAML helper with
+bounded event intake for the specified subset. PyYAML BaseLoader is only a syntax/
+event provider; no native resolver or tag constructor chooses the data model.
+JSON uses int/Decimal, YAML numeric scalars use the same exact callbacks. Invalid
+surrogates are intentionally retained only in the negative **value fixture** data;
+actual source parsing and successful projected data require valid Unicode scalars.
 
-## Portable fixture protocol (test packaging only)
+## Portable fixture protocol
 
-`fixtures/dictionary/v1/manifest.json` indexes all sets. `catalog.json` supplies
-one definition per type. Each value vector embeds its definition, portable input,
-and expected outcome. `schemaValid` in definition/source vectors is separate from
-semantic `expected.valid`; null means parsing must fail before schema validation.
-Source paths are repository-relative; providers are opaque diagnostic identities.
-Catalog scenarios execute steps in order, with contexts independently scoped.
-`descriptorProjection` is the complete minimum contractual projection from §6.1,
-including normalized empty constraints, ENUM order and absence of undeclared
-optional fields. It does not prescribe native classes or a diagnostic envelope.
-`patterns.json` supplies explicit grammar verdicts, independent structural
-`schemaValid` verdicts and full-match samples. The development parser and bounded
-position-set matcher in `tools/portable_pattern.py` use no host regex engine.
-They are fixture checks, not production runtime implementations.
-`assertRejectedGeneration` asserts the failed generation was not published; it
-allows both retention of the old snapshot and no active snapshot as the spec does.
+`fixtures/dictionary/v1/manifest.json` indexes the same six sets and the common
+`intakeProfile` budgets. Values embed definitions and portable inputs; original
+expectations are preserved. `catalog.json` has all 17 types. Catalog scenarios
+execute their steps in order in independent contexts. Catalog ordering is not
+semantic; descriptor projections are complete and optional undeclared fields stay absent.
 
-All expected outcomes are authored contract vectors, not output generated by a
-reference production validator. An adapter for a future stack must report actual
-outcomes and compare them, never treat expected data as execution evidence.
+Definition/source `schemaValid` is separate from semantic `expected.valid`.
+A null structural verdict means no model reaches schema validation, whether due
+to malformed/unsupported intake **or an intake security budget**. Explicit
+LIMIT_EXCEEDED expectations distinguish limits from syntax. Source paths are
+repository-relative and provider identities remain opaque.
 
-## Coverage against specification §9
+A valid source case may additionally contain `descriptorProjection`. A runtime
+runner MUST build that source, resolve `descriptorProjection.id` and compare the
+whole projection, as for catalog scenarios. This catches parsers that accept
+multiline text or metadata with the wrong decoded content/kind. There are four
+such assertions in the new cases; they add no new production operation.
 
-| Area | Fixture coverage / remaining boundary |
-| --- | --- |
-| Source | Equivalent YAML/JSON, missing/unknown format, root/unknown keys, duplicate keys at two depths, malformed JSON, alias/anchor, tag, directive, merge, multiple documents, UTF-8 |
-| Catalog | Multiple providers, reversed provider order, duplicate within/across sources/providers, atomic rejection, not found, isolated contexts, zero providers, case distinction |
-| Identity/types | Qualified and invalid IDs, excessive length, 17 positives, unknown type, inapplicable keys, ENUM requirements |
-| Integers | All inclusive endpoints/outside endpoints, INT64 beyond safe JS integer, negative unsigned lexical rejection, signed -0, leading zero/exponent/plus/kind |
-| Decimal | Canonical zeros/trailing zeros, geometry, exact multiples, exact bounds/exclusivity, no float rounding, 4096-digit boundary and excess |
-| Text/pattern | Supplementary and decomposed lengths, no trim/NFC, surrogate, empty/min/max, full-match, formal grammar positives/negatives, empty expressions/classes, reversed ranges, controls, pattern/input limits |
-| ENUM | Literal, case rejection, duplicates/empty/missing, inconsistent literal constraints, authored order in catalog |
-| UUID/temporal | Uppercase/nil UUID, malformed UUID, Gregorian leap distinction, invalid year/month/suffix, TIME fractions/ranges, DATETIME offsets across days, seven digits, missing/excess offset, UTC underflow |
-| BINARY | Empty/padded payload, decoded lengths, alphabet/padding/whitespace/padding bits |
-| Constraints/errors | Applicability, wrong types, contradictory bounds/lengths, exclusivity, geometry pairing, divisor zero, ordered simultaneous failures, no normalized output on failure |
+Comparison uses JSON model equality: object key ordering is irrelevant, arrays
+retain order, numeric nodes compare as exact mathematical numbers regardless of
+spelling (`1` == `1.00` == `0.1e1`), and booleans/strings are distinct from numbers.
+Numeric constraint **strings** retain representation under specification §6.1.
+Diagnostics remain excluded; scalar constraint issue ordering is unchanged.
 
-Snapshot immutability, resource ceilings of at least 1 MiB/2048 elements,
-no filesystem/network effects during validation and absence of cache leakage
-also need implementation instrumentation; JSON expectations alone cannot prove them.
-The inventory is representative, not an exhaustive proof of every grammar string.
+`patterns.json` still describes grammar verdicts and matching samples, independently
+of schema structural verdicts. `assertRejectedGeneration` requires that the failed
+new generation was not published, without forcing disposal of a prior snapshot.
 
-## Approved incident closure and remaining limitations
+The checker reports **327 shared runtime assertions inventoried**, not 327 native
+runtime passes: 136 values, 36 definitions, 40 sources, four source projections,
+45 patterns, 21 samples, 32 catalog steps, 12 catalog projections and one base catalog.
+The 27 regression test methods are separate development-tool checks, including
+all ASCII controls, byte/element boundaries generated in memory, depth, numeric
+budget edges, YAML scalar styles/chomping, exact type resolution and error families.
 
-- **A:** `typeRange` is the normative intrinsic integer range name and first scalar
-  constraint in error order. All eleven pending vectors are complete; no unresolved
-  markers remain. Negative unsigned lexemes remain VALUE_TYPE and numeric/pattern
-  safety ceiling violations remain LIMIT_EXCEEDED. `typeRange` cannot be declared
-  in source constraints.
-- **B:** §6.1 defines the minimum descriptor projection. Five new scenarios exercise
-  absent/empty constraints, declared constraints, ENUM order and optional texts.
-- **C:** §5.2.1 formalizes the approved printable ASCII subset. Forty-five vectors
-  cover legal atoms/escapes/classes/quantifiers, full matching, empty-capable valid
-  expressions, invalid empty expressions/classes, reversed ranges, controls,
-  engine extensions and limits. Regression tests reject all 33 ASCII controls
-  both directly, in classes and after a backslash. Schema checks printable ASCII,
-  nonempty text and length; the independent parser checks the complete grammar.
-- **D:** §7.2 classifies syntax, format, document structure and element defects.
-  Source vectors isolate each asserted defect. The old missing/unknown-format
-  sources now have valid nonempty elements, removing a second structural defect.
-  No global accumulation/order policy for simultaneous definition defects is
-  prescribed or tested. Only scalar constraint issues have a fixed order.
-- **E:** The specification explicitly says approved for implementation and still
-  unpublished. ARP remains the sole authority; no architecture is changed.
+## Coverage and limits
 
-The reported Phase A contract incidents are closed by the approved decisions.
-Global accumulation/order of definition issues remains deliberately unspecified,
-not an unresolved fixture requirement. Native API envelopes remain implementation
-choices, with the minimum descriptor projection fixed.
+Original Phase A clarifications (`typeRange`, descriptor projection, formal
+pattern grammar, intake layering and unpublished status) remain intact. Original
+298 shared assertions are preserved and extended by 25 vectors / 29 assertions.
+The additions are mapped to distinct divergences/boundaries in the
+[consolidation record](dictionary-portability-002.md).
 
-The existing YAML helper limitation, representative (not exhaustive) coverage,
-resource-limit instrumentation, snapshot immutability and runtime side-effect/
-isolation checks remain as described above. Actual semantic conformance of each
-stack must be demonstrated later against a released tag/SHA. No Java/.NET/PHP
-conformance tests have run; publication and independent release review remain pending.
+These checks are representative, not an exhaustive proof of every YAML string or
+runtime behavior. Bare validation's no-I/O guarantee, immutable snapshots,
+isolation and concurrency need native implementation tests. No native stack is
+run or modified by this contract-only task. Historical `0172ab6` reports do not
+establish conformance with the updated candidate.

@@ -6,6 +6,20 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 
 ## Unreleased
 
+### ARP-DICT-001 portability consolidation 002
+
+- Defined the mandatory bounded YAML subset: explicit scalar resolution, plain
+  dates/boolean-looking words as text, single-line flow scalars and block multiline
+  text; common indentation/escapes/security rules replace native-parser extensions.
+- Added exact source-number token/exponent/magnitude budgets (256 characters,
+  absolute exponent 128, magnitude below 10^128), mathematical integer metadata
+  semantics, shared depth 128 and distinct syntax versus security-limit errors.
+- Added 25 directed vectors and four source descriptor projections: 327 shared
+  runtime assertions, preserving every original expectation. Updated schema,
+  manifest, focused intake checks, regression tests and per-stack handoff.
+- Classified these as pre-publication behavior tightening/clarification, not a
+  released PATCH or automatic adoption by existing stacks. No functionality added.
+
 ### ARP-DICT-001 Phase A
 
 - Closed approved contractual incidents: normative `typeRange`, minimum resolved

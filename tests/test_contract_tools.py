@@ -14,7 +14,7 @@ class ContractChecks(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.schema = checker.load(checker.ROOT / 'schemas/dictionary/v1/dictionary.schema.json')
-        cls.validator = checker.Draft202012Validator(cls.schema)
+        cls.validator = checker.contract_validator(cls.schema)
         cls.doc = checker.load(checker.ROOT / 'fixtures/dictionary/v1/catalog.json')
 
     def test_suite(self):

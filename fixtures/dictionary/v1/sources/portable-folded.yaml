@@ -1,0 +1,7 @@
+apiVersion: arp.dictionary/v1
+elements:
+  - id: portable.folded
+    type: TEXT
+    description: >-
+      first
+      second

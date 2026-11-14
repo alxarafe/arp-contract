@@ -100,12 +100,92 @@ At least two dot-separated segments are required; no empty segments, whitespace,
 
 ### 3.4 YAML/JSON intake rules
 
-- The normative **data model** is JSON-compatible objects, arrays, strings, booleans, integers and null where explicitly allowed. Both JSON and a **safe, restricted YAML 1.2 subset** MAY be accepted as source encodings; both MUST yield identical model semantics.
-- Exactly one document/root object per source; duplicate mapping keys at any depth are rejected. No arbitrary tags, constructors, anchors/aliases, merge keys, directives, implicit timestamp objects, embedded executable content or additional YAML documents.
-- Numbers for `minimum`, `maximum` and `multipleOf` are **quoted strings**, never YAML/JSON numeric literals. `precision`, `scale`, `minimumLength`, `maximumLength` and repetition counts are integer values where specified. Booleans are native `true`/`false`.
-- A parser MUST reject malformed or unsupported input rather than interpreting it with language-specific YAML 1.1 implicit boolean/date rules. The normative JSON Schema validates node shapes; parser-level duplicate keys and forbidden YAML constructs additionally require dedicated checks.
-- UTF-8 input is required. Invalid encoding and unpaired Unicode surrogates are rejected. No implicit Unicode normalization, trimming or case conversion of IDs, labels or enum values.
-- The format is **closed**. Future attributes require an explicitly reviewed compatible format extension or new format generation under `docs/versioning.md`, not an unvalidated free-form extension bag in this MVP.
+Both JSON and the **ARP portable YAML profile** below MUST be supported. They
+produce the same JSON-compatible data model. This profile is a closed subset of
+YAML 1.2, not a requirement to implement all YAML features. Unsupported syntax
+is rejected with `DICTIONARY_DOCUMENT_INVALID`; host-parser extensions MUST NOT
+silently become ARP features.
+
+Common intake requirements:
+
+- Exactly one UTF-8 document/root object. Reject invalid encoding and unpaired
+  Unicode surrogates, including escaped keys. Do not trim, normalize Unicode,
+  fold case, or replace invalid characters with U+FFFD.
+- Mapping keys are strings, unique **after decoding** at every depth, including
+  when the first value is null. No implicit conversion of numeric keys to text.
+- The format remains closed: future attributes require an explicitly reviewed
+  format extension or new generation under `docs/versioning.md`; this consolidation
+  adds no document properties.
+- Unknown document/element/constraint keys remain errors under §7.2. Numeric
+  `minimum`, `maximum`, `multipleOf` are quoted strings in both encodings.
+- Source number tokens and collection depth obey §8.1 before schema/definition
+  validation. Schema alone cannot check token spelling, duplicates or YAML syntax.
+
+#### 3.4.1 Required portable YAML syntax
+
+- Block and flow mappings/sequences, comments, and optional single `---`/`...`
+  document boundary markers. Collections may span lines; each scalar's rules
+  below still apply. A second document is forbidden.
+- Indentation uses spaces, never tabs. Child block indentation is greater than
+  its parent; siblings align. A sequence used as a mapping value may also have
+  its `-` indicators aligned with that mapping key (the YAML indentless-sequence
+  form). No fixed two/four-space step is imposed. Tabs inside scalar content do not
+  become indentation. Line endings LF and CRLF are accepted and block text
+  normalizes line breaks to LF; other physical line separators are unsupported.
+- Plain, single-quoted and double-quoted scalars are **single physical line**.
+  Quote a plain value when YAML indicator/comment/separator syntax would be
+  ambiguous; quote significant leading/trailing spaces. No post-decode trimming
+  is permitted (syntactic indentation/separation is not scalar data). Single quotes
+  escape an apostrophe by doubling it. Double-quoted scalars use JSON string
+  syntax: raw control characters are forbidden; use escapes for them. They
+  admit only JSON escapes (`\"`, `\\`, `\/`, `\b`, `\f`, `\n`, `\r`, `\t`,
+  `\uHHHH`); escaped supplementary characters require a valid surrogate pair.
+  YAML-only escapes such as `\x41`, `\N`, `\U0001F600` are unsupported.
+- Multiline text uses literal `|` or folded `>` block scalars, optionally followed
+  by `-` (strip) or `+` (keep). Without a suffix, clip applies. Explicit numeric
+  indentation indicators such as `|2` are unsupported; indentation is inferred
+  from the first nonempty content line and removed uniformly. Content must be
+  indented beyond its containing block; more-indented content retains its extra
+  spaces. Literal text retains line breaks. Folded text joins ordinary adjacent
+  lines with a space, retaining breaks around blank/more-indented content. Strip
+  removes final breaks, clip retains one when present, keep retains trailing
+  breaks. An all-empty block clips/strips to the empty string; keep preserves its
+  empty content line breaks. See [YAML 1.2 block scalar rules](https://yaml.org/spec/1.2.2/#81-block-scalar-styles)
+  for these existing folding/chomping semantics within the permitted headers.
+- Multiline plain/quoted scalars, including quoted backslash continuations and
+  continuation at column zero, are forbidden even if a host parser accepts them.
+  Use block text or a one-line double-quoted `\n` escape. This closes the observed
+  Java/PHP/.NET continuation disagreement without requiring general flow folding.
+- Tags (including explicit built-ins), directives (including unknown directives),
+  anchors, aliases, merge keys `<<`, explicit complex keys, constructors, external
+  references and executable/environment expansion are forbidden. Symbols that
+  resemble these constructs inside scalar text remain literal data. Parser-added
+  implicit tag handles are not source-declared tags and do not cause rejection.
+
+#### 3.4.2 Scalar resolution
+
+Resolution is explicit and independent of YAML 1.1 or native implicit resolvers:
+
+| Source scalar | JSON model kind/value |
+| --- | --- |
+| Quoted or block scalar | String with its decoded text; never implicit numeric/date/boolean conversion |
+| Plain `null`, or an omitted mapping/sequence scalar | Null (subsequent typed schema rules still reject it where disallowed) |
+| Plain `true`, `false` | Boolean |
+| Plain token matching the JSON number grammar | Exact JSON Number, subject to §8.1 |
+| Any other valid one-line plain scalar | String, unchanged |
+
+The JSON numeric grammar is `-?(0|[1-9][0-9]*)(\.[0-9]+)?([eE][+-]?[0-9]+)?`.
+Thus dates such as `2026-11-14`, words `yes/no/on/off`, `True`, `~`, `012`, `+1`
+are text; no octal, timestamp object, shorthand boolean or implicit localization
+is introduced. Quoting `"1.00"` makes a string; unquoted `1.00` is a number with
+exact value one. No NaN/infinity numeric kind exists in the model.
+
+For metadata whose schema type is integer, integrality is mathematical:
+`1`, `1.00`, `0.1e1` have the same admissible integer value; `1.01` is not an
+integer. Booleans are never numbers. Successful descriptor numeric nodes retain
+JSON Number kind and exact value; their textual spelling MAY be canonicalized.
+Numeric **strings** retain their authored representation under §6.1. This does
+not change the non-exponent portable INTEGER/DECIMAL **value** grammar in §4.
 
 ## 4. Scalar values and canonical conformance representation
 
@@ -200,7 +280,12 @@ Only the following keys are permitted within `constraints`. All constraints are 
 
 Unrecognized or inapplicable constraint keys are definition errors, **not** ignored annotations. Numeric bounds MUST use the matching integer or decimal lexical grammar, and MUST be valid within the element's declared numeric domain; `multipleOf` MUST be positive and exact. For integers `multipleOf` MUST be an integer. If an exclusivity flag is present and true, its corresponding bound MUST exist; a false flag without a bound is allowed but has no effect. Default exclusivity is false.
 
-`minimumLength`, `maximumLength` are nonnegative integral values; an explicit maximum below the minimum is a definition error. Numeric bounds with `minimum > maximum`, or equal bounds with an exclusive endpoint, are definition errors. These checks identify straightforward contradictions; the MVP is **not** a general satisfiability solver for arbitrary combinations of `pattern`, `multipleOf`, and other restrictions.
+`minimumLength`, `maximumLength` are nonnegative integral values; an explicit
+maximum below the minimum is a definition error. For DECIMAL, “numeric domain”
+means the general exact-decimal domain, not the
+optional precision/scale geometry. A bound outside that geometry does not itself
+make a definition invalid (see the existing `ordered-constraints` vector).
+Numeric bounds with `minimum > maximum`, or equal bounds with an exclusive endpoint, are definition errors. These checks identify straightforward contradictions; the MVP is **not** a general satisfiability solver for arbitrary combinations of `pattern`, `multipleOf`, and other restrictions.
 
 A value violating a constraint is invalid; ARP MUST NOT truncate, clamp, coerce or round to make it pass. Format validation happens before constraints so invalid lexemes do not create spurious range errors.
 
@@ -404,10 +489,62 @@ well-typed scalar value, not to multiple definition errors.
 ## 8. Portability, safety and resource limits
 
 - **No implicit coercion:** no string-to-boolean, `"123"`-to-STRING when expecting an integer by guessed context, loss of integer precision, binary floating-point rounding, string trimming, local time zone assumptions or unknown-key ignoring.
-- **Resource ceilings:** documents MAY have implementation-configurable limits, but the default conformance profile MUST accept at least **1 MiB UTF-8** and **2048 elements per source**. Numeric lexical inputs above 4096 digits, patterns above 512 ASCII chars, or pattern-matched values above 4096 code points MUST be rejected with the declared limit code. Implementations MAY reject larger documents with `DICTIONARY_LIMIT_EXCEEDED` if the configured limit is disclosed, but conformance tests use values below the baseline.
+- **Resource ceilings:** the common portable intake profile in §8.1 fixes deterministic
+  boundaries and rejection categories. Portable scalar numeric inputs above 4096
+  digits, patterns above 512 ASCII characters, and pattern-matched values above
+  4096 code points remain `DICTIONARY_LIMIT_EXCEEDED`. These scalar ceilings are
+  separate from source metadata numbers; no scalar numeric range is reduced.
 - **Safe parsing:** no arbitrary-object construction or code execution from YAML, no untrusted handler names interpreted as executable code, no external document `$ref` fetch, no filesystem/network access during bare value validation.
 - **Snapshot consistency:** validation always uses one fully built catalog snapshot; changing an ERP module's effective source selection requires a new build, not in-place mutation visible to concurrent validations.
 - **Optionality:** dictionary-only consumption requires no module manager, database, UI, messaging, HTTP or domain dispatcher.
+
+### 8.1 Common portable intake budgets
+
+| Budget | Inclusive portable maximum / condition |
+| --- | --- |
+| Raw UTF-8 bytes per source | 1,048,576 bytes (1 MiB) |
+| Elements per source | 2048 |
+| Collection depth | 128; root object/array is depth 1, each nested object/array adds 1; scalars do not add depth |
+| Source number token | 256 ASCII characters including sign, point and exponent spelling |
+| Source exponent | Absolute mathematical exponent at most 128, including a zero-valued significand |
+| Source numeric magnitude | `abs(number) < 10^128` |
+
+Source numeric budgets apply to **every unquoted JSON/YAML number token**, before
+conversion to native number types and before definition validation. Exponent
+padding/signs do not change its mathematical bound, but count toward token length.
+For example `1e127` is within the budget; `1e128` exceeds magnitude; `1e10000`,
+`1e-129` and `0e9999999999999999999` exceed exponent budget. A 257-character
+spelling of the number one exceeds token budget. All yield LIMIT_EXCEEDED, not
+native overflow, infinity, a rounded value, or ELEMENT_INVALID.
+
+Consequently admitted nonnegative integer length metadata ranges from zero to
+`10^128 - 1`, inclusive. Precision and scale retain their existing smaller limits.
+A within-budget but negative/nonintegral integer-typed metadata value is
+ELEMENT_INVALID, not a security-limit error. Source numeric strings for bounds
+use their existing §4/§5 grammar and 4096-digit ceiling; the token/exponent rules
+above do not apply inside strings. Do not scan quoted/block text for fake numbers.
+
+The portable/default conformance profile MUST accept byte/element counts up to
+these boundaries and MUST reject their excess with LIMIT_EXCEEDED. It MUST also
+enforce the depth and source-number budgets above. Applications MAY explicitly
+configure different byte/element/depth budgets for their own contexts, but must
+identify them as a different resource profile; portable conformance uses this
+profile. The numeric metadata domain and fixed scalar/pattern ceilings are common
+semantics, not stack-specific configurable extensions.
+
+Count bytes before decoding. Check collection nesting iteratively/before recursive
+materialization and source numeric budgets before any lossy/native bounded
+conversion. When an intake limit is encountered, reject the entire source with
+`DICTIONARY_LIMIT_EXCEEDED` before schema/element checks. In-budget malformed or
+unsupported syntax, duplicate keys and invalid encoding are DOCUMENT_INVALID;
+well-formed supported input then follows the format/document/element layers of
+§7.2. No ordering is required among competing simultaneous intake defects; limit
+vectors use well-formed syntax and explicitly exercise pre-semantic intake.
+
+No machine-dependent timeout, arbitrary recursion default, or host numeric maximum
+may redefine these limits. Bound work by bytes, collection depth, token size,
+bounded exact arithmetic and the existing pattern ceilings. No general YAML
+implementation or metadata arithmetic with unbounded exponent expansion is required.
 
 ## 9. Shared conformance suite — minimum inventory
 

@@ -284,5 +284,298 @@
         }
       ]
     }
+  },
+  {
+    "id": "portable-scalars.yaml",
+    "path": "fixtures/dictionary/v1/sources/portable-scalars.yaml",
+    "encoding": "yaml",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    },
+    "descriptorProjection": {
+      "id": "portable.scalars",
+      "type": "ENUM",
+      "label": "2026-11-14",
+      "description": "JSON escapes: \n\ud83d\ude00",
+      "enumValues": [
+        "yes",
+        "no",
+        "on",
+        "off",
+        "True",
+        "~",
+        "012",
+        "+1",
+        "null",
+        "1.00"
+      ],
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 100
+      }
+    }
+  },
+  {
+    "id": "portable-literal.yaml",
+    "path": "fixtures/dictionary/v1/sources/portable-literal.yaml",
+    "encoding": "yaml",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    },
+    "descriptorProjection": {
+      "id": "portable.literal",
+      "type": "STRING",
+      "label": "It's literal",
+      "description": "first\n%YAML !!tag &anchor *alias <<: ---\n",
+      "constraints": {}
+    }
+  },
+  {
+    "id": "portable-folded.yaml",
+    "path": "fixtures/dictionary/v1/sources/portable-folded.yaml",
+    "encoding": "yaml",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    },
+    "descriptorProjection": {
+      "id": "portable.folded",
+      "type": "TEXT",
+      "description": "first second",
+      "constraints": {}
+    }
+  },
+  {
+    "id": "portable-equivalent.json",
+    "path": "fixtures/dictionary/v1/sources/portable-equivalent.json",
+    "encoding": "json",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    },
+    "descriptorProjection": {
+      "id": "portable.equivalent",
+      "type": "TEXT",
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      }
+    }
+  },
+  {
+    "id": "multiline-quoted.yaml",
+    "path": "fixtures/dictionary/v1/sources/multiline-quoted.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "multiline-plain.yaml",
+    "path": "fixtures/dictionary/v1/sources/multiline-plain.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "indent-tab.yaml",
+    "path": "fixtures/dictionary/v1/sources/indent-tab.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "yaml-only-escape.yaml",
+    "path": "fixtures/dictionary/v1/sources/yaml-only-escape.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "block-indent-indicator.yaml",
+    "path": "fixtures/dictionary/v1/sources/block-indent-indicator.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-directive.yaml",
+    "path": "fixtures/dictionary/v1/sources/unknown-directive.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "duplicate-null-escaped.yaml",
+    "path": "fixtures/dictionary/v1/sources/duplicate-null-escaped.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "depth-128.json",
+    "path": "fixtures/dictionary/v1/sources/depth-128.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "depth-129.json",
+    "path": "fixtures/dictionary/v1/sources/depth-129.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-exponent-overflow.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-exponent-overflow.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-zero-exponent-overflow.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-zero-exponent-overflow.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-negative-exponent-overflow.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-negative-exponent-overflow.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-magnitude-overflow.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-magnitude-overflow.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-token-overflow.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-token-overflow.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-negative-exponent-boundary.json",
+    "path": "fixtures/dictionary/v1/sources/numeric-negative-exponent-boundary.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
   }
 ]

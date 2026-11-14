@@ -27,9 +27,9 @@ These rows are placeholders only. They are **not claims of support**.
 
 | Implementation | Implementation ref | Contract tag + SHA | Feature / format | Status | Evidence |
 | --- | --- | --- | --- | --- | --- |
-| `arp-java` | — | — | ARP-DICT-001 / TBD | `NOT_EVALUATED` | — |
-| `arp-dotnet` | — | — | ARP-DICT-001 / TBD | `NOT_EVALUATED` | — |
-| `arp-php` | — | — | ARP-DICT-001 / TBD | `NOT_EVALUATED` | — |
+| `arp-java` | — | — | ARP-DICT-001 / arp.dictionary/v1 | `NOT_EVALUATED` | — |
+| `arp-dotnet` | — | — | ARP-DICT-001 / arp.dictionary/v1 | `NOT_EVALUATED` | — |
+| `arp-php` | — | — | ARP-DICT-001 / arp.dictionary/v1 | `NOT_EVALUATED` | — |
 
 Populate the table only after the first contract release exists. Add one row for each contract/feature/format combination actually validated, including older supported generations where relevant. If the matrix becomes large, move detailed results to a versioned manifest while keeping a human-readable summary here.
 
@@ -63,3 +63,16 @@ For implementation-specific releases, verify the implementation actually contain
 ## Existing Erbas contracts
 
 Earlier `erbas-contract` releases and adoption claims remain separate historical evidence. Nothing in this blank ARP matrix asserts that those releases have been migrated or that Java, .NET, and PHP currently conform to ARP-DICT-001.
+
+## Pre-release evidence and portability consolidation
+
+PHP, Java and .NET have documented 298 shared fixture assertions against the
+unpublished `0172ab64742218b9f64a6ae96c43ebdfe690f4c6` candidate. These are historical
+candidate results, not adoption of a released contract, and are not rewritten by
+the [327-assertion portability consolidation](dictionary-portability-002.md).
+
+All three implementations are **NOT_EVALUATED for the consolidated candidate**.
+Each needs the concrete parser/budget/runner adaptations documented there, an
+exact updated pin and its own new semantic/instrumentation evidence. No native
+repository was modified or rerun by this contract-only task. The first release
+matrix remains unpopulated until a published contract and precise evidence exist.

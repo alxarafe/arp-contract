@@ -1,0 +1,8 @@
+apiVersion: arp.dictionary/v1
+elements:
+- id: portable.literal
+  type: STRING
+  label: 'It''s literal'
+  description: |
+    first
+    %YAML !!tag &anchor *alias <<: ---
