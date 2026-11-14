@@ -1,0 +1,20 @@
+# Local tooling and IDE state
+.openidea/
+.idea/
+.vscode/
+
+# Local environment and generated outputs
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+.tmp/
+tmp/
+coverage/
+.phpunit.cache/
+.phpunit.result.cache
+vendor/
+node_modules/
+__pycache__/
+*.pyc
