@@ -533,5 +533,239 @@
         }
       }
     ]
+  },
+  {
+    "id": "descriptor-plain",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.plain",
+                  "type": "STRING"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.plain",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.plain",
+          "type": "STRING",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-empty",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.empty",
+                  "type": "STRING",
+                  "constraints": {}
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.empty",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.empty",
+          "type": "STRING",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-constrained",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.constrained",
+                  "type": "DECIMAL",
+                  "constraints": {
+                    "minimum": "1.00"
+                  },
+                  "label": "Amount"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.constrained",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.constrained",
+          "type": "DECIMAL",
+          "constraints": {
+            "minimum": "1.00"
+          },
+          "label": "Amount"
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-enum",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.enum",
+                  "type": "ENUM",
+                  "enumValues": [
+                    "z",
+                    "A",
+                    "middle"
+                  ],
+                  "description": "Ordered literals"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.enum",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.enum",
+          "type": "ENUM",
+          "enumValues": [
+            "z",
+            "A",
+            "middle"
+          ],
+          "description": "Ordered literals",
+          "constraints": {}
+        }
+      }
+    ]
+  },
+  {
+    "id": "descriptor-texts",
+    "steps": [
+      {
+        "operation": "buildCatalog",
+        "context": "descriptor",
+        "sources": [
+          {
+            "providerId": "opaque.provider",
+            "sourceId": "opaque.source",
+            "document": {
+              "apiVersion": "arp.dictionary/v1",
+              "elements": [
+                {
+                  "id": "descriptor.texts",
+                  "type": "TEXT",
+                  "label": " e\\u0301 ",
+                  "description": "Descriptive text"
+                }
+              ]
+            }
+          }
+        ],
+        "expected": {
+          "valid": true,
+          "issues": []
+        }
+      },
+      {
+        "operation": "resolve",
+        "context": "descriptor",
+        "elementId": "descriptor.texts",
+        "expected": {
+          "valid": true,
+          "issues": []
+        },
+        "descriptorProjection": {
+          "id": "descriptor.texts",
+          "type": "TEXT",
+          "label": " e\\u0301 ",
+          "description": "Descriptive text",
+          "constraints": {}
+        }
+      }
+    ]
   }
 ]

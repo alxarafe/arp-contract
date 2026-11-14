@@ -12,7 +12,7 @@ The target is to let applications combine a portable dictionary, logical structu
 
 **Initial architecture and governance — no ARP contract release has been published from this repository yet.** `ARP-CONTRACT-001` established the versioning and release policy; `ARP-ARCH-001` documents the architecture direction without publishing a runtime contract.
 
-The planned first contractual release, `v0.1.0`, is contingent on approval of the ARP-DICT-001 MVP specification and its normative schemas and conformance fixtures. Until that release exists, examples of `v0.1.0` or `dictionary/v1` are illustrative, not supported-version claims.
+The planned first contractual release, `v0.1.0`, is subject to release review of the ARP-DICT-001 design approved for implementation, its schemas and conformance fixtures. Until that release exists, examples of `v0.1.0` or `dictionary/v1` are illustrative, not supported-version claims.
 
 ## Sources of truth
 

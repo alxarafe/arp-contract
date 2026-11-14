@@ -1,6 +1,6 @@
 # ARP-DICT-001 — Phase A checks and handoff
 
-Unreleased implementation of the supplied design; no tag or stack support claim.
+Implementation of the approved design, including approved Phase A clarifications; no tag or stack support claim.
 ARP owns these expectations. ERP integration results cannot redefine them.
 
 ## Execute offline
@@ -25,12 +25,15 @@ No framework, ORM, database or production runtime is imported.
    objects, 17 types, identity, numeric lexemes, ENUM arrays, constraint applicability,
    paired precision/scale. Regex end assertions also reject a final newline.
 2. **Integrity:** unique fixture IDs and mapping keys, local source paths and refs,
-   explicit outcomes, error vocabulary, ordered constraints, absence of normalized
+   explicit outcomes, error vocabulary, ordered scalar constraints, absence of normalized
    output on failure, coverage of 17 successful types, source parsing restrictions,
-   JSON/YAML sample equivalence and declared structural verdicts.
+   JSON/YAML sample equivalence and declared structural verdicts. Independent checks
+   also verify the formal pattern grammar and sample matches, complete `typeRange`
+   errors and resolved descriptor projections against their declarations.
 3. **Semantic:** future implementations must execute build/resolve/validate against
-   the vectors. The checker does **not** validate scalar semantics, arbitrary pattern
-   grammar, mathematical contradictions, registration, atomicity or cache isolation.
+   the vectors. Beyond the focused pattern checks, the checker does **not** validate
+   general scalar semantics, mathematical contradictions, registration, atomicity
+   or cache isolation.
    A successful integrity run proves no runtime conformant.
 
 The YAML parser helper is deliberately restricted to the supplied string-valued
@@ -47,8 +50,13 @@ and expected outcome. `schemaValid` in definition/source vectors is separate fro
 semantic `expected.valid`; null means parsing must fail before schema validation.
 Source paths are repository-relative; providers are opaque diagnostic identities.
 Catalog scenarios execute steps in order, with contexts independently scoped.
-`descriptorProjection` compares only the listed descriptor fields; it does not
-prescribe native classes, serialization or extra diagnostics.
+`descriptorProjection` is the complete minimum contractual projection from §6.1,
+including normalized empty constraints, ENUM order and absence of undeclared
+optional fields. It does not prescribe native classes or a diagnostic envelope.
+`patterns.json` supplies explicit grammar verdicts, independent structural
+`schemaValid` verdicts and full-match samples. The development parser and bounded
+position-set matcher in `tools/portable_pattern.py` use no host regex engine.
+They are fixture checks, not production runtime implementations.
 `assertRejectedGeneration` asserts the failed generation was not published; it
 allows both retention of the old snapshot and no active snapshot as the spec does.
 
@@ -65,7 +73,7 @@ outcomes and compare them, never treat expected data as execution evidence.
 | Identity/types | Qualified and invalid IDs, excessive length, 17 positives, unknown type, inapplicable keys, ENUM requirements |
 | Integers | All inclusive endpoints/outside endpoints, INT64 beyond safe JS integer, negative unsigned lexical rejection, signed -0, leading zero/exponent/plus/kind |
 | Decimal | Canonical zeros/trailing zeros, geometry, exact multiples, exact bounds/exclusivity, no float rounding, 4096-digit boundary and excess |
-| Text/pattern | Supplementary and decomposed lengths, no trim/NFC, surrogate, empty/min/max, full-match, grammar-invalid declarations, pattern/input limits |
+| Text/pattern | Supplementary and decomposed lengths, no trim/NFC, surrogate, empty/min/max, full-match, formal grammar positives/negatives, empty expressions/classes, reversed ranges, controls, pattern/input limits |
 | ENUM | Literal, case rejection, duplicates/empty/missing, inconsistent literal constraints, authored order in catalog |
 | UUID/temporal | Uppercase/nil UUID, malformed UUID, Gregorian leap distinction, invalid year/month/suffix, TIME fractions/ranges, DATETIME offsets across days, seven digits, missing/excess offset, UTC underflow |
 | BINARY | Empty/padded payload, decoded lengths, alphabet/padding/whitespace/padding bits |
@@ -76,28 +84,36 @@ no filesystem/network effects during validation and absence of cache leakage
 also need implementation instrumentation; JSON expectations alone cannot prove them.
 The inventory is representative, not an exhaustive proof of every grammar string.
 
-## Contract questions requiring explicit review
+## Approved incident closure and remaining limitations
 
-- §7.1 requires every constraint failure to name `constraint`, but the fixed order
-  names “built-in type range” without defining its portable identifier. Eleven
-  intrinsic-range vectors carry `unresolvedContract` and only the specified code;
-  they are **incomplete conformance expectations**, deliberately not silently
-  assigned a new constraint name. Unsigned negative input fails lexical typing
-  first, so its three lower-bound vectors correctly expect VALUE_TYPE.
-- §6/§7 do not specify a serialized resolved descriptor envelope. Projection-based
-  lookup cases cover identity/type/absent constraints as `{}`; exact native API or
-  additional canonical descriptor fields require review before exact-output tests.
-- Error-family precedence for inputs with simultaneous document/element defects
-  and the ordering of multiple definition issues are not specified. Fixtures avoid
-  imposing an order. The schema verdict is never used to infer a portable error code.
-- §5.2 describes a pattern subset in prose, not a formal grammar: edge cases such
-  as empty expressions/classes, ASCII control literals and reversed ranges remain
-  to be reconciled before a complete grammar oracle is adopted. The schema only
-  checks ASCII and length, as documented; it does not silently accept host regex
-  grammar as ARP grammar.
-- The source file still labels the design a candidate, despite approval supplied
-  for this implementation task. Its publication status is preserved. Architecture
-  open questions are not rewritten by implementation tooling.
+- **A:** `typeRange` is the normative intrinsic integer range name and first scalar
+  constraint in error order. All eleven pending vectors are complete; no unresolved
+  markers remain. Negative unsigned lexemes remain VALUE_TYPE and numeric/pattern
+  safety ceiling violations remain LIMIT_EXCEEDED. `typeRange` cannot be declared
+  in source constraints.
+- **B:** §6.1 defines the minimum descriptor projection. Five new scenarios exercise
+  absent/empty constraints, declared constraints, ENUM order and optional texts.
+- **C:** §5.2.1 formalizes the approved printable ASCII subset. Forty-five vectors
+  cover legal atoms/escapes/classes/quantifiers, full matching, empty-capable valid
+  expressions, invalid empty expressions/classes, reversed ranges, controls,
+  engine extensions and limits. Regression tests reject all 33 ASCII controls
+  both directly, in classes and after a backslash. Schema checks printable ASCII,
+  nonempty text and length; the independent parser checks the complete grammar.
+- **D:** §7.2 classifies syntax, format, document structure and element defects.
+  Source vectors isolate each asserted defect. The old missing/unknown-format
+  sources now have valid nonempty elements, removing a second structural defect.
+  No global accumulation/order policy for simultaneous definition defects is
+  prescribed or tested. Only scalar constraint issues have a fixed order.
+- **E:** The specification explicitly says approved for implementation and still
+  unpublished. ARP remains the sole authority; no architecture is changed.
 
-These are publication review items. This branch is not a release-ready assertion
-of complete semantic conformance, and no Java/.NET/PHP tests have run.
+The reported Phase A contract incidents are closed by the approved decisions.
+Global accumulation/order of definition issues remains deliberately unspecified,
+not an unresolved fixture requirement. Native API envelopes remain implementation
+choices, with the minimum descriptor projection fixed.
+
+The existing YAML helper limitation, representative (not exhaustive) coverage,
+resource-limit instrumentation, snapshot immutability and runtime side-effect/
+isolation checks remain as described above. Actual semantic conformance of each
+stack must be demonstrated later against a released tag/SHA. No Java/.NET/PHP
+conformance tests have run; publication and independent release review remain pending.

@@ -107,7 +107,9 @@
                   "pattern": {
                     "type": "string",
                     "maxLength": 512,
-                    "pattern": "^[\\u0000-\\u007f]*$(?![\\s\\S])"
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
                   }
                 },
                 "additionalProperties": false
@@ -138,7 +140,9 @@
                   "pattern": {
                     "type": "string",
                     "maxLength": 512,
-                    "pattern": "^[\\u0000-\\u007f]*$(?![\\s\\S])"
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
                   }
                 },
                 "additionalProperties": false
@@ -543,7 +547,9 @@
                   "pattern": {
                     "type": "string",
                     "maxLength": 512,
-                    "pattern": "^[\\u0000-\\u007f]*$(?![\\s\\S])"
+                    "pattern": "^[\\u0020-\\u007e]*$(?![\\s\\S])",
+                    "minLength": 1,
+                    "description": "Printable ASCII and length only; formal ARP grammar checked independently by development tooling."
                   }
                 },
                 "additionalProperties": false

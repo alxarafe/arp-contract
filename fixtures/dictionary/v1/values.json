@@ -282,11 +282,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int8"
+          "elementId": "test.int8",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT8-above",
@@ -301,11 +301,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int8"
+          "elementId": "test.int8",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT8-leading",
@@ -438,11 +438,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.uint8"
+          "elementId": "test.uint8",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "UINT8-leading",
@@ -557,11 +557,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int16"
+          "elementId": "test.int16",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT16-above",
@@ -576,11 +576,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int16"
+          "elementId": "test.int16",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT16-leading",
@@ -713,11 +713,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.uint16"
+          "elementId": "test.uint16",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "UINT16-leading",
@@ -832,11 +832,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int32"
+          "elementId": "test.int32",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT32-above",
@@ -851,11 +851,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int32"
+          "elementId": "test.int32",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT32-leading",
@@ -988,11 +988,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.uint32"
+          "elementId": "test.uint32",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "UINT32-leading",
@@ -1107,11 +1107,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int64"
+          "elementId": "test.int64",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT64-above",
@@ -1126,11 +1126,11 @@
       "issues": [
         {
           "code": "DICTIONARY_VALUE_CONSTRAINT",
-          "elementId": "test.int64"
+          "elementId": "test.int64",
+          "constraint": "typeRange"
         }
       ]
-    },
-    "unresolvedContract": "intrinsic-range-constraint-name"
+    }
   },
   {
     "id": "INT64-leading",
@@ -2270,6 +2270,39 @@
           "code": "DICTIONARY_VALUE_CONSTRAINT",
           "elementId": "test.binary",
           "constraint": "maximumLength"
+        }
+      ]
+    }
+  },
+  {
+    "id": "intrinsic-and-declared-order",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8",
+      "constraints": {
+        "maximum": "100",
+        "multipleOf": "3"
+      }
+    },
+    "value": "128",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int8",
+          "constraint": "typeRange"
+        },
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int8",
+          "constraint": "maximum"
+        },
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int8",
+          "constraint": "multipleOf"
         }
       ]
     }

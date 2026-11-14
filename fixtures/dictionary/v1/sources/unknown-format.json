@@ -1,1 +1,9 @@
-{"apiVersion":"other/v1","elements":[]}
+{
+  "apiVersion": "other/v1",
+  "elements": [
+    {
+      "id": "test.x",
+      "type": "STRING"
+    }
+  ]
+}

@@ -214,5 +214,75 @@
         }
       ]
     }
+  },
+  {
+    "id": "format-wrong-kind.json",
+    "path": "fixtures/dictionary/v1/sources/format-wrong-kind.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_FORMAT_UNSUPPORTED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elements-empty.json",
+    "path": "fixtures/dictionary/v1/sources/elements-empty.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "elements-wrong-kind.json",
+    "path": "fixtures/dictionary/v1/sources/elements-wrong-kind.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "element-nonobject.json",
+    "path": "fixtures/dictionary/v1/sources/element-nonobject.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "element-unknown-property.json",
+    "path": "fixtures/dictionary/v1/sources/element-unknown-property.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
   }
 ]

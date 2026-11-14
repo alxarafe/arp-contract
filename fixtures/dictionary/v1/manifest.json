@@ -8,8 +8,8 @@
     "sources": "sources.json",
     "definitions": "definitions.json",
     "values": "values.json",
-    "catalogs": "catalogs.json"
+    "catalogs": "catalogs.json",
+    "patterns": "patterns.json"
   },
-  "comparison": "JSON model equality; issue array order is significant; diagnostic messages excluded",
-  "unresolvedContract": ["intrinsic-range-constraint-name", "resolved-descriptor-shape"]
+  "comparison": "JSON model equality; scalar value issues follow \u00a77.1 order; definition fixtures isolate defects and impose no global issue ordering; diagnostics excluded"
 }

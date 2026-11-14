@@ -1,12 +1,12 @@
 # ARP-DICT-001 — Reusable scalar data dictionary
 
-**Status:** Design candidate for review; **not yet a published, normative contract**.
+**Status:** Design approved for implementation, including Phase A contractual clarifications; **not yet a published contract**.
 **Target:** `arp-contract` first functional contract release, prospectively `v0.1.0`.
-**Format proposal:** `arp.dictionary/v1`.
+**Approved format:** `arp.dictionary/v1`.
 **Ownership:** ARP defines the reusable logical language and its observable mechanics; the consuming application owns all element names, business meanings and usages.
 **Sources reviewed:** [`arp-contract/docs/architecture.md`](../architecture.md), [`docs/versioning.md`](../versioning.md), and the published [`erbas-contract v0.13.0` resources specification](https://github.com/alxarafe/erbas-contract/blob/v0.13.0/docs/core/resources-001.md) and [OpenAPI resource schema](https://github.com/alxarafe/erbas-contract/blob/v0.13.0/openapi/core/resources/contract.yaml).
 
-> **Review convention.** MUST, SHOULD and MAY describe the behavior intended for the first *approved* release; this draft itself does not impose a released contract. Codex must not silently modify these decisions. Any discrepancy exposed by implementation goes back to contract review before publication.
+> **Review convention.** MUST, SHOULD and MAY describe the behavior intended for the first *approved* release; this approved implementation design does not itself publish a contract. Codex must not silently modify these decisions. Any discrepancy exposed by implementation goes back to contract review before publication.
 
 ## 1. Purpose and product boundary
 
@@ -212,11 +212,61 @@ Equality for text and ENUM is code-point-exact. `pattern` and lengths evaluate o
 
 An unrestricted PCRE/Java/.NET regular-expression string would yield different semantics across stacks. The MVP instead defines **full-string matching** over a deliberately limited ASCII expression subset:
 
-- Permitted: ASCII literal characters; escaped ASCII punctuation; positive ASCII character classes with literal characters and ranges such as `[A-Z0-9_-]`; concatenation; per-atom quantifiers `?`, `*`, `+`, `{n}`, `{n,m}`; optional leading `^` and trailing `$` (redundant under full-string matching).
+- Permitted: printable ASCII literal characters; escaped ASCII punctuation; positive ASCII character classes with literal characters and ranges such as `[A-Z0-9_-]`; concatenation; per-atom quantifiers `?`, `*`, `+`, `{n}`, `{n,m}`; optional leading `^` and trailing `$` (redundant under full-string matching).
 - Quantifier counts are decimal integers `0..1024`, with `m >= n` and no leading zeros except `0`. A pattern contains at most **512 ASCII characters**. A validated value with `pattern` contains at most **4096 Unicode code points**; larger inputs receive `DICTIONARY_LIMIT_EXCEEDED`, not a misleading pattern mismatch.
 - Disallowed in this generation: capturing/noncapturing groups, alternation, lookaround, backreferences, shorthand classes (`\d`, `\w`, `\s`), Unicode property classes, flags, inline modifiers, named captures, nested quantifiers, backtracking controls, dot wildcard, negative character classes, engine-specific escapes and any non-ASCII pattern character.
 - `^` may occur only at the beginning, `$` only at the end; they are redundant because matching already covers the full input. A hyphen within a character class is literal only at the beginning/end or when escaped. A literal metacharacter must be escaped according to the grammar; otherwise it is invalid.
 - Pattern grammar is checked on **definition ingestion**. Implementations MAY translate it into their host regex library, but MUST retain exactly the accepted language and outcomes in the shared fixtures; they must not expose extra host-engine constructs as conformant.
+
+#### 5.2.1 Formal grammar and lexical rules
+
+The following EBNF operates on decoded pattern characters, not JSON/YAML escape
+bytes. Square brackets denote optional EBNF terms, braces denote repetition, and
+quoted terminals are literal pattern characters.
+
+```ebnf
+pattern     = [ "^" ], atom, { atom }, [ "$" ];
+atom        = primary, [ quantifier ];
+primary     = literal | escape | class;
+quantifier  = "?" | "*" | "+" | "{", count, [ ",", count ], "}";
+count       = "0" | nonzero, { digit };
+class       = "[", classBody, "]";
+classBody   = [ "-" ], { classItem }, [ "-" ];
+classItem   = classChar, [ "-", classChar ];
+classChar   = classLiteral | escape;
+escape      = "\", punctuation;
+digit       = "0" | "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+nonzero     = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9";
+```
+
+- Every decoded character MUST be printable ASCII U+0020..U+007E, including
+  escaped characters. U+0000..U+001F, U+007F and all non-ASCII characters are
+  invalid. A backslash followed by a letter/digit/space is not an escape.
+- `punctuation` is ASCII punctuation U+0021..002F, U+003A..0040,
+  U+005B..0060 or U+007B..007E. Escapes denote the escaped character literally;
+  `\n`, `\x41`, `\u0041`, shorthand classes and backreferences are forbidden.
+- `literal` is printable ASCII except `. ^ $ * + ? { } [ ] \ ( ) |`.
+  `classLiteral` is printable ASCII except `\ [ ] ^ -`. Other punctuation has
+  literal meaning inside a class. A raw caret is never a class literal;
+  an escaped caret is literal, not negation.
+- `classBody` MUST contain at least one decoded member. To disambiguate raw
+  hyphens, first consume a raw hyphen at the start and/or end as literal members;
+  then parse the remaining items left to right. An interior raw hyphen joins the
+  immediately preceding and following `classChar` as one inclusive range.
+  Endpoints cannot be reused by another range; a remaining raw hyphen is invalid.
+  Escaped hyphens are ordinary `classChar` values. Thus `[-a-z]`, `[a-z-]`,
+  `[-]`, `[a-a]` and `[\-]` are valid; `[]`, `[^a]`, `[z-a]` and `[a-b-c]` are not.
+- Range endpoints are compared by ASCII code point and MUST be ascending or
+  equal. Counts MUST be 0..1024, without leading zeros except `0`; in `{n,m}`,
+  `m >= n`. `{n,}` is not permitted. Only one quantifier may follow a primary.
+- The pattern MUST contain an atom: `""`, `^`, `$`, `^$` are invalid. A valid
+  pattern may still match an empty value (for example `a*` or `a{0}`). Length
+  includes anchors, escapes and quantifiers and MUST NOT exceed 512 characters;
+  excess length is `DICTIONARY_LIMIT_EXCEEDED`. Other grammar violations are
+  `DICTIONARY_ELEMENT_INVALID` on definition ingestion.
+- Unescaped anchors occur only at the outer boundaries. Escaped `\^`/`\$`
+  are literals. Full-string matching applies with or without anchors, including
+  a final newline in the input: there is no host-engine end-anchor exception.
 
 This is adequate for identifiers such as `^[A-Z0-9-]+$`. Sophisticated or Unicode-aware patterns can be proposed in a later format generation, or validated by ERP domain functions using a future domain bridge. **Do not quietly weaken these restrictions per language.**
 
@@ -238,6 +288,25 @@ If a build fails, its partial result MUST NOT become the active catalog. A previ
 Catalog ordering is **not semantically relevant**: providers and element order must not change duplicates, resolution or validity. Catalog enumeration, if exposed, uses ascending ASCII/Unicode-code-point order of element IDs. Source provenance and trusted diagnostic data must be available for error reporting, but must not become ERP business rules.
 
 Any caching is scoped to the **specific application/catalog context**. Implementations MUST NOT leak definitions between tenants or applications and must not assume all installations share one global catalog. This MVP has no aliasing, overlay precedence, automatic hot reload, cross-catalog resolution, schema migrations or remote provider protocol. Future providers may supply sources from packages, memory or remote stores through adapters.
+
+### 6.1 Minimum contractual resolved descriptor projection
+
+A resolved scalar descriptor MUST expose this language-neutral projection:
+
+| Property | Presence and meaning |
+| --- | --- |
+| `id`, `type` | Required; exactly the declared identity and scalar type |
+| `constraints` | Required object; declared intrinsic constraints, or `{}` when absent |
+| `enumValues` | Required exclusively for ENUM; preserve declared values and order; absent for other types |
+| `label`, `description` | Present only when declared, with their exact Unicode text |
+
+The projection does not add implicit constraint keys, contextual field/resource
+metadata, presentation or persistence metadata. Numeric constraint strings retain
+the declaration's representation; their mathematical interpretation remains §5.
+This specifies observable data, not PHP/Java/.NET classes, interfaces or object
+layout. Implementations may keep diagnostic provenance separately; it is not
+part of the projection. Fixtures compare the whole contractual projection,
+including absence of undeclared properties, without prescribing a native envelope.
 
 ## 7. Abstract operations and observable results
 
@@ -299,7 +368,38 @@ A failure never invents a normalized value:
 
 For definition and duplicate errors, each issue SHOULD carry diagnostic `providerId`, `sourceId`, `elementId` (where known) and JSON Pointer path (when known). Value issues MUST carry `elementId`; constraint failures MUST carry the violated constraint name. An implementation MAY add non-contract diagnostic messages, but semantic tests cannot depend on them. Internal errors and resource failures must not be mislabeled as business-invalid values.
 
-A type/lexical failure suppresses constraint checks for that value. For a well-typed value, applicable constraint failures are returned in fixed order: **built-in type range; `minimum`; `maximum`; `multipleOf`; `precision`; `scale`; `minimumLength`; `maximumLength`; `pattern`; `enumValues`**. The same ordered conditions must yield the same `issues` across stacks. Exact parser line/column diagnostics may differ and are excluded from conformance comparisons.
+A type/lexical failure suppresses constraint checks for that value. For a well-typed value, applicable constraint failures are returned in fixed order: **`typeRange` (built-in integer type range); `minimum`; `maximum`; `multipleOf`; `precision`; `scale`; `minimumLength`; `maximumLength`; `pattern`; `enumValues`**. The same ordered conditions must yield the same `issues` across stacks. Exact parser line/column diagnostics may differ and are excluded from conformance comparisons.
+
+`typeRange` is the normative constraint name for an integer outside its intrinsic
+inclusive bounds (§4.1). It is not a legal declaration key. A negative unsigned
+lexeme is `DICTIONARY_VALUE_TYPE`, not a range violation. A numeric input exceeding
+the 4096-digit safety ceiling is `DICTIONARY_LIMIT_EXCEEDED`, not `typeRange`.
+
+### 7.2 Intake classification and multiple definition defects
+
+The following layers distinguish failures; JSON Schema alone does not choose a
+portable error family:
+
+- **Syntax/intake:** malformed encoding or syntax, duplicate mapping keys,
+  forbidden YAML constructs, multiple roots or invalid Unicode:
+  `DICTIONARY_DOCUMENT_INVALID`. Format dispatch requires a parsed object.
+- **Format:** a missing or unsupported `apiVersion` in a parsed root object:
+  `DICTIONARY_FORMAT_UNSUPPORTED`. This includes a non-string format value.
+- **Document structure:** a non-object root, invalid top-level keys, missing/invalid `elements`
+  container, empty array, or a non-object element entry:
+  `DICTIONARY_DOCUMENT_INVALID` for the supported format.
+- **Element structure/semantics:** missing, unknown or incorrectly typed element
+  properties, invalid identity/type, inappropriate constraints, invalid ENUM
+  declarations, pattern grammar or contradictory constraint configuration:
+  `DICTIONARY_ELEMENT_INVALID`, except explicit security-limit violations which
+  use `DICTIONARY_LIMIT_EXCEEDED`. Repeated IDs use `DICTIONARY_DUPLICATE_ELEMENT`.
+
+These categories classify individual defects and prerequisites of intake; they
+MUST NOT be read as a global ordering or accumulation policy for simultaneous
+definition defects. This MVP does not require all such issues, a first issue,
+or any global order among them. Fixtures that assert one definition error isolate
+that defect. The fixed ordering in §7.1 applies to constraint failures of one
+well-typed scalar value, not to multiple definition errors.
 
 ## 8. Portability, safety and resource limits
 
@@ -361,4 +461,4 @@ Codex must create portable fixtures with explicit **input, expected validity, no
 
 ## 12. Relationship to governance
 
-This document is a **draft contract candidate**, not a published release or proof that any implementation conforms. It must be reviewed with [`docs/architecture.md`](../architecture.md), [`docs/versioning.md`](../versioning.md) and [`docs/compatibility.md`](../compatibility.md). The first actual normative snapshot requires an approved schema, fixtures, checks, release inventory and immutable tag under the published process. The next developer step is **implementation of an approved design**, not delegation of its architectural decisions.
+This document is an **approved implementation design, still unpublished**, not a published release or proof that any implementation conforms. It must be reviewed with [`docs/architecture.md`](../architecture.md), [`docs/versioning.md`](../versioning.md) and [`docs/compatibility.md`](../compatibility.md). The first actual normative snapshot requires an approved schema, fixtures, checks, release inventory and immutable tag under the published process. The next developer step is **implementation of an approved design**, not delegation of its architectural decisions.

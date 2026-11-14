@@ -8,6 +8,13 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 
 ### ARP-DICT-001 Phase A
 
+- Closed approved contractual incidents: normative `typeRange`, minimum resolved
+  descriptor projection, formal printable-ASCII pattern grammar, error-layer
+  classification and approved-but-unpublished specification status.
+- Completed the eleven range expectations; added descriptor, source classification
+  and pattern fixtures plus independent grammar/match coherence checks. No global
+  definition-error accumulation/order requirement or runtime support is introduced.
+
 - Added versioned Draft 2020-12 dictionary schema, portable positive/negative
   source, definition, value and catalog fixtures covering all 17 scalar types.
 - Added independent offline structural/integrity checks and checker regression tests.
