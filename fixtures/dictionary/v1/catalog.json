@@ -1,0 +1,77 @@
+{
+  "apiVersion": "arp.dictionary/v1",
+  "elements": [
+    {
+      "id": "test.boolean",
+      "type": "BOOLEAN"
+    },
+    {
+      "id": "test.string",
+      "type": "STRING"
+    },
+    {
+      "id": "test.text",
+      "type": "TEXT"
+    },
+    {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    {
+      "id": "test.uuid",
+      "type": "UUID"
+    },
+    {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    {
+      "id": "test.enum",
+      "type": "ENUM",
+      "enumValues": [
+        "first",
+        "Second"
+      ]
+    },
+    {
+      "id": "test.binary",
+      "type": "BINARY"
+    }
+  ]
+}

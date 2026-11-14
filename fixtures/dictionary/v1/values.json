@@ -1,0 +1,2277 @@
+[
+  {
+    "id": "type-BOOLEAN",
+    "operation": "validate",
+    "element": {
+      "id": "test.boolean",
+      "type": "BOOLEAN"
+    },
+    "value": true,
+    "expected": {
+      "valid": true,
+      "normalizedValue": true,
+      "issues": []
+    }
+  },
+  {
+    "id": "type-STRING",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING"
+    },
+    "value": "a",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "a",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-TEXT",
+    "operation": "validate",
+    "element": {
+      "id": "test.text",
+      "type": "TEXT"
+    },
+    "value": "",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-INT8",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-UINT8",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-INT16",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-UINT16",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-INT32",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-UINT32",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-INT64",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-DECIMAL",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    "value": "1.2300",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "1.23",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-UUID",
+    "operation": "validate",
+    "element": {
+      "id": "test.uuid",
+      "type": "UUID"
+    },
+    "value": "ABCDEF01-2345-6789-ABCD-EF0123456789",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "abcdef01-2345-6789-abcd-ef0123456789",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-DATE",
+    "operation": "validate",
+    "element": {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    "value": "2000-02-29",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2000-02-29",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-TIME",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "12:34:56",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "12:34:56.0000000",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-DATETIME",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T01:00:00+01:00",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2024-01-01T00:00:00.0000000Z",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-ENUM",
+    "operation": "validate",
+    "element": {
+      "id": "test.enum",
+      "type": "ENUM",
+      "enumValues": [
+        "first",
+        "Second"
+      ]
+    },
+    "value": "first",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "first",
+      "issues": []
+    }
+  },
+  {
+    "id": "type-BINARY",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "Zg==",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "Zg==",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT8-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "-128",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "-128",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT8-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "127",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "127",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT8-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "-129",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int8"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT8-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "128",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int8"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT8-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT8-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT8-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT8-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT8-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT8-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "255",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "255",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT8-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "-1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT8-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "256",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.uint8"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "UINT8-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT8-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT8-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT8-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint8",
+      "type": "UINT8"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint8"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT16-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "-32768",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "-32768",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT16-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "32767",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "32767",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT16-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "-32769",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int16"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT16-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "32768",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int16"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT16-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT16-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT16-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT16-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.int16",
+      "type": "INT16"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT16-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT16-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "65535",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "65535",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT16-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "-1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT16-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "65536",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.uint16"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "UINT16-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT16-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT16-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT16-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint16",
+      "type": "UINT16"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint16"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT32-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "-2147483648",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "-2147483648",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT32-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "2147483647",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2147483647",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT32-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "-2147483649",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int32"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT32-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "2147483648",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int32"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT32-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT32-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT32-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT32-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.int32",
+      "type": "INT32"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT32-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT32-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "4294967295",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "4294967295",
+      "issues": []
+    }
+  },
+  {
+    "id": "UINT32-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "-1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT32-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "4294967296",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.uint32"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "UINT32-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT32-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT32-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "UINT32-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.uint32",
+      "type": "UINT32"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uint32"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT64-min",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "-9223372036854775808",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "-9223372036854775808",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT64-max",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "9223372036854775807",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "9223372036854775807",
+      "issues": []
+    }
+  },
+  {
+    "id": "INT64-below",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "-9223372036854775809",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int64"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT64-above",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "9223372036854775808",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.int64"
+        }
+      ]
+    },
+    "unresolvedContract": "intrinsic-range-constraint-name"
+  },
+  {
+    "id": "INT64-leading",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int64"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT64-exponent",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "1e0",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int64"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT64-plus",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": "+1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int64"
+        }
+      ]
+    }
+  },
+  {
+    "id": "INT64-kind",
+    "operation": "validate",
+    "element": {
+      "id": "test.int64",
+      "type": "INT64"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.int64"
+        }
+      ]
+    }
+  },
+  {
+    "id": "negative-zero",
+    "operation": "validate",
+    "element": {
+      "id": "test.int8",
+      "type": "INT8"
+    },
+    "value": "-0",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "decimal-zero",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    "value": "-0.00",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0",
+      "issues": []
+    }
+  },
+  {
+    "id": "geometry-999.99",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    "value": "999.99",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "999.99",
+      "issues": []
+    }
+  },
+  {
+    "id": "geometry-1.2300",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    "value": "1.2300",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "1.23",
+      "issues": []
+    }
+  },
+  {
+    "id": "geometry-1000",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    "value": "1000",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "precision"
+        }
+      ]
+    }
+  },
+  {
+    "id": "geometry-0.001",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "precision": 5,
+        "scale": 2
+      }
+    },
+    "value": "0.001",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "scale"
+        }
+      ]
+    }
+  },
+  {
+    "id": "exact-multiple",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "multipleOf": "0.1"
+      }
+    },
+    "value": "0.3",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0.3",
+      "issues": []
+    }
+  },
+  {
+    "id": "not-multiple",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "multipleOf": "0.1"
+      }
+    },
+    "value": "0.31",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "multipleOf"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-81",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    "value": "1e2",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.decimal"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-82",
+    "operation": "validate",
+    "element": {
+      "id": "test.boolean",
+      "type": "BOOLEAN"
+    },
+    "value": "true",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.boolean"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-83",
+    "operation": "validate",
+    "element": {
+      "id": "test.boolean",
+      "type": "BOOLEAN"
+    },
+    "value": 1,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.boolean"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-84",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING"
+    },
+    "value": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.string"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-85",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING"
+    },
+    "value": "\ud800",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.string"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-86",
+    "operation": "validate",
+    "element": {
+      "id": "test.uuid",
+      "type": "UUID"
+    },
+    "value": "gggggggggggggggggggggggggggggggggggg",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uuid"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-87",
+    "operation": "validate",
+    "element": {
+      "id": "test.uuid",
+      "type": "UUID"
+    },
+    "value": "00000000000000000000000000000000",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.uuid"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-88",
+    "operation": "validate",
+    "element": {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    "value": "1900-02-29",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.date"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-89",
+    "operation": "validate",
+    "element": {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    "value": "0000-01-01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.date"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-90",
+    "operation": "validate",
+    "element": {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    "value": "2024-13-01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.date"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-91",
+    "operation": "validate",
+    "element": {
+      "id": "test.date",
+      "type": "DATE"
+    },
+    "value": "2024-01-01Z",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.date"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-92",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "24:00:00",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.time"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-93",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "12:00:60",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.time"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-94",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "12:00:00.12345678",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.time"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-95",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T00:00:00",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.datetime"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-96",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T00:00:00+14:01",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.datetime"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-97",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "0001-01-01T00:00:00+01:00",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.datetime"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-98",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "Zg",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.binary"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-99",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "Zh==",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.binary"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-100",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "Zg==\n",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.binary"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lexical-101",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "_w==",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_TYPE",
+          "elementId": "test.binary"
+        }
+      ]
+    }
+  },
+  {
+    "id": "fraction1",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "12:00:00.1",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "12:00:00.1000000",
+      "issues": []
+    }
+  },
+  {
+    "id": "fraction7",
+    "operation": "validate",
+    "element": {
+      "id": "test.time",
+      "type": "TIME"
+    },
+    "value": "12:00:00.1234567",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "12:00:00.1234567",
+      "issues": []
+    }
+  },
+  {
+    "id": "offset-day",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T23:00:00-02:00",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2024-01-02T01:00:00.0000000Z",
+      "issues": []
+    }
+  },
+  {
+    "id": "nil",
+    "operation": "validate",
+    "element": {
+      "id": "test.uuid",
+      "type": "UUID"
+    },
+    "value": "00000000-0000-0000-0000-000000000000",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "00000000-0000-0000-0000-000000000000",
+      "issues": []
+    }
+  },
+  {
+    "id": "binary-empty",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY"
+    },
+    "value": "",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "",
+      "issues": []
+    }
+  },
+  {
+    "id": "emoji",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 1
+      }
+    },
+    "value": "\ud83d\ude00",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "\ud83d\ude00",
+      "issues": []
+    }
+  },
+  {
+    "id": "decomposed",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "minimumLength": 2,
+        "maximumLength": 2
+      }
+    },
+    "value": "e\u0301",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "e\u0301",
+      "issues": []
+    }
+  },
+  {
+    "id": "space",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "minimumLength": 3,
+        "maximumLength": 3
+      }
+    },
+    "value": " a ",
+    "expected": {
+      "valid": true,
+      "normalizedValue": " a ",
+      "issues": []
+    }
+  },
+  {
+    "id": "short",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 2
+      }
+    },
+    "value": "",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.string",
+          "constraint": "minimumLength"
+        }
+      ]
+    }
+  },
+  {
+    "id": "long",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 2
+      }
+    },
+    "value": "abc",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.string",
+          "constraint": "maximumLength"
+        }
+      ]
+    }
+  },
+  {
+    "id": "pattern-pass",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "pattern": "^[A-Z0-9-]+$"
+      }
+    },
+    "value": "AB-12",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "AB-12",
+      "issues": []
+    }
+  },
+  {
+    "id": "pattern-full",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "pattern": "[A-Z]+"
+      }
+    },
+    "value": "aAB",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.string",
+          "constraint": "pattern"
+        }
+      ]
+    }
+  },
+  {
+    "id": "pattern-limit",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "pattern": "a*"
+      }
+    },
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED",
+          "elementId": "test.string"
+        }
+      ]
+    }
+  },
+  {
+    "id": "numeric-limit",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    "value": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED",
+          "elementId": "test.decimal"
+        }
+      ]
+    }
+  },
+  {
+    "id": "enum-case",
+    "operation": "validate",
+    "element": {
+      "id": "test.enum",
+      "type": "ENUM",
+      "enumValues": [
+        "first",
+        "Second"
+      ]
+    },
+    "value": "First",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.enum",
+          "constraint": "enumValues"
+        }
+      ]
+    }
+  },
+  {
+    "id": "binary-bytes",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY",
+      "constraints": {
+        "minimumLength": 1,
+        "maximumLength": 1
+      }
+    },
+    "value": "Zg==",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "Zg==",
+      "issues": []
+    }
+  },
+  {
+    "id": "ordered-constraints",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "minimum": "2",
+        "multipleOf": "0.3",
+        "precision": 2,
+        "scale": 2
+      }
+    },
+    "value": "1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "minimum"
+        },
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "multipleOf"
+        },
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "precision"
+        }
+      ]
+    }
+  },
+  {
+    "id": "decimal-inclusive-minimum",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "minimum": "0.1"
+      }
+    },
+    "value": "0.1000",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0.1",
+      "issues": []
+    }
+  },
+  {
+    "id": "decimal-exclusive-minimum",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "minimum": "0.1",
+        "exclusiveMinimum": true
+      }
+    },
+    "value": "0.1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "minimum"
+        }
+      ]
+    }
+  },
+  {
+    "id": "decimal-inclusive-maximum",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "maximum": "0.1"
+      }
+    },
+    "value": "0.1000",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "0.1",
+      "issues": []
+    }
+  },
+  {
+    "id": "decimal-exclusive-maximum",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "maximum": "0.1",
+        "exclusiveMaximum": true
+      }
+    },
+    "value": "0.1",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.decimal",
+          "constraint": "maximum"
+        }
+      ]
+    }
+  },
+  {
+    "id": "false-exclusivity",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "exclusiveMinimum": false,
+        "exclusiveMaximum": false
+      }
+    },
+    "value": "1",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "1",
+      "issues": []
+    }
+  },
+  {
+    "id": "exact-no-float",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL",
+      "constraints": {
+        "minimum": "9007199254740993.1",
+        "maximum": "9007199254740993.1"
+      }
+    },
+    "value": "9007199254740993.1",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "9007199254740993.1",
+      "issues": []
+    }
+  },
+  {
+    "id": "decimal-input-ceiling",
+    "operation": "validate",
+    "element": {
+      "id": "test.decimal",
+      "type": "DECIMAL"
+    },
+    "value": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+      "issues": []
+    }
+  },
+  {
+    "id": "pattern-value-ceiling",
+    "operation": "validate",
+    "element": {
+      "id": "test.string",
+      "type": "STRING",
+      "constraints": {
+        "pattern": "A*"
+      }
+    },
+    "value": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+      "issues": []
+    }
+  },
+  {
+    "id": "positive-offset-day",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T00:30:00+01:00",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2023-12-31T23:30:00.0000000Z",
+      "issues": []
+    }
+  },
+  {
+    "id": "datetime-seven",
+    "operation": "validate",
+    "element": {
+      "id": "test.datetime",
+      "type": "DATETIME"
+    },
+    "value": "2024-01-01T00:00:00.1234567Z",
+    "expected": {
+      "valid": true,
+      "normalizedValue": "2024-01-01T00:00:00.1234567Z",
+      "issues": []
+    }
+  },
+  {
+    "id": "binary-minimum",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY",
+      "constraints": {
+        "minimumLength": 1
+      }
+    },
+    "value": "",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.binary",
+          "constraint": "minimumLength"
+        }
+      ]
+    }
+  },
+  {
+    "id": "binary-maximum",
+    "operation": "validate",
+    "element": {
+      "id": "test.binary",
+      "type": "BINARY",
+      "constraints": {
+        "maximumLength": 2
+      }
+    },
+    "value": "Zm9v",
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_VALUE_CONSTRAINT",
+          "elementId": "test.binary",
+          "constraint": "maximumLength"
+        }
+      ]
+    }
+  }
+]

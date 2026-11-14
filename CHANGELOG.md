@@ -6,6 +6,17 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 
 ## Unreleased
 
+### ARP-DICT-001 Phase A
+
+- Added versioned Draft 2020-12 dictionary schema, portable positive/negative
+  source, definition, value and catalog fixtures covering all 17 scalar types.
+- Added independent offline structural/integrity checks and checker regression tests.
+- Prepared prospective initial MINOR inventory; documented unresolved contractual
+  boundaries and semantic checks deferred to independently tested runtimes.
+- No published ARP behavior is changed; no automatic Erbas migration or stack
+  conformance is claimed.
+
+
 ### Architecture
 
 - Documented the product mission, optional capabilities, business-domain ownership, infrastructure-independent domain boundary, and adapter responsibilities (**ARP-ARCH-001**).

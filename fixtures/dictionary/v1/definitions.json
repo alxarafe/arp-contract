@@ -1,0 +1,837 @@
+[
+  {
+    "id": "no-dot",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "single",
+          "type": "STRING"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "digit",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "1a.b",
+          "type": "STRING"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "empty-segment",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "a..b",
+          "type": "STRING"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "id-long",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "a.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "type": "STRING"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-type",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "OTHER"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "required": true
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "null-label",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "label": null
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "inapplicable",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "precision": 3
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "negative-length",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "minimumLength": -1
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wrong-kind",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "minimumLength": "1"
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "length-inverted",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "minimumLength": 2,
+            "maximumLength": 1
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "shorthand",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "\\d+"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "groups",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "(a)"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "lookaround",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "(?=a)a"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "non-ascii",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "\u00e9"
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "pattern-long",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_LIMIT_EXCEEDED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unpaired",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "precision": 5
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "scale-high",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "precision": 2,
+            "scale": 3
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "bounds-inverted",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "minimum": "2",
+            "maximum": "1"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "exclusive-equal",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "minimum": "1",
+            "maximum": "1",
+            "exclusiveMinimum": true
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "exclusive-missing",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "exclusiveMaximum": true
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "zero-divisor",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "multipleOf": "0"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "number-bound",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "DECIMAL",
+          "constraints": {
+            "minimum": 1
+          }
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "enum-empty",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "ENUM",
+          "enumValues": []
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "enum-duplicate",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "ENUM",
+          "enumValues": [
+            "a",
+            "a"
+          ]
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "enum-missing",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "ENUM"
+        }
+      ]
+    },
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "enum-incompatible",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "ENUM",
+          "enumValues": [
+            "a"
+          ],
+          "constraints": {
+            "minimumLength": 2
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alternation",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "a|b"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "wildcard",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "."
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "negative-class",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "[^a]"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quantifier-limit",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "a{1025}"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quantifier-order",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "a{2,1}"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "quantifier-leading-zero",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "a{01}"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "nested-quantifier",
+    "operation": "buildCatalog",
+    "document": {
+      "apiVersion": "arp.dictionary/v1",
+      "elements": [
+        {
+          "id": "test.x",
+          "type": "STRING",
+          "constraints": {
+            "pattern": "a++"
+          }
+        }
+      ]
+    },
+    "schemaValid": true,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_ELEMENT_INVALID"
+        }
+      ]
+    }
+  }
+]

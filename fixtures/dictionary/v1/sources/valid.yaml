@@ -1,0 +1,4 @@
+apiVersion: arp.dictionary/v1
+elements:
+  - id: test.sample
+    type: STRING

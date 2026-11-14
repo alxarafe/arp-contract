@@ -1,0 +1,218 @@
+[
+  {
+    "id": "valid.yaml",
+    "path": "fixtures/dictionary/v1/sources/valid.yaml",
+    "encoding": "yaml",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    }
+  },
+  {
+    "id": "valid.json",
+    "path": "fixtures/dictionary/v1/sources/valid.json",
+    "encoding": "json",
+    "schemaValid": true,
+    "expected": {
+      "valid": true,
+      "issues": []
+    }
+  },
+  {
+    "id": "duplicate.json",
+    "path": "fixtures/dictionary/v1/sources/duplicate.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "nested-duplicate.json",
+    "path": "fixtures/dictionary/v1/sources/nested-duplicate.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "missing-format.json",
+    "path": "fixtures/dictionary/v1/sources/missing-format.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_FORMAT_UNSUPPORTED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-format.json",
+    "path": "fixtures/dictionary/v1/sources/unknown-format.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_FORMAT_UNSUPPORTED"
+        }
+      ]
+    }
+  },
+  {
+    "id": "root.json",
+    "path": "fixtures/dictionary/v1/sources/root.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "unknown-key.json",
+    "path": "fixtures/dictionary/v1/sources/unknown-key.json",
+    "encoding": "json",
+    "schemaValid": false,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "malformed.json",
+    "path": "fixtures/dictionary/v1/sources/malformed.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "alias.yaml",
+    "path": "fixtures/dictionary/v1/sources/alias.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "tag.yaml",
+    "path": "fixtures/dictionary/v1/sources/tag.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "multi.yaml",
+    "path": "fixtures/dictionary/v1/sources/multi.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "directive.yaml",
+    "path": "fixtures/dictionary/v1/sources/directive.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "merge.yaml",
+    "path": "fixtures/dictionary/v1/sources/merge.yaml",
+    "encoding": "yaml",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "invalid-utf8.json",
+    "path": "fixtures/dictionary/v1/sources/invalid-utf8.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  },
+  {
+    "id": "surrogate.json",
+    "path": "fixtures/dictionary/v1/sources/surrogate.json",
+    "encoding": "json",
+    "schemaValid": null,
+    "expected": {
+      "valid": false,
+      "issues": [
+        {
+          "code": "DICTIONARY_DOCUMENT_INVALID"
+        }
+      ]
+    }
+  }
+]

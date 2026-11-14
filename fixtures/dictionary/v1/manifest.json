@@ -1,0 +1,15 @@
+{
+  "feature": "ARP-DICT-001",
+  "apiVersion": "arp.dictionary/v1",
+  "status": "unreleased-review-candidate",
+  "schema": "schemas/dictionary/v1/dictionary.schema.json",
+  "sets": {
+    "catalog": "catalog.json",
+    "sources": "sources.json",
+    "definitions": "definitions.json",
+    "values": "values.json",
+    "catalogs": "catalogs.json"
+  },
+  "comparison": "JSON model equality; issue array order is significant; diagnostic messages excluded",
+  "unresolvedContract": ["intrinsic-range-constraint-name", "resolved-descriptor-shape"]
+}

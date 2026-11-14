@@ -40,24 +40,13 @@ Once a feature is approved, its specification, schema(s), and conformance fixtur
 - Actual conformance requires running the released fixtures in the relevant implementation and recording evidence. Proposed, partial, or untested support is not conformance.
 - Pre-1.0 development favors deliberate evolution. Breaking changes remain explicit and versioned, rather than hidden behind silent schema or behavior edits.
 
-## Repository layout
+## Contract checks and candidate assets
 
-```text
-arp-contract/
-├── README.md
-├── LICENSE
-├── .gitignore
-├── CHANGELOG.md
-├── docs/
-│   ├── architecture.md
-│   ├── versioning.md
-│   ├── compatibility.md
-│   └── release-process.md
-└── releases/
-    └── README.md
-```
-
-The `schemas/`, `fixtures/`, and `docs/features/` directories are intentionally **not created** until a real feature needs them. They will be introduced with ARP-DICT-001, together with clearly versioned format rules.
+ARP-DICT-001 Phase A provides `schemas/dictionary/v1/`, portable fixtures in
+`fixtures/dictionary/v1/`, and development-only checks in `tools/` and `tests/`.
+See [execution, coverage and unresolved contract questions](docs/dictionary-checks.md)
+and [recorded results](docs/dictionary-check-results.md). These assets remain
+unreleased; Java/.NET/PHP semantic conformance has not been evaluated.
 
 ## Previously published Erbas contracts
 
