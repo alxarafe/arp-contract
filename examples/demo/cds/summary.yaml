@@ -1,0 +1,6 @@
+apiVersion: arp.projection/v1
+id: demo.items.summary
+source:
+  projection: demo.items.public
+fields: [id, code]
+operations: [LIST, GET]

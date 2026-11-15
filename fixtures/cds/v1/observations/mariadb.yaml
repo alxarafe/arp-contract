@@ -1,0 +1,28 @@
+# Fixture only. Runtime must generate physical descriptors from its DB.
+apiVersion: arp.physical/v1
+id: demo.items
+kind: table
+source:
+  provider: primary
+  dialect: mariadb
+  schema: demo
+  name: items
+columns:
+  - name: id
+    nativeType: int
+    scalarType: INT32
+    nullable: false
+    primaryKey: true
+    minimum: '-2147483648'
+    maximum: '2147483647'
+  - name: code
+    nativeType: varchar(12)
+    scalarType: STRING
+    nullable: false
+    maximumLength: 12
+  - name: rating
+    nativeType: tinyint signed
+    scalarType: INT8
+    nullable: false
+    minimum: '-128'
+    maximum: '127'
