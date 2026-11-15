@@ -53,3 +53,29 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 
 Estas comprobaciones siguen siendo **estáticas y deliberadamente limitadas**;
 la validación real de tipos nativos y de adaptadores no está implementada aquí.
+
+
+## Ampliación: compatibilidad y actualización parcial de datos históricos
+
+- `docs/features/arp-cds-001-compatibility-and-historical-data.md`: frontera
+  de adaptadores físicos, representabilidad lógica, estado independiente de auditoría,
+  PATCH de campos incluidos y controles de formulario ante datos históricos.
+- `fixtures/cds/v1/compatibility.json`: vectores para rangos enteros exactos,
+  tipos lógicos/físicos diferentes, restricciones intrínsecas/contextuales y
+  capacidades no verificadas.
+- `fixtures/cds/v1/historical-updates.json`: vectores de CREATE, UPDATE parcial,
+  edición de cliente y auditorías sintéticas.
+- `tools/check_cds_compatibility_draft.py` y
+  `tests/test_cds_compatibility_draft.py`: oráculo **limitado a rangos enteros**
+  e integridad de los casos compartidos; no runtime ni validación de BD real.
+
+Ejecución adicional:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 tools/check_cds_compatibility_draft.py
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+```
+
+Estos vectores propuestos no constituyen aún una adopción contractual por Java,
+.NET o PHP; la formalización del protocolo de ejecución, restricciones no
+enteras, concurrencia y metadatos de UI permanece pendiente.

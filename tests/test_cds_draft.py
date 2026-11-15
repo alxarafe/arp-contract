@@ -64,6 +64,22 @@ class CdsDraftTests(unittest.TestCase):
                             self.docs['public'],self.docs['summary'])
         self.assertEqual(effective['capacityStatuses']['rating'],'not-verified')
 
+    def test_dictionary_int16_narrowed_to_int8_storage_is_compatible(self):
+        logical=deepcopy(self.docs['logical'])
+        dictionary=deepcopy(self.docs['dictionary'])
+        dictionary['elements'].append({'id':'demo.rating','type':'INT16'})
+        logical['fields']['rating']['dictionary']='demo.rating'
+        resolved=c.resolve(self.mdb,logical,dictionary,self.docs['public'],self.docs['summary'])
+        self.assertEqual(resolved['capacityStatuses']['rating'],'compatible')
+
+    def test_dictionary_int16_unrestricted_cannot_fit_int8_storage(self):
+        logical=deepcopy(self.docs['logical'])
+        dictionary=deepcopy(self.docs['dictionary'])
+        dictionary['elements'].append({'id':'demo.rating','type':'INT16'})
+        logical['fields']['rating']={'dictionary':'demo.rating'}
+        with self.assertRaisesRegex(c.DraftInvalid,'physical-incompatible'):
+            c.resolve(self.mdb,logical,dictionary,self.docs['public'],self.docs['summary'])
+
     def test_child_cannot_expand_operations(self):
         grandchild={'apiVersion':'arp.projection/v1','id':'demo.items.grandchild',
                     'source':{'projection':'demo.items.summary'},'fields':['id'],

@@ -1,0 +1,476 @@
+{
+  "feature": "ARP-CDS-001",
+  "status": "unreleased-draft",
+  "kind": "historical-edit-policy",
+  "field": "rating",
+  "allowedInclusive": [
+    "0",
+    "10"
+  ],
+  "nullable": false,
+  "serverCases": [
+    {
+      "id": "historic-patch-other-field",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {
+        "code": "B"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "B",
+          "rating": "11"
+        }
+      }
+    },
+    {
+      "id": "historic-empty-patch",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {},
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "rating": "11"
+        }
+      }
+    },
+    {
+      "id": "historic-correct-rating",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {
+        "rating": "8"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "rating": "8"
+        }
+      }
+    },
+    {
+      "id": "historic-submit-original-invalid",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {
+        "rating": "11"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    },
+    {
+      "id": "historic-submit-worse-invalid",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {
+        "rating": "12"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    },
+    {
+      "id": "valid-to-invalid",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "8"
+      },
+      "input": {
+        "rating": "11"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    },
+    {
+      "id": "historic-send-null",
+      "operation": "UPDATE",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "input": {
+        "rating": null
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    },
+    {
+      "id": "new-valid",
+      "operation": "CREATE",
+      "input": {
+        "code": "A",
+        "rating": "8"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "rating": "8"
+        }
+      }
+    },
+    {
+      "id": "new-invalid",
+      "operation": "CREATE",
+      "input": {
+        "code": "A",
+        "rating": "11"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    },
+    {
+      "id": "new-low-invalid",
+      "operation": "CREATE",
+      "input": {
+        "code": "A",
+        "rating": "-1"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "field": "rating"
+      }
+    }
+  ],
+  "clientCases": [
+    {
+      "id": "historic-display-and-edit-other-field",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "attempts": [
+        {
+          "field": "code",
+          "value": "B",
+          "accepted": true
+        }
+      ],
+      "expected": {
+        "originalWarning": true,
+        "finalForm": {
+          "code": "B",
+          "rating": "11"
+        },
+        "patch": {
+          "code": "B"
+        }
+      }
+    },
+    {
+      "id": "historic-correct",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        }
+      ],
+      "expected": {
+        "originalWarning": true,
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "patch": {
+          "rating": "8"
+        }
+      }
+    },
+    {
+      "id": "historic-correct-then-forbidden-return",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        },
+        {
+          "field": "rating",
+          "value": "11",
+          "accepted": false
+        }
+      ],
+      "expected": {
+        "originalWarning": true,
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "patch": {
+          "rating": "8"
+        }
+      }
+    },
+    {
+      "id": "historic-edit-try-twelve",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "12",
+          "accepted": false
+        }
+      ],
+      "expected": {
+        "originalWarning": true,
+        "finalForm": {
+          "code": "A",
+          "rating": "11"
+        },
+        "patch": {}
+      }
+    },
+    {
+      "id": "valid-edit-try-eleven",
+      "original": {
+        "code": "A",
+        "rating": "8"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "11",
+          "accepted": false
+        }
+      ],
+      "expected": {
+        "originalWarning": false,
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "patch": {}
+      }
+    },
+    {
+      "id": "historic-cancel-full-edit",
+      "original": {
+        "code": "A",
+        "rating": "11"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        },
+        {
+          "field": "code",
+          "value": "B",
+          "accepted": true
+        }
+      ],
+      "cancelWholeEdit": true,
+      "expected": {
+        "originalWarning": true,
+        "finalForm": {
+          "code": "A",
+          "rating": "11"
+        },
+        "patch": {}
+      }
+    },
+    {
+      "id": "valid-unchanged-value-suppressed",
+      "original": {
+        "code": "A",
+        "rating": "8"
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "9",
+          "accepted": true
+        },
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        }
+      ],
+      "expected": {
+        "originalWarning": false,
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "patch": {}
+      }
+    }
+  ],
+  "auditCases": [
+    {
+      "id": "full-audit-finds-legacy-eleven",
+      "rows": [
+        {
+          "rating": "8"
+        },
+        {
+          "rating": "11"
+        }
+      ],
+      "complete": true,
+      "expected": {
+        "status": "nonconforming",
+        "invalidCount": 1
+      }
+    },
+    {
+      "id": "partial-audit-finds-legacy-eleven",
+      "rows": [
+        {
+          "rating": "11"
+        }
+      ],
+      "complete": false,
+      "expected": {
+        "status": "nonconforming",
+        "invalidCount": 1
+      }
+    },
+    {
+      "id": "partial-audit-no-errors",
+      "rows": [
+        {
+          "rating": "8"
+        }
+      ],
+      "complete": false,
+      "expected": {
+        "status": "not-verified",
+        "invalidCount": 0
+      }
+    },
+    {
+      "id": "complete-audit-no-errors",
+      "rows": [
+        {
+          "rating": "8"
+        },
+        {
+          "rating": "0"
+        },
+        {
+          "rating": "10"
+        }
+      ],
+      "complete": true,
+      "expected": {
+        "status": "conformant",
+        "invalidCount": 0
+      }
+    }
+  ],
+  "notes": "Server cases isolate field-range validation; other application policies and concurrency can still reject a write. Client cases model accepted final selection and changed-field payload, not HTML keystroke transitions. Audit rows are synthetic snapshots.",
+  "createClientCases": [
+    {
+      "id": "create-ui-forbids-eleven",
+      "initialForm": {
+        "code": "A",
+        "rating": null
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "11",
+          "accepted": false
+        }
+      ],
+      "expected": {
+        "finalForm": {
+          "code": "A",
+          "rating": null
+        },
+        "canSubmit": false
+      }
+    },
+    {
+      "id": "create-ui-selects-eight",
+      "initialForm": {
+        "code": "A",
+        "rating": null
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        }
+      ],
+      "expected": {
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "canSubmit": true
+      }
+    },
+    {
+      "id": "create-ui-invalid-after-valid-does-not-overwrite",
+      "initialForm": {
+        "code": "A",
+        "rating": null
+      },
+      "attempts": [
+        {
+          "field": "rating",
+          "value": "8",
+          "accepted": true
+        },
+        {
+          "field": "rating",
+          "value": "12",
+          "accepted": false
+        }
+      ],
+      "expected": {
+        "finalForm": {
+          "code": "A",
+          "rating": "8"
+        },
+        "canSubmit": true
+      }
+    }
+  ]
+}

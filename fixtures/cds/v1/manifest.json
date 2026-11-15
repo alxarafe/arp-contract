@@ -175,5 +175,7 @@
       }
     }
   ],
-  "executionNote": "These scenarios are static draft integrity checks; no native runtime conformance or DB access is asserted. The unknown-capacity case is a synthetic opaque-adapter observation, NOT a valid MariaDB column type."
+  "executionNote": "These scenarios are static draft integrity checks; no native runtime conformance or DB access is asserted. The unknown-capacity case is a synthetic opaque-adapter observation, NOT a valid MariaDB column type.",
+  "compatibilityFixtures": "fixtures/cds/v1/compatibility.json",
+  "historicalUpdateFixtures": "fixtures/cds/v1/historical-updates.json"
 }

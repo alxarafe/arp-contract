@@ -1,0 +1,227 @@
+{
+  "feature": "ARP-CDS-001",
+  "status": "unreleased-draft",
+  "kind": "integer-representability-subset",
+  "assertions": [
+    {
+      "id": "int16-narrowed-fits-mariadb",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-unrestricted-exceeds-mariadb",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {},
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "incompatible"
+    },
+    {
+      "id": "int16-unrestricted-fits-postgresql",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {},
+      "physical": {
+        "nativeType": "smallint",
+        "scalarType": "INT16"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-narrowed-fits-postgresql",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "smallint",
+        "scalarType": "INT16"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-lower-too-small-for-mariadb",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "-129",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "incompatible"
+    },
+    {
+      "id": "int16-upper-too-big-for-mariadb",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "128"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "incompatible"
+    },
+    {
+      "id": "int16-negative-window-fits-mariadb",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "-10",
+        "maximum": "0"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-opaque-physical",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "opaque_int"
+      },
+      "expected": "not-verified"
+    },
+    {
+      "id": "int16-contradictory-range",
+      "dictionaryType": "INT16",
+      "contextualConstraints": {
+        "minimum": "10",
+        "maximum": "0"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "definition-invalid"
+    },
+    {
+      "id": "int8-context-expands-intrinsic",
+      "dictionaryType": "INT8",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "500"
+      },
+      "physical": {
+        "nativeType": "smallint",
+        "scalarType": "INT16"
+      },
+      "expected": "definition-invalid"
+    },
+    {
+      "id": "uint8-narrowed-fits-signed-int8",
+      "dictionaryType": "UINT8",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "uint8-unrestricted-exceeds-signed-int8",
+      "dictionaryType": "UINT8",
+      "contextualConstraints": {},
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "incompatible"
+    },
+    {
+      "id": "decimal-capacity-not-yet-covered",
+      "dictionaryType": "DECIMAL",
+      "contextualConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "not-verified"
+    },
+    {
+      "id": "int16-intrinsic-narrowing-fits-mariadb",
+      "dictionaryType": "INT16",
+      "intrinsicConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "contextualConstraints": {},
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-context-narrower-than-intrinsic",
+      "dictionaryType": "INT16",
+      "intrinsicConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "contextualConstraints": {
+        "minimum": "1",
+        "maximum": "9"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "compatible"
+    },
+    {
+      "id": "int16-context-must-not-loosen-intrinsic",
+      "dictionaryType": "INT16",
+      "intrinsicConstraints": {
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "contextualConstraints": {
+        "maximum": "12"
+      },
+      "physical": {
+        "nativeType": "tinyint signed",
+        "scalarType": "INT8"
+      },
+      "expected": "definition-invalid"
+    },
+    {
+      "id": "int8-invalid-intrinsic-bound",
+      "dictionaryType": "INT8",
+      "intrinsicConstraints": {
+        "minimum": "-500"
+      },
+      "contextualConstraints": {},
+      "physical": {
+        "nativeType": "smallint",
+        "scalarType": "INT16"
+      },
+      "expected": "definition-invalid"
+    }
+  ],
+  "note": "scalarType is normalized only when verified by the host adapter; nativeType alone never establishes compatibility. Cases are small integer-domain examples; not a complete SQL compatibility contract."
+}

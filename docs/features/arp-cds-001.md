@@ -78,3 +78,20 @@ Casos contractuales necesarios para la siguiente fase:
 - Invalidación atómica entre procesos y tenants, ciclo de vida de módulos.
 
 **Orden cerrado (D11):** contrato y fixtures primero; implementaciones independientes después; demos por stack y finalmente Angular. **No publicar versión 0.1 ni tags parciales.** El objetivo global incluye también comportamientos, reglas, servicios y extensibilidad; este recorrido es solo el primer tramo.
+
+
+## 9. Compatibilidad físico-lógica y valores históricos (ampliación propuesta)
+
+La propuesta y sus vectores compartidos se documentan en
+[`arp-cds-001-compatibility-and-historical-data.md`](arp-cds-001-compatibility-and-historical-data.md).
+La compatibilidad exige **representabilidad completa del dominio lógico efectivo**
+por el tipo físico verificado, no igualdad nominal de tipos. La conformidad de
+los datos preexistentes se verifica por separado y no exige un escaneo al inicio.
+
+En las actualizaciones parciales se validan los **campos incluidos**; los ausentes
+no se reescriben ni se invalidan por datos históricos. El cliente conserva la
+visualización de un valor histórico fuera de rango, pero, una vez que se edita
+ese campo, solo admite valores nuevos válidos y no permite volver a elegir el
+valor histórico inválido. Alta, cambios y backend conservan las restricciones.
+Esta ampliación también sigue siendo **borrador no normativo**, sin evidencia de
+conformidad de runtimes ni autorización para publicar una versión.

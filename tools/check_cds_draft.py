@@ -106,7 +106,26 @@ def resolve(model, logical, dictionary, public, summary):
         if 'dictionary' in overlay:
             expect(overlay['dictionary'] in elements,'dictionary ref unresolved')
             physical=next(c for c in model['columns'] if c['name']==field)
-            expect(elements[overlay['dictionary']]['type']==physical.get('scalarType'), 'dictionary type incompatible')
+            element = elements[overlay['dictionary']]
+            # A logical integer may be safely narrower than a differently sized
+            # verified physical integer. Exact name equality is not necessary.
+            if element['type'] in INTEGER_RANGES:
+                from check_cds_compatibility_draft import structural_status
+                status = structural_status({
+                    'dictionaryType':element['type'],
+                    'intrinsicConstraints':element.get('constraints', {}),
+                    'contextualConstraints':overlay.get('constraints', {}),
+                    'physical':physical,
+                })
+                expect(status != 'definition-invalid',
+                       f'definition-invalid: {field} integer constraints')
+                expect(status != 'incompatible',
+                       f'physical-incompatible: {field} dictionary range')
+                capacity_statuses[field] = status
+            elif element['type'] != physical.get('scalarType'):
+                # Other physical mappings need dedicated verification; a name
+                # mismatch alone does not prove incompatibility or permission.
+                capacity_statuses[field] = 'not-verified'
         c=overlay.get('constraints',{})
         if 'minimum' in c and 'maximum' in c:
             expect(Decimal(c['minimum'])<=Decimal(c['maximum']), 'ill-formed interval')
