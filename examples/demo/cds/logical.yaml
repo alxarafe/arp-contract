@@ -1,0 +1,12 @@
+apiVersion: arp.logical/v1
+id: demo.items
+physical: demo.items
+fields:
+  code:
+    dictionary: demo.itemCode
+    label: Code
+  rating:
+    constraints:
+      minimum: '0'
+      maximum: '10'
+    label: Rating

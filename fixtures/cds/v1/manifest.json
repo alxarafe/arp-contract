@@ -1,0 +1,179 @@
+{
+  "feature": "ARP-CDS-001",
+  "status": "unreleased-draft",
+  "contractRelease": null,
+  "formats": {
+    "physical": "arp.physical/v1",
+    "logical": "arp.logical/v1",
+    "projection": "arp.projection/v1"
+  },
+  "schemas": {
+    "physical": "schemas/cds/v1/physical.schema.json",
+    "logical": "schemas/cds/v1/logical.schema.json",
+    "projection": "schemas/cds/v1/projection.schema.json"
+  },
+  "examples": {
+    "dictionary": "examples/demo/cds/dictionary.yaml",
+    "logical": "examples/demo/cds/logical.yaml",
+    "public": "examples/demo/cds/public.yaml",
+    "summary": "examples/demo/cds/summary.yaml"
+  },
+  "physicalObservations": {
+    "postgresql": "fixtures/cds/v1/observations/postgresql.yaml",
+    "mariadb": "fixtures/cds/v1/observations/mariadb.yaml"
+  },
+  "scenarios": [
+    {
+      "id": "postgresql-effective",
+      "engine": "postgresql",
+      "expected": {
+        "logicalFields": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "publicFields": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "summaryFields": [
+          "id",
+          "code"
+        ],
+        "ratingType": "INT16"
+      }
+    },
+    {
+      "id": "mariadb-effective",
+      "engine": "mariadb",
+      "expected": {
+        "logicalFields": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "publicFields": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "summaryFields": [
+          "id",
+          "code"
+        ],
+        "ratingType": "INT8"
+      }
+    },
+    {
+      "id": "new-column-not-public",
+      "engine": "mariadb",
+      "mutation": {
+        "appendPhysicalColumn": {
+          "name": "internal_note",
+          "nativeType": "text",
+          "scalarType": "TEXT",
+          "nullable": true
+        }
+      },
+      "expected": {
+        "logicalFields": [
+          "id",
+          "code",
+          "rating",
+          "internal_note"
+        ],
+        "publicFields": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "summaryFields": [
+          "id",
+          "code"
+        ]
+      }
+    },
+    {
+      "id": "derived-cannot-expand-fields",
+      "mutation": {
+        "appendPhysicalColumn": {
+          "name": "internal_note",
+          "nativeType": "text",
+          "scalarType": "TEXT",
+          "nullable": true
+        },
+        "summaryFields": [
+          "id",
+          "internal_note"
+        ]
+      },
+      "expectedErrorFamily": "definition-invalid",
+      "engine": "mariadb"
+    },
+    {
+      "id": "derived-cannot-expand-operations",
+      "mutation": {
+        "grandchildOperations": [
+          "LIST",
+          "GET",
+          "DELETE"
+        ]
+      },
+      "expectedErrorFamily": "definition-invalid"
+    },
+    {
+      "id": "unknown-operation-identifier",
+      "mutation": {
+        "summaryOperations": [
+          "LIST",
+          "GET",
+          "EXECUTE"
+        ]
+      },
+      "expectedErrorFamily": "definition-invalid"
+    },
+    {
+      "id": "physical-capacity-conflict",
+      "engine": "mariadb",
+      "mutation": {
+        "ratingMaximum": "500"
+      },
+      "expectedErrorFamily": "physical-incompatible"
+    },
+    {
+      "id": "rating-out-of-logical-range",
+      "engine": "mariadb",
+      "input": {
+        "rating": "11"
+      },
+      "expectedErrorFamily": "invalid-data"
+    },
+    {
+      "id": "module-disabled",
+      "mutation": {
+        "moduleEnabled": false
+      },
+      "expected": {
+        "serviceExposed": false,
+        "userFilesPreserved": true
+      }
+    },
+    {
+      "id": "unknown-physical-capacity",
+      "engine": "mariadb",
+      "mutation": {
+        "setPhysicalDialect": "opaque-test-adapter",
+        "replacePhysicalColumn": {
+          "name": "rating",
+          "nativeType": "vendor_opaque_rating",
+          "nullable": false
+        }
+      },
+      "expected": {
+        "capacityStatus": "not-verified"
+      }
+    }
+  ],
+  "executionNote": "These scenarios are static draft integrity checks; no native runtime conformance or DB access is asserted. The unknown-capacity case is a synthetic opaque-adapter observation, NOT a valid MariaDB column type."
+}

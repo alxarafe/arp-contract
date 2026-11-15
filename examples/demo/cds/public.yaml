@@ -1,0 +1,6 @@
+apiVersion: arp.projection/v1
+id: demo.items.public
+source:
+  entity: demo.items
+fields: [id, code, rating]
+operations: [LIST, GET, CREATE, UPDATE, DELETE]

@@ -1,0 +1,8 @@
+apiVersion: arp.dictionary/v1
+elements:
+  - id: demo.itemCode
+    type: STRING
+    label: Item code
+    constraints:
+      minimumLength: 1
+      maximumLength: 12
