@@ -6,6 +6,13 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 
 ## Unreleased
 
+No changes after the first-release candidate have been recorded.
+
+## v0.1.0 — first functional contract (release inventory prepared)
+
+This entry describes the intended content of `v0.1.0`. Publication is
+established by the annotated Git tag and GitHub Release, not this heading.
+
 ### ARP-DICT-001 portability consolidation 002
 
 - Defined the mandatory bounded YAML subset: explicit scalar resolution, plain
@@ -51,4 +58,4 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 - Defined independent contract-release, document-format, implementation, and module version dimensions.
 - Defined pre-1.0 and post-1.0 change classifications, release immutability, and conformance evidence requirements.
 
-**No `arp-contract` version has been published by these documentation changes.** In particular, `v0.1.0` is reserved as a prospective first feature release, not an existing tag.
+These entries specify the first functional contract release content. The annotated `v0.1.0` tag and matching GitHub Release must be verified before reporting publication.

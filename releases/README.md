@@ -1,6 +1,6 @@
 # Published release inventories
 
-Each published `arp-contract` release has a corresponding document `vX.Y.Z.md` here, matched to an **annotated, immutable Git tag**. These documents are release inventories, not implementation conformance certificates. No release has yet been published from this repository.
+Each published `arp-contract` release has a corresponding document `vX.Y.Z.md` here, matched to an **annotated, immutable Git tag**. These documents are release inventories, not implementation conformance certificates. A prepared inventory is not evidence of publication; check the immutable annotated tag and GitHub Release record.
 
 ## Required contents of each release inventory
 
@@ -34,6 +34,6 @@ Release date: <YYYY-MM-DD>
 - No automatic support claim; link to compatibility record
 ```
 
-Do not commit placeholder files named for prospective releases. In particular, **`v0.1.0` does not exist yet**; it will only be published after approval of the ARP-DICT-001 MVP and its schemas/fixtures.
+An inventory may be prepared and reviewed before the first publication; it becomes part of the released snapshot only with its annotated tag and GitHub Release. Once published, preserve the historical tag and inventory without rewriting their contents.
 
 See [`../docs/release-process.md`](../docs/release-process.md) and [`../docs/versioning.md`](../docs/versioning.md).
