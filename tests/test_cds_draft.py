@@ -23,9 +23,47 @@ class CdsDraftTests(unittest.TestCase):
                 c.validate_document(self.schemas['physical'],model)
                 self.assertEqual(c.resolve(model,self.docs['logical'],self.docs['dictionary'],self.docs['public'],self.docs['summary'])['publicFields'],['id','code','rating'])
     def test_child_cannot_restore_parent_exclusion(self):
-        altered=deepcopy(self.docs['summary']);altered['fields']=['id','internal_note']
-        with self.assertRaisesRegex(c.DraftInvalid,'field expansion'):
-            c.resolve(self.mdb,self.docs['logical'],self.docs['dictionary'],self.docs['public'],altered)
+        case=next(s for s in self.manifest['scenarios']
+                  if s['id']=='derived-cannot-expand-fields')
+        physical=deepcopy(self.mdb)
+        physical['columns'].append(case['mutation']['appendPhysicalColumn'])
+        c.validate_document(self.schemas['physical'],physical)
+        effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
+                            self.docs['public'],self.docs['summary'])
+        self.assertIn('internal_note',effective['logicalFields'])
+        self.assertNotIn('internal_note',effective['publicFields'])
+        altered=deepcopy(self.docs['summary'])
+        altered['fields']=case['mutation']['summaryFields']
+        with self.assertRaisesRegex(c.DraftInvalid,'definition-invalid: field expansion'):
+            c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
+                      self.docs['public'],altered)
+    def test_known_integer_capacity_without_explicit_maximum(self):
+        physical=deepcopy(self.mdb)
+        rating=next(x for x in physical['columns'] if x['name']=='rating')
+        rating.pop('maximum')
+        self.assertEqual(c.integer_capacity_status(rating,{'minimum':'0','maximum':'10'}),
+                         'compatible')
+        effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
+                            self.docs['public'],self.docs['summary'])
+        self.assertEqual(effective['capacityStatuses']['rating'],'compatible')
+
+    def test_opaque_numeric_capacity_remains_unverified(self):
+        case=next(s for s in self.manifest['scenarios']
+                  if s['id']=='unknown-physical-capacity')
+        physical=deepcopy(self.mdb)
+        physical['source']['dialect']=case['mutation']['setPhysicalDialect']
+        rating=case['mutation']['replacePhysicalColumn']
+        physical['columns']=[rating if c['name']=='rating' else c
+                             for c in physical['columns']]
+        c.validate_document(self.schemas['physical'],physical)
+        self.assertNotIn('scalarType',rating)
+        self.assertNotIn('maximum',rating)
+        self.assertEqual(c.integer_capacity_status(rating,{'minimum':'0','maximum':'10'}),
+                         'not-verified')
+        effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
+                            self.docs['public'],self.docs['summary'])
+        self.assertEqual(effective['capacityStatuses']['rating'],'not-verified')
+
     def test_child_cannot_expand_operations(self):
         grandchild={'apiVersion':'arp.projection/v1','id':'demo.items.grandchild',
                     'source':{'projection':'demo.items.summary'},'fields':['id'],

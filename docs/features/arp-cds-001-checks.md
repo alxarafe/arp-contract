@@ -35,3 +35,21 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 4. Verificar los servicios, demos y el cliente Angular común; registrar evidencias exactas, sin publicar versiones parciales.
 
 **Integración:** incorporar los archivos a una rama propia en `arp-contract`; no se han escrito en el repositorio GitHub por limitación de permisos del conector. No hacer merge antes de la revisión del contrato.
+
+## Corrección de dos escenarios de revisión (PR #7)
+
+- `derived-cannot-expand-fields` añade `internal_note` a la observación física
+  simulada antes de intentar incluirlo en la proyección hija. El modelo lógico
+  efectivo debe contenerlo y la proyección pública padre debe excluirlo; el
+  rechazo prueba entonces **herencia restrictiva**, no inexistencia física.
+- `unknown-physical-capacity` usa una observación **sintética de adaptador opaco**:
+  `vendor_opaque_rating` no tiene `scalarType` ni límites numéricos verificados.
+  El resultado de compatibilidad debe ser `not-verified`. Este nombre nativo
+  **no se presenta como un tipo SQL válido de MariaDB**.
+- Prueba de control complementaria: si un `INT8` verificado pierde solo su
+  atributo redundante `maximum`, su rango sigue deduciéndose de `INT8` y debe
+  seguir clasificándose como compatible con `0..10`. No confundir atributo
+  ausente con capacidad desconocida.
+
+Estas comprobaciones siguen siendo **estáticas y deliberadamente limitadas**;
+la validación real de tipos nativos y de adaptadores no está implementada aquí.

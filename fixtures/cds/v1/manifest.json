@@ -97,12 +97,19 @@
     {
       "id": "derived-cannot-expand-fields",
       "mutation": {
+        "appendPhysicalColumn": {
+          "name": "internal_note",
+          "nativeType": "text",
+          "scalarType": "TEXT",
+          "nullable": true
+        },
         "summaryFields": [
           "id",
           "internal_note"
         ]
       },
-      "expectedErrorFamily": "definition-invalid"
+      "expectedErrorFamily": "definition-invalid",
+      "engine": "mariadb"
     },
     {
       "id": "derived-cannot-expand-operations",
@@ -156,12 +163,17 @@
       "id": "unknown-physical-capacity",
       "engine": "mariadb",
       "mutation": {
-        "removePhysicalMaximum": "rating"
+        "setPhysicalDialect": "opaque-test-adapter",
+        "replacePhysicalColumn": {
+          "name": "rating",
+          "nativeType": "vendor_opaque_rating",
+          "nullable": false
+        }
       },
       "expected": {
         "capacityStatus": "not-verified"
       }
     }
   ],
-  "executionNote": "These scenarios are static draft integrity checks; no native runtime conformance or DB access is asserted."
+  "executionNote": "These scenarios are static draft integrity checks; no native runtime conformance or DB access is asserted. The unknown-capacity case is a synthetic opaque-adapter observation, NOT a valid MariaDB column type."
 }
