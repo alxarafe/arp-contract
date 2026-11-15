@@ -1,6 +1,6 @@
 # ARP compatibility and conformance record
 
-**Current state: no ARP contract release or conformance claim yet.** This document defines how adoption will be recorded after a release is available. Do not infer compatibility from a framework version, code compilation, documentation, or successful tests unrelated to released fixtures.
+**Release note:** this file distinguishes pre-release execution evidence from formal adoption of an immutable published contract. At the preparation of `v0.1.0`, the release tag had not been created; consult the current tag and release record before asserting publication. This document defines how adoption will be recorded after a release is available. Do not infer compatibility from a framework version, code compilation, documentation, or successful tests unrelated to released fixtures.
 
 ## What is compared
 
@@ -66,13 +66,32 @@ Earlier `erbas-contract` releases and adoption claims remain separate historical
 
 ## Pre-release evidence and portability consolidation
 
-PHP, Java and .NET have documented 298 shared fixture assertions against the
-unpublished `0172ab64742218b9f64a6ae96c43ebdfe690f4c6` candidate. These are historical
-candidate results, not adoption of a released contract, and are not rewritten by
-the [327-assertion portability consolidation](dictionary-portability-002.md).
+The earlier candidate `0172ab64742218b9f64a6ae96c43ebdfe690f4c6` was tested
+against 298 shared assertions in PHP, Java and .NET. This is historical evidence,
+not proof of adoption of the eventual release.
 
-All three implementations are **NOT_EVALUATED for the consolidated candidate**.
-Each needs the concrete parser/budget/runner adaptations documented there, an
-exact updated pin and its own new semantic/instrumentation evidence. No native
-repository was modified or rerun by this contract-only task. The first release
-matrix remains unpopulated until a published contract and precise evidence exist.
+The consolidated **unpublished** contract candidate `2dde1a09780e29c7385606c5e018fa75a0808b68`
+was then tested by all three independent runtimes. The following evidence is
+specific to that exact candidate SHA, not to a future documentation commit or tag:
+
+| Implementation | Merged runtime SHA | Shared | Independent | Evidence |
+| --- | --- | ---: | ---: | --- |
+| PHP 8.4 / 8.5 | [`ca097104c1ce188f19410af74b2d65d9b9e939fe`](https://github.com/alxarafe/arp-php/commit/ca097104c1ce188f19410af74b2d65d9b9e939fe) | 327/327 | 25/25 per version | [Conformance](https://github.com/alxarafe/arp-php/blob/ca097104c1ce188f19410af74b2d65d9b9e939fe/docs/conformance.md) |
+| Java 25 | [`3a14a5ea1460ab6caaf634dc538292cefcb74c81`](https://github.com/alxarafe/arp-java/commit/3a14a5ea1460ab6caaf634dc538292cefcb74c81) | 327/327 | 28/28 | [Conformance](https://github.com/alxarafe/arp-java/blob/3a14a5ea1460ab6caaf634dc538292cefcb74c81/docs/conformance.md) / [Machine report](https://github.com/alxarafe/arp-java/blob/3a14a5ea1460ab6caaf634dc538292cefcb74c81/docs/conformance-summary.json) |
+| .NET 10 | [`786632f3b04cd615a21db89d66942727152c7c8f`](https://github.com/alxarafe/arp-dotnet/commit/786632f3b04cd615a21db89d66942727152c7c8f) | 327/327 | 35/35 | [Conformance](https://github.com/alxarafe/arp-dotnet/blob/786632f3b04cd615a21db89d66942727152c7c8f/docs/conformance.md) / [Machine report](https://github.com/alxarafe/arp-dotnet/blob/786632f3b04cd615a21db89d66942727152c7c8f/docs/acceptance-summary.json) |
+
+All execution results in this table were produced and recorded by the native
+repositories on 2026-11-15, with zero reported failures/skips; they were not
+independently rerun by this release-documentation change. The consolidated
+contract's separate structural validation and 27 regression tests passed. No
+GitHub Actions run was found for the runtime PR heads when reviewed.
+
+The formal released-version adoption table above deliberately remains
+`NOT_EVALUATED` until (1) the final immutable `v0.1.0` tag and resolved SHA
+exist, (2) each runtime pins that final tag/SHA, and (3) the required tests
+are rerun and the exact evidence is recorded. Updating these documentation-only
+files changes the contract repository commit SHA even though the normative schema
+and fixtures remain the same; previous exact-SHA results cannot be relabeled.
+
+The published release does not automatically imply Erbas contract compatibility
+or consumer application adoption. [Release process](release-process.md).
