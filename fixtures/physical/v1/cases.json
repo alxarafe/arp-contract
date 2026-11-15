@@ -1,0 +1,566 @@
+{
+  "status": "CANDIDATE_NOT_NORMATIVE",
+  "cases": [
+    {
+      "id": "valid-mariadb",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "VALID"
+    },
+    {
+      "id": "valid-postgresql",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.postgres",
+        "object": {
+          "schema": "public",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "int8",
+            "nullable": false
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "int2",
+            "integerRange": {
+              "minimum": "-32768",
+              "maximum": "32767"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "VALID"
+    },
+    {
+      "id": "valid-unknown-nullability",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "VALID"
+    },
+    {
+      "id": "valid-view-with-no-key",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "VIEW"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ]
+      },
+      "expected": "VALID"
+    },
+    {
+      "id": "invalid-unexpected-label",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true,
+            "label": "Usuario"
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SCHEMA_INVALID"
+    },
+    {
+      "id": "invalid-missing-format",
+      "document": {
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SCHEMA_INVALID"
+    },
+    {
+      "id": "invalid-negative-length",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": -1,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SCHEMA_INVALID"
+    },
+    {
+      "id": "invalid-null-unverified",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": null,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SCHEMA_INVALID"
+    },
+    {
+      "id": "invalid-duplicate-column",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "id",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SEMANTIC_INVALID"
+    },
+    {
+      "id": "invalid-duplicate-ordinal",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 2,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SEMANTIC_INVALID"
+    },
+    {
+      "id": "invalid-key-not-in-columns",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "missing"
+        ]
+      },
+      "expected": "SEMANTIC_INVALID"
+    },
+    {
+      "id": "invalid-reversed-integer-range",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "1000",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SEMANTIC_INVALID"
+    },
+    {
+      "id": "invalid-scale-greater-than-precision",
+      "document": {
+        "apiVersion": "arp.physical/v1",
+        "sourceId": "demo.mariadb",
+        "object": {
+          "schema": "demo",
+          "name": "evaluaciones",
+          "kind": "TABLE"
+        },
+        "columns": [
+          {
+            "name": "id",
+            "ordinal": 1,
+            "nativeType": "bigint",
+            "nullable": false,
+            "identity": true
+          },
+          {
+            "name": "puntuacion",
+            "ordinal": 2,
+            "nativeType": "tinyint",
+            "nullable": false,
+            "integerRange": {
+              "minimum": "-128",
+              "maximum": "127"
+            }
+          },
+          {
+            "name": "codigo",
+            "ordinal": 3,
+            "nativeType": "varchar",
+            "characterLength": {
+              "value": 10,
+              "unit": "CHARACTERS"
+            },
+            "decimalGeometry": {
+              "precision": 2,
+              "scale": 3
+            }
+          }
+        ],
+        "primaryKey": [
+          "id"
+        ]
+      },
+      "expected": "SEMANTIC_INVALID"
+    }
+  ]
+}
