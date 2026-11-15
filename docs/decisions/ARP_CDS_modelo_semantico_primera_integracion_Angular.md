@@ -277,3 +277,17 @@ Estas cuestiones deben resolverse en `arp-contract` al redactar esquemas y casos
 ---
 
 **Situación de cierre:** D01–D11 **aprobados en alcance funcional**. Siguiente paso: especificación contractual de este recorrido en `arp-contract`, siguiendo el orden acordado. **No se han modificado repositorios ni publicado versiones mediante este documento.**
+
+## 13. Acuerdos posteriores: compatibilidad y datos históricos (15-11-2026)
+
+Estas precisiones **amplían** D01, D05 y D07 sin reabrir los once acuerdos iniciales:
+
+- **Proveedores físicos intercambiables:** cada conexión registrada usa un adaptador capaz de identificar su motor y versión y observar capacidades físicas verificadas; el núcleo no contiene SQL dependiente de dialecto. Puede haber varias conexiones y motores en una aplicación.
+- **Compatibilidad estructural:** el dominio de valores permitido por diccionario y restricciones lógicas debe caber íntegramente en la capacidad física demostrada; **no se exige identidad nominal de tipos**. `compatible`, `incompatible` y `not-verified` son estados diferentes. La auditoría de datos históricos es una comprobación separada.
+- **Registros históricos:** un valor persistido que ya incumpla una restricción nueva no se modifica ni elimina automáticamente. La auditoría de datos existentes se ejecuta expresamente, no en cada lectura; si se conoce una infracción se informa de ella sin bloquear por defecto toda la entidad.
+- **Actualización parcial:** el cliente envía los campos cuyos valores finales han cambiado; los campos omitidos no se reescriben ni invalidan individualmente por sus valores históricos. Todo campo incluido en la petición se valida **en el servidor**, incluso si coincide con el valor anterior; las reglas de negocio dependientes pueden exigir otras comprobaciones.
+- **Formulario preventivo:** los controles impiden seleccionar o aceptar como valor final entradas nuevas fuera de rango. Con `rating` restringido a `0–10`, un registro antiguo con `rating=11` lo puede mostrar y conservar mientras no se cambie. Una vez editado `rating`, solamente se puede elegir `0–10` y **no se puede volver a seleccionar `11`**. Cancelar toda la edición restaura la lectura del dato original sin efectuar escrituras. Para un alta nunca se ofrece ni acepta `11`.
+
+Los detalles contractuales propuestos y las pruebas compartidas se encuentran en
+[`../features/arp-cds-001-compatibility-and-historical-data.md`](../features/arp-cds-001-compatibility-and-historical-data.md)
+y los fixtures CDS. No se afirma todavía conformidad de los tres runtimes ni se publica una versión.
