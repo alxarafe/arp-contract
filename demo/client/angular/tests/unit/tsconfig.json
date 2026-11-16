@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "strict": true,
+    "skipLibCheck": true,
+    "rootDir": "../../src/i18n",
+    "outDir": "../../out-unit"
+  },
+  "files": [
+    "../../src/i18n/translate.ts"
+  ]
+}

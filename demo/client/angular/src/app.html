@@ -1,0 +1,100 @@
+<div class="demo-controls">
+    <div class="demo-brand"><span class="demo-monogram">ARP</span><span>{{ t('app.brand') }}</span></div>
+    <div class="demo-selectors">
+        <label>{{ t('selector.runtime') }}
+            <select data-testid="runtime" [value]="runtimeId()" (change)="selectRuntime($event)">
+                @for (item of runtimes; track item.id) { <option [value]="item.id">{{ item.label }}</option> }
+            </select>
+        </label>
+        <label>{{ t('selector.theme') }}
+            <select data-testid="theme" [value]="themes.current().id" (change)="selectTheme($event)">
+                @for (theme of registry.all; track theme.id) { <option [value]="theme.id">{{ theme.id }}</option> }
+            </select>
+        </label>
+        <label>{{ t('selector.language') }}
+            <select data-testid="language" [value]="i18n.current()" (change)="selectLanguage($event)">
+                <option value="es">{{ t('language.es') }}</option>
+                <option value="en">{{ t('language.en') }}</option>
+            </select>
+        </label>
+    </div>
+</div>
+<aur-theme-shell [heading]="heading" [content]="body" [footer]="footer" [navigation]="navigation()"
+                 (navigationSelected)="selectCapability($event.itemId)" />
+<ng-template #heading>
+    <span class="demo-eyebrow">{{ t('heading.eyebrow') }}</span>
+    <h1>{{ t('heading.title') }}</h1>
+</ng-template>
+<ng-template #body>
+    <div class="demo-content" [attr.data-active-theme]="themes.current().id">
+        <section class="demo-intro">
+            <p>{{ t('intro.description') }}</p>
+            <p class="demo-note">
+                {{ t('intro.evidence') }}
+            </p>
+        </section>
+        <section class="demo-instance" [attr.aria-label]="t('instance.region')">
+            <div>
+                <span class="demo-eyebrow">{{ t('instance.selected') }}</span>
+                <h2 data-testid="runtime-label">{{ runtime().label }}</h2>
+            </div>
+            @for (instance of [runtime()]; track instance.id) {
+                <label class="demo-url">{{ t('instance.url') }}
+                    <input data-testid="instance-url" type="url" [placeholder]="t('instance.placeholder')"
+                           [value]="url()" (input)="configureUrl($event)" aria-describedby="connection-note url-error">
+                </label>
+            }
+            <p id="url-error" role="alert">{{ urlError() ? t(urlError()!) : '' }}</p>
+            <p id="connection-note" data-testid="connection-status">
+                {{ t(url() ? 'instance.configured' : 'instance.unconfigured') }} · {{ t('instance.adapter') }}
+            </p>
+            <p>{{ t('instance.unqueried') }}</p>
+            <small>
+                {{ t('instance.inventory') }}: {{ runtime().commit }} · {{ runtime().branch }}.
+                {{ t('instance.noDiscovery') }}
+            </small>
+        </section>
+        <section [attr.aria-label]="t('capabilities.region')" class="demo-capabilities">
+            @for (item of capabilities; track item.id) {
+                <button class="demo-card" [attr.data-capability]="item.id"
+                        [attr.aria-pressed]="capability().id === item.id" (click)="selectCapability(item.id)">
+                    <span class="demo-number">{{ item.mark }}</span>
+                    <strong>{{ t(item.label) }}</strong>
+                    <span>{{ t(item.status) }}</span>
+                </button>
+            }
+        </section>
+        <section class="demo-scenario" [attr.aria-label]="t('scenario.region')">
+            <div class="demo-scenario-heading">
+                <div>
+                    <span class="demo-eyebrow">{{ t('scenario.heading') }}</span>
+                    <h2>{{ t(capability().label) }}</h2>
+                </div>
+                <span class="demo-badge">{{ t('scenario.readonly') }}</span>
+            </div>
+            <p data-testid="capability-detail">{{ t(capability().detail) }}</p>
+            <button data-testid="execute" disabled aria-describedby="execution-limit">
+                {{ t('scenario.execute') }}
+            </button>
+            <p id="execution-limit">{{ t('scenario.limit') }}</p>
+            <label class="demo-file">{{ t('scenario.file') }}
+                <select data-testid="source" [value]="source()" (change)="selectFile($event)">
+                    @for (file of capability().files; track file) { <option [value]="file">{{ file }}</option> }
+                </select>
+            </label>
+            <p class="demo-note">
+                {{ t('scenario.exact') }}
+            </p>
+            @if (loading()) { <p role="status">{{ t('scenario.loading') }}</p> }
+            @if (error()) { <p role="alert">{{ t(error()!) }}</p> }
+            <pre data-testid="source-content" tabindex="0" [attr.aria-label]="source()">{{ content() }}</pre>
+            <a [href]="'contract/' + source()" download>{{ t('scenario.download') }}</a>
+        </section>
+    </div>
+</ng-template>
+<ng-template #footer>
+    <p class="demo-footer">
+        {{ t('footer.contract') }}: {{ revision() }} ({{ t('footer.workingTree') }})
+        · {{ t('footer.themes') }} · {{ t('footer.draft') }}
+    </p>
+</ng-template>
