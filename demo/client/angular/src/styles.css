@@ -1,0 +1,66 @@
+@import '@alxarafe/ui-theme-default/theme.css';
+@import '@alxarafe/ui-theme-alternative/theme.css';
+@import '@alxarafe/ui-theme-cyberpunk/theme.css';
+@import '@alxarafe/ui-theme-vintage/theme.css';
+@import '@alxarafe/ui-theme-high-contrast/theme.css';
+
+/* Demo layout only. Theme components, palettes and selection belong to the installed packages. */
+body { margin: 0; font-family: system-ui, sans-serif; }
+button, input, select { font: inherit; }
+.demo-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid currentColor;
+}
+.demo-brand, .demo-selectors { display: flex; align-items: center; gap: 1rem; }
+.demo-monogram { font-weight: 800; letter-spacing: -.05em; font-size: 1.8rem; }
+.demo-selectors label { display: grid; gap: .25rem; }
+.demo-content { max-width: 92rem; margin: auto; }
+.demo-eyebrow { text-transform: uppercase; letter-spacing: .12em; font-size: .75rem; }
+.demo-note, small { font-size: .85rem; }
+.demo-intro { margin-bottom: 1.5rem; }
+.demo-instance { padding: 1rem; border: 1px solid currentColor; border-radius: .5rem; }
+.demo-url { display: grid; gap: .5rem; }
+.demo-url input { max-width: 42rem; padding: .65rem; min-width: 0; }
+.demo-capabilities { display: grid; grid-template-columns: repeat(5, 1fr); gap: .75rem; margin: 1.5rem 0; }
+.demo-card {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    text-align: left;
+    padding: 1rem;
+    border: 1px solid currentColor;
+    border-radius: .5rem;
+    color: inherit;
+    background: transparent;
+    cursor: pointer;
+}
+.demo-card[aria-pressed="true"] { outline: 3px solid currentColor; outline-offset: -4px; }
+.demo-card span:last-child { font-size: .8rem; }
+.demo-number { font-family: monospace; }
+.demo-scenario { padding: 1rem; border: 1px solid currentColor; border-radius: .5rem; }
+.demo-scenario-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+.demo-badge { border: 1px solid currentColor; border-radius: 1rem; padding: .25rem .75rem; white-space: nowrap; }
+.demo-file { display: grid; gap: .5rem; margin-top: 1.5rem; }
+.demo-file select { max-width: 100%; padding: .5rem; }
+.demo-scenario pre {
+    max-height: 32rem;
+    overflow: auto;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    padding: 1rem;
+    border: 1px solid currentColor;
+    font-size: .85rem;
+    line-height: 1.5;
+}
+.demo-footer { overflow-wrap: anywhere; font-size: .8rem; }
+@media (max-width: 900px) { .demo-capabilities { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 540px) {
+    .demo-controls { align-items: flex-start; flex-direction: column; padding: 1rem; }
+    .demo-capabilities { grid-template-columns: 1fr; }
+    .demo-selectors { width: 100%; }
+    .demo-selectors label { flex: 1; }
+}
