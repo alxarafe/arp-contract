@@ -1,118 +1,72 @@
-# ARP-CDS-PHY-001 — Contrato candidato de descripción física regenerable
+# ARP-CDS-PHY-001 — Integración del modelo físico en ARP-CDS-001
 
-**Estado:** PROPUESTA TÉCNICA PARA REVISIÓN. No aprobada, no publicada y sin soporte declarado en ningún runtime.
-**Ámbito:** primer paso contractual del recorrido CDS–Angular, aprobado funcionalmente como D01, D04 y D11 en `docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md`.
-**Compatibilidad:** no altera `ARP-DICT-001`; no introduce API HTTP, tablas en ARP ni un ORM propio. `arp-res-001-borrador-especificacion.md` sigue siendo antecedente no aprobado y **no** se toma como contrato del modelo lógico CDS.
+**Estado:** borrador contractual unificado; no publicado, sin soporte de runtime demostrado.
 
-## 1. Decisiones funcionales que NO se reabren
+**Decisiones funcionales:** D01, D04, D11 y ampliación de compatibilidad/datos históricos de ARP-CDS-001.
 
-1. La base de datos real es la autoridad del almacenamiento existente. ARP **genera** una definición física por tabla o vista cuando se necesita, si aún no está en caché.
-2. El artefacto generado **no se personaliza**. Todas las especializaciones del consumidor (referencias al diccionario, etiquetas, rangos 0…10, etc.) pertenecen al YAML lógico separado.
-3. Una migración controlada **invalida explícitamente** la definición física afectada; en el próximo uso se vuelve a generar. No se requiere vigilancia continua de cambios DDL ni introspección general en cada arranque.
-4. La invalidación alcanza instantáneas lógicas y proyecciones compiladas dependientes. Nunca se borran YAML lógicos ni proyecciones del usuario.
-5. Las tablas físicas que permanecen en la base de datos pueden existir aunque su módulo esté desactivado; ello **no publica** servicios ni proyecciones de ese módulo.
-6. El modelo lógico efectivo podrá incorporar automáticamente una nueva columna física. Ninguna proyección pública incorpora nuevos campos sin una declaración explícita.
-7. El mismo significado contractual se podrá implementar con PostgreSQL (Java/.NET) y MariaDB (PHP), mediante adaptadores independientes.
+## Único contrato físico propuesto
 
-## 2. Alcance de este primer contrato candidato
+El documento físico `arp.physical/v1` se define exclusivamente en
+[`schemas/cds/v1/physical.schema.json`](../../schemas/cds/v1/physical.schema.json).
+El antiguo esquema alternativo `schemas/physical/v1/physical.schema.json` se elimina;
+no deben coexistir dos gramáticas diferentes con el mismo `apiVersion`.
 
-Define la **forma de una instantánea física** que el adaptador puede producir y recuperar de una caché, junto con pruebas de estructura y algunas reglas de consistencia. Se propone un documento `arp.physical/v1` por objeto físico. Su archivo puede contenerse en una caché persistente YAML; ni su ruta ni el formato serializado son fuente de verdad por delante de la BD.
+Se mantiene la estructura del primer borrador CDS: `id`, `kind` (`table` o `view`),
+`source` (`provider`, `dialect`, `name` y `schema`/`catalog` opcionales) y `columns`.
+`source.provider` identifica la conexión registrada por la aplicación;
+`source.dialect` y `source.engineVersion`, cuando se declaran, provienen del adaptador
+verificado, **nunca** se deducen del lenguaje de programación. `scalarType` es la
+normalización escalar verificada, no una etiqueta de negocio. La identidad física
+se obtiene de la fuente registrada y de la identidad completa del objeto.
 
-La generación efectiva por introspección, la invalidación entre procesos y la conexión con el modelo lógico se especificarán y probarán en pasos sucesivos; **no están implementadas** por los archivos de esta propuesta.
+Capacidades que se incorporan del borrador recuperado:
 
-El documento contiene:
+- `ordinal` opcional, cuando se verifica la posición de la columna.
+- `integerRange` con límites decimales exactos, completos o parciales;
+  se omite cualquier extremo desconocido, sin inventarlo. Un `scalarType`
+  entero verificado conserva sus límites intrínsecos.
+- `characterLength: {value, unit}`; `unit` distingue `CHARACTERS` y `BYTES`.
+- `decimalGeometry: {precision, scale}` con `0 ≤ scale ≤ precision`.
+- `nullable`, `identity`, `generated` como capacidades opcionales verificadas.
+- `primaryKey` como **lista de columnas**, que permite claves compuestas; `[]`
+  significa ausencia comprobada de clave y propiedad omitida significa no verificado.
+- `indexes` y `foreignKeys` opcionales cuando su observación es completa y fiable.
+  Una lista vacía significa ausencia observada, no dato desconocido.
 
-- `sourceId`: identidad estable del origen de almacenamiento, declarada por la aplicación/proveedor; no equivale a un usuario ni a un permiso.
-- `object`: identidad física (`catalog` y/o `schema` cuando correspondan, `name`, `kind: TABLE|VIEW`).
-- `columns`: nombre físico, ordinal, tipo nativo y **únicamente** capacidades conocidas por el adaptador (nulabilidad, longitud con unidad, rango entero, precisión y escala). También puede indicar si la columna es generada o de identidad, cuando se ha verificado.
-- `primaryKey`, `indexes` y `foreignKeys` **opcionales** cuando el proveedor conoce dichos datos de forma suficiente. Su omisión **no implica** que no existan; la lista vacía sí comunica que se ha observado que no hay entradas de esa clase.
+Se eliminan del formato los atributos antiguos por columna `primaryKey: true`,
+`minimum`/`maximum` y `maximumLength`, para evitar dos representaciones
+contradictorias. Los ejemplos, pruebas y escenarios se han adaptado al formato único.
 
-**Propiedad ausente ≠ `false`, `0`, `[]` ni capacidad ilimitada.** En particular, la ausencia de `nullable` representa información no verificada, **no** `nullable: false`. El contrato de compatibilidad físico↔lógico tendrá que respetar esta distinción.
+## Semántica y alcance
 
-Los rangos enteros se expresan como cadenas decimales exactas y no como números de punto flotante. Por ejemplo, MariaDB `TINYINT SIGNED` puede publicar `-128…127` y PostgreSQL `smallint` `-32768…32767`, si el adaptador ha identificado esas capacidades con certeza. Una columna `VARCHAR(10)` puede publicar una longitud 10 en `CHARACTERS` o en `BYTES` **solo cuando conoce realmente la unidad**. No se supondrá equivalencia entre ambas.
+La BD real es la autoridad. El adaptador genera la descripción **bajo demanda**
+y únicamente informa hechos comprobables; el YAML físico es regenerable,
+no editable. La invalidación tras DDL controlado afecta a los derivados
+lógicos y proyecciones compiladas. El DDL externo exige invalidación explícita;
+no se promete detección autónoma ni introspección global al inicio.
 
-Las claves, relaciones y los índices son **metadatos del almacenamiento**, no autorizaciones de lectura/escritura ni asociaciones semánticas del CDS. Una vista SQL no es lo mismo que una proyección ARP.
+El modelo lógico incorpora columnas físicas nuevas automáticamente; las
+proyecciones públicas siguen requiriendo selección explícita. Las
+especializaciones de usuario no se borran al cambiar el esquema o desactivar
+un módulo. Los datos históricos inválidos se mantienen y se auditan por separado,
+sin rebajar la validación de escrituras nuevas.
 
-## 3. Ejemplo de representación candidata
+Los tipos SQL concretos, unidades de longitud, precisión, claves e índices
+requieren proveedores por motor. Las reglas semánticas verificables incluyen
+unicidad de nombres/ordinales según el proveedor, referencias locales existentes,
+correspondencia de columnas de claves externas, intervalos ordenados y geometrías
+decimales coherentes. El nombre original de SQL no se normaliza con un *case folding*
+universal.
 
-```yaml
-apiVersion: arp.physical/v1
-sourceId: demo.mariadb
-object:
-  schema: demo
-  name: evaluaciones
-  kind: TABLE
-columns:
-  - name: id
-    ordinal: 1
-    nativeType: bigint
-    nullable: false
-    identity: true
-  - name: puntuacion
-    ordinal: 2
-    nativeType: tinyint
-    nullable: false
-    integerRange:
-      minimum: '-128'
-      maximum: '127'
-  - name: codigo
-    ordinal: 3
-    nativeType: varchar
-    characterLength:
-      value: 10
-      unit: CHARACTERS
-primaryKey: [id]
-```
+## Referencias y pruebas
 
-Es **solo una propuesta de formato**. El usuario ya aprobó las capas y el ciclo de vida, **no esta gramática ni estos identificadores**. El documento `fixtures/physical/v1/example.mariadb.yaml` contiene el ejemplo verificable correspondiente.
+- `fixtures/physical/v1/cases.json`: escenarios positivos y negativos adaptados.
+- `fixtures/physical/v1/example.mariadb.yaml`: ejemplo del único esquema.
+- `tests/test_physical_candidate.py`: estructura y coherencia local.
+- `fixtures/cds/v1/observations/`: observaciones ilustrativas PostgreSQL/MariaDB.
+- `tools/check_cds_draft.py` y `tools/check_cds_compatibility_draft.py`:
+  pequeños oráculos estáticos de CDS y representabilidad entera.
 
-## 4. Reglas semánticas a especificar y comprobar
-
-1. La identidad física completa se compone de `sourceId` y de la identidad del objeto: nombres y esquema/catálogo según el motor. El proveedor debe resolver nombres ambiguos sin adivinar el esquema.
-2. No puede haber dos columnas con el mismo nombre canónico **según la política de nombres del proveedor**, ni dos ordinales iguales. El modelo portable conserva el nombre original; no se aplica case folding global.
-3. Si se declara `primaryKey`, todos sus nombres deben existir en `columns` y no repetirse. Un array omitido equivale a no observado; un array vacío no es una clave primaria válida.
-4. Si se declaran índices o claves externas, todas sus referencias locales tienen que apuntar a columnas existentes y estar libres de duplicados; las referencias externas requieren nombres de destino explícitos. No se exige que todo proveedor pueda reconstruir toda expresión de índice o relación.
-5. `integerRange.minimum` ≤ `integerRange.maximum`; `decimalGeometry.scale` ≤ `decimalGeometry.precision`. No se declara un rango o precisión que el proveedor no haya comprobado realmente.
-6. No se infiere `nullable`, restricciones de negocio, etiquetas, valores por defecto funcionales, permisos, recursos HTTP o operaciones CRUD a partir del nombre/tipo de la columna.
-7. No se aplican autocorrecciones de valores ni cambios de esquema SQL al leer un YAML físico.
-8. Una definición cacheada solo se considera vigente bajo el **protocolo de invalidación del consumidor**. El contrato no puede garantizar detectar cambios DDL externos no comunicados.
-
-Los casos de prueba candidatos comprueban la **forma** y coherencia local, no la veracidad de los datos frente a una BD. Esa evidencia solo podrá aportar una prueba de adaptador e introspección real.
-
-## 5. Política de caché e invalidación
-
-- **Cache miss:** el runtime solicita al adaptador la descripción actual del objeto, la valida y publica una instantánea completa; si la inspección falla, no publica un artefacto incompleto.
-- **Cache hit:** se usa la instantánea disponible, sin exigir conexión SQL por cada lectura, siempre bajo la suposición documentada de que las migraciones invalidan la caché correctamente.
-- **Migración confirmada:** la aplicación invalida el objeto y todos sus derivados lógicos/de proyección; la siguiente consulta debe obtener una nueva generación.
-- **DDL externo:** el administrador debe solicitar invalidación manual. No prometer detección autónoma.
-- **Desactivación de módulo:** afecta al catálogo público activo, **no** borra objetos SQL, archivos físicos ni personalizaciones lógicas.
-- **Concurrencia/múltiples instancias:** debe garantizarse que no se observa una mezcla incoherente de generaciones. El protocolo distribuido y su token de generación quedan pendientes de contrato posterior.
-
-**Riesgo reconocido:** borrar solamente el archivo YAML no es suficiente si existen cachés de proceso. La invalidación **debe ser una operación del sistema**, capaz de borrar artefactos y notificar a los catálogos dependientes; la eliminación del archivo es un posible mecanismo interno, no la interfaz pública del contrato.
-
-## 6. Alcance de las pruebas incluidas
-
-El paquete contiene:
-
-- `schemas/physical/v1/physical.schema.json`: JSON Schema Draft 2020-12 candidato de un documento físico.
-- `fixtures/physical/v1/cases.json`: 13 casos (válidos, defectos estructurales y defectos semánticos locales) con resultado esperado.
-- `fixtures/physical/v1/example.mariadb.yaml`: ejemplo legible de generación física.
-- `tests/test_physical_candidate.py`: pruebas de integridad sobre esquema, fixtures y ejemplo YAML.
-
-Para ejecutar este conjunto candidato desde la raíz de `arp-contract`:
-
-```bash
-python3 -m unittest discover -s tests -p 'test_physical_candidate.py' -v
-```
-
-Requiere `jsonschema` y `PyYAML`, ya utilizados por las herramientas de desarrollo del contrato. **Superar estas pruebas NO acredita introspección real, compatibilidad física-lógica, invalidación ni conformidad de Java/.NET/PHP.**
-
-## 7. Siguientes contratos y cuestiones abiertas
-
-1. `ARP-CDS-LOG-001`: especialización YAML persistente sobre el modelo físico, enlace con `ARP-DICT-001`, y composición estricta de rangos/tipos; incorporación automática de nuevas columnas sin modificar YAML del consumidor.
-2. `ARP-CDS-PRJ-001`: proyecciones públicas explícitas, derivación sin ampliación de campos, restricciones no debilitables y metadatos de presentación modificables.
-3. `ARP-CDS-OPS-001`: operaciones declaradas; CRUD automático **solo** sobre tabla simple con clave y adaptadores; ejecución delegada para lógica específica.
-4. `ARP-CDS-API-001`: contrato de exposición, metadatos de Angular y cinco familias de errores normalizados.
-5. Integración y conformidad: introspección e invalidación real (PostgreSQL, MariaDB), demos Java/.NET/PHP y cliente Angular único.
-
-**Por decidir al revisar esta propuesta:** forma exacta de identidades `catalog/schema` para los dos motores; perfil portable YAML aplicable; cómo demostrar que `nullable`, longitud y límites son *verificados*; soporte inicial de índices y claves externas (representación disponible, cobertura real opcional); cómo se invalidan instantáneas entre procesos; si `arp.physical/v1` es el nombre adecuado. Ninguna de estas opciones es un acuerdo adicional de producto hasta su revisión.
+**No demuestra** introspección de BD real, invalidación distribuida, CRUD,
+resolución completa de Unicode/decimales/tiempos ni conformidad de Java/.NET/PHP.
+La sintaxis continúa siendo candidata; no publicar versiones ni etiquetas.

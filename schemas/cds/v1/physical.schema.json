@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://alxarafe.org/arp/drafts/cds/v1/physical.schema.json",
-  "title": "ARP-CDS-001 proposed physical descriptor (not published)",
+  "title": "ARP-CDS-001 unified proposed physical descriptor (not published)",
   "type": "object",
   "required": [
     "apiVersion",
@@ -46,6 +46,14 @@
           "minLength": 1
         },
         "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "catalog": {
+          "type": "string",
+          "minLength": 1
+        },
+        "engineVersion": {
           "type": "string",
           "minLength": 1
         }
@@ -95,25 +103,168 @@
           "nullable": {
             "type": "boolean"
           },
-          "primaryKey": {
+          "ordinal": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "identity": {
             "type": "boolean"
           },
-          "minimum": {
-            "type": "string",
-            "pattern": "^-?(0|[1-9][0-9]*)$"
+          "generated": {
+            "type": "boolean"
           },
-          "maximum": {
-            "type": "string",
-            "pattern": "^-?(0|[1-9][0-9]*)$"
+          "integerRange": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "minimum": {
+                "$ref": "#/$defs/exactInteger"
+              },
+              "maximum": {
+                "$ref": "#/$defs/exactInteger"
+              }
+            },
+            "minProperties": 1
           },
-          "maximumLength": {
-            "type": "integer",
-            "minimum": 0
+          "characterLength": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "value",
+              "unit"
+            ],
+            "properties": {
+              "value": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "unit": {
+                "enum": [
+                  "CHARACTERS",
+                  "BYTES"
+                ]
+              }
+            }
+          },
+          "decimalGeometry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "precision",
+              "scale"
+            ],
+            "properties": {
+              "precision": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "scale": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
           }
         },
         "additionalProperties": false
       }
+    },
+    "primaryKey": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/name"
+      }
+    },
+    "indexes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "columns",
+          "unique"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/name"
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "unique": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "foreignKeys": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "columns",
+          "target"
+        ],
+        "properties": {
+          "name": {
+            "$ref": "#/$defs/name"
+          },
+          "columns": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "$ref": "#/$defs/name"
+            }
+          },
+          "target": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "table",
+              "columns"
+            ],
+            "properties": {
+              "catalog": {
+                "$ref": "#/$defs/name"
+              },
+              "schema": {
+                "$ref": "#/$defs/name"
+              },
+              "table": {
+                "$ref": "#/$defs/name"
+              },
+              "columns": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "$ref": "#/$defs/name"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "name": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "\\S"
+    },
+    "exactInteger": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)$"
+    }
+  }
 }

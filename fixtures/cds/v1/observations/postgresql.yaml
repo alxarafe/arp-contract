@@ -1,4 +1,4 @@
-# Fixture only. Runtime must generate physical descriptors from its DB.
+# Illustrative fixture only. Real adapters must introspect the database.
 apiVersion: arp.physical/v1
 id: demo.items
 kind: table
@@ -8,21 +8,26 @@ source:
   schema: public
   name: items
 columns:
-  - name: id
-    nativeType: integer
-    scalarType: INT32
-    nullable: false
-    primaryKey: true
+- name: id
+  nativeType: integer
+  scalarType: INT32
+  nullable: false
+  integerRange:
     minimum: '-2147483648'
     maximum: '2147483647'
-  - name: code
-    nativeType: varchar(12)
-    scalarType: STRING
-    nullable: false
-    maximumLength: 12
-  - name: rating
-    nativeType: smallint
-    scalarType: INT16
-    nullable: false
+- name: code
+  nativeType: varchar(12)
+  scalarType: STRING
+  nullable: false
+  characterLength:
+    value: 12
+    unit: CHARACTERS
+- name: rating
+  nativeType: smallint
+  scalarType: INT16
+  nullable: false
+  integerRange:
     minimum: '-32768'
     maximum: '32767'
+primaryKey:
+- id

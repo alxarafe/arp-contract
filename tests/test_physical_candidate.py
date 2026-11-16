@@ -8,7 +8,7 @@ from jsonschema import Draft202012Validator
 
 ROOT = Path(__file__).resolve().parents[1]
 FIXTURES = ROOT / 'fixtures/physical/v1'
-SCHEMA = ROOT / 'schemas/physical/v1/physical.schema.json'
+SCHEMA = ROOT / 'schemas/cds/v1/physical.schema.json'
 
 
 def local_semantic_issues(doc):
@@ -50,6 +50,27 @@ class PhysicalContractCandidateChecks(unittest.TestCase):
         Draft202012Validator.check_schema(cls.schema)
         cls.validator = Draft202012Validator(cls.schema)
         cls.cases = json.loads((FIXTURES / 'cases.json').read_text(encoding='utf-8'))['cases']
+
+    def test_exactly_one_physical_schema_for_v1(self):
+        self.assertFalse((ROOT / 'schemas/physical/v1/physical.schema.json').exists())
+        manifest = json.loads((ROOT / 'fixtures/cds/v1/manifest.json').read_text(encoding='utf-8'))
+        self.assertEqual(manifest['schemas']['physical'], str(SCHEMA.relative_to(ROOT)))
+
+    def test_empty_pk_means_verified_absence_not_unknown(self):
+        empty_pk = next(c['document'] for c in self.cases if c['id'] == 'valid-observed-no-primary-key')
+        unknown_pk = next(c['document'] for c in self.cases if c['id'] == 'valid-unverified-primary-key')
+        self.assertEqual(empty_pk['primaryKey'], [])
+        self.assertNotIn('primaryKey', unknown_pk)
+        self.assertFalse(list(self.validator.iter_errors(empty_pk)))
+        self.assertFalse(list(self.validator.iter_errors(unknown_pk)))
+
+    def test_physical_cds_observations_validate_against_same_schema(self):
+        for engine in ('mariadb', 'postgresql'):
+            path = ROOT / f'fixtures/cds/v1/observations/{engine}.yaml'
+            model = yaml.safe_load(path.read_text(encoding='utf-8'))
+            self.assertFalse(list(self.validator.iter_errors(model)), engine)
+            self.assertEqual(model['primaryKey'], ['id'])
+            self.assertIn('integerRange', next(c for c in model['columns'] if c['name'] == 'rating'))
 
     def test_candidate_fixture_expectations(self):
         ids = [item['id'] for item in self.cases]

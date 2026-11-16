@@ -1,26 +1,30 @@
+# Illustrative unified physical descriptor; not a generated runtime artifact.
 apiVersion: arp.physical/v1
-sourceId: demo.mariadb
-object:
+id: demo.evaluaciones
+kind: table
+source:
+  provider: primary
+  dialect: mariadb
   schema: demo
   name: evaluaciones
-  kind: TABLE
 columns:
-  - name: id
-    ordinal: 1
-    nativeType: bigint
-    nullable: false
-    identity: true
-  - name: puntuacion
-    ordinal: 2
-    nativeType: tinyint
-    nullable: false
-    integerRange:
-      minimum: '-128'
-      maximum: '127'
-  - name: codigo
-    ordinal: 3
-    nativeType: varchar
-    characterLength:
-      value: 10
-      unit: CHARACTERS
-primaryKey: [id]
+- name: id
+  ordinal: 1
+  nativeType: bigint
+  nullable: false
+  identity: true
+- name: puntuacion
+  ordinal: 2
+  nativeType: tinyint
+  nullable: false
+  integerRange:
+    minimum: '-128'
+    maximum: '127'
+- name: codigo
+  ordinal: 3
+  nativeType: varchar
+  characterLength:
+    value: 10
+    unit: CHARACTERS
+primaryKey:
+- id
