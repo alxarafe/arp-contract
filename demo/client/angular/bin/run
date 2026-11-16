@@ -16,7 +16,7 @@ case "${1:-}" in
     build|check)
         docker run --rm --init --user "$(id -u):$(id -g)" \
             --env HOME=/tmp --env NG_CLI_ANALYTICS=false --env ARP_CONTRACT_PATH=/contract \
-            --env "ARP_CONTRACT_REVISION=$(git -C "$contract" rev-parse HEAD) (working tree)" \
+            --env "ARP_CONTRACT_REVISION=$(git -C "$contract" rev-parse HEAD)" \
             --env "AUR_SOURCE_COMMIT=$expected" --env AUR_SOURCE_STATUS=clean \
             --mount "type=bind,src=$aur,dst=/aur,readonly" \
             --mount "type=bind,src=$contract,dst=/contract,readonly" \

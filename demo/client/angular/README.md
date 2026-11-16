@@ -7,7 +7,9 @@ No es una prueba de conformidad de runtime ni un protocolo nuevo de ARP.
 ## Qué funciona
 
 - Selector .NET / Java / PHP con una URL independiente por instancia. La selección conserva las URLs durante la
-  sesión; no guarda credenciales ni persiste ajustes del usuario en el navegador.
+  sesión; no guarda credenciales ni persiste URLs del usuario en el navegador.
+- Selector Español / English, con español inicial y cambio inmediato sin recargar. Solo el idioma se conserva en
+  `localStorage`; se recupera en visitas posteriores.
 - Cinco temas reales de angular-ui-runtime, incluidos shell, navegación y panel: default, alternative, cyberpunk,
   vintage y high-contrast. Se usa `provideThemeRuntime`, `ThemeService` y `ThemeShellOutlet`, sin otro motor de temas.
 - Exploración de diccionario/validaciones, entidades/estructuras, proyecciones, CRUD y servicios/invocaciones.
@@ -16,6 +18,28 @@ No es una prueba de conformidad de runtime ni un protocolo nuevo de ARP.
   No se duplican expectativas ni se convierten números exactos a números JavaScript. `expected` nunca se muestra
   como resultado obtenido. Los ejemplos de negocio siguen en los fixtures/definiciones de demo existentes.
 - Compilación Angular estricta y pruebas Chromium de selección, temas, capacidades, integridad de assets y errores.
+
+## Idiomas y traducciones
+
+La cabecera permite seleccionar **Español (`es`) / English (`en`)** junto a Runtime y Tema. El idioma inicial es
+español, independientemente del idioma del navegador. Se recupera la preferencia válida de la clave
+`arp-demo.language` en `localStorage`; un valor ausente o desconocido usa español. Si el almacenamiento está bloqueado
+o lleno, se puede seguir cambiando el idioma durante la sesión. No se persisten las URLs ni otros datos de trabajo.
+
+Los catálogos independientes `src/i18n/en.ts` y `src/i18n/es.ts` centralizan todos los textos propios de la interfaz,
+los mensajes de error, estados, navegación, título del documento y etiquetas accesibles. Las claves están tipadas
+a partir del **catálogo de referencia completo inglés**. Para añadir textos, definir primero su clave y traducción
+inglesa y después la española. Un error ya visible cambia de idioma sin perder su causa.
+
+**Respaldo: ES → EN.** Si falta una traducción española, se utiliza la inglesa. Si falta también la inglesa, se
+muestra `[i18n:clave]`. En desarrollo se emite un aviso de consola por clave ausente; en producción se conserva el
+marcador sin añadir avisos. La selección inglesa no usa español como respaldo. Las pruebas inyectan catálogos
+incompletos en el resolvedor para comprobar ambos casos sin retirar traducciones reales de la aplicación.
+
+El cambio no recarga la aplicación ni los assets: conserva runtime, URLs, tema, archivo seleccionado, contenido y
+borradores de entrada. También actualiza `html.lang` y el título de la pestaña. No traduce identificadores de temas,
+runtimes, campos, rutas, códigos contractuales ni los bytes originales de fixtures y definiciones. No modifica los
+textos internos de paquetes de terceros. Se utilizan señales y servicios de Angular, sin dependencias nuevas.
 
 ## Qué requiere backend
 
@@ -49,7 +73,8 @@ Desde este directorio:
 
 Abrir **http://127.0.0.1:4173**. `Ctrl+C` detiene el contenedor temporal. Solo se publica el puerto en loopback.
 El build copia el árbol de trabajo actual del contrato, no un catálogo remoto. La revisión de referencia se muestra
-con la indicación «working tree», por lo que no se confunde el commit con la totalidad de cambios no confirmados.
+con la indicación traducida de «árbol de trabajo», por lo que no se confunde el commit con la totalidad de cambios
+no confirmados.
 
 `build` y `check` construyen el core y los cinco temas desde el checkout fijado dentro de un contenedor temporal,
 con sus lockfiles originales. Instalan únicamente los archivos APF generados en una copia temporal del consumidor.
@@ -80,8 +105,9 @@ ni ruta que la demo pueda probar legítimamente.
 ./bin/run check
 ```
 
-Reconstruye la aplicación y los paquetes y ejecuta Chromium a 1440×1000 y 390×844 en otra imagen fijada por digest.
-Escribe resultados JSON, trazas de fallos y capturas por tema en `artifacts/browser/`.
+Reconstruye la aplicación y los paquetes, compila/ejecuta las pruebas unitarias del resolvedor de traducciones con
+TypeScript y `node:test`, y ejecuta Chromium a 1440×1000 y 390×844 en otra imagen fijada por digest.
+Escribe resultados JSON, trazas de fallos y capturas por tema e idioma en `artifacts/browser/`.
 Las capturas ayudan a revisar el diseño; no sustituyen revisión humana ni pruebas de accesibilidad exhaustivas.
 Los checks de paquetes ejecutados al construirlos pertenecen a angular-ui-runtime; tampoco certifican ARP.
 

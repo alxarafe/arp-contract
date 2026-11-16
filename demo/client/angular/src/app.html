@@ -1,14 +1,20 @@
 <div class="demo-controls">
-    <div class="demo-brand"><span class="demo-monogram">ARP</span><span>Laboratorio de contrato</span></div>
+    <div class="demo-brand"><span class="demo-monogram">ARP</span><span>{{ t('app.brand') }}</span></div>
     <div class="demo-selectors">
-        <label>Runtime
+        <label>{{ t('selector.runtime') }}
             <select data-testid="runtime" [value]="runtimeId()" (change)="selectRuntime($event)">
                 @for (item of runtimes; track item.id) { <option [value]="item.id">{{ item.label }}</option> }
             </select>
         </label>
-        <label>Tema
+        <label>{{ t('selector.theme') }}
             <select data-testid="theme" [value]="themes.current().id" (change)="selectTheme($event)">
                 @for (theme of registry.all; track theme.id) { <option [value]="theme.id">{{ theme.id }}</option> }
+            </select>
+        </label>
+        <label>{{ t('selector.language') }}
+            <select data-testid="language" [value]="i18n.current()" (change)="selectLanguage($event)">
+                <option value="es">{{ t('language.es') }}</option>
+                <option value="en">{{ t('language.en') }}</option>
             </select>
         </label>
     </div>
@@ -16,76 +22,79 @@
 <aur-theme-shell [heading]="heading" [content]="body" [footer]="footer" [navigation]="navigation()"
                  (navigationSelected)="selectCapability($event.itemId)" />
 <ng-template #heading>
-    <span class="demo-eyebrow">ARP-DEMO-001 · Explorador común</span>
-    <h1>Del contrato a la ejecución</h1>
+    <span class="demo-eyebrow">{{ t('heading.eyebrow') }}</span>
+    <h1>{{ t('heading.title') }}</h1>
 </ng-template>
 <ng-template #body>
     <div class="demo-content" [attr.data-active-theme]="themes.current().id">
         <section class="demo-intro">
-            <p>Explora las definiciones compartidas y comprueba qué está disponible en cada runtime.</p>
+            <p>{{ t('intro.description') }}</p>
             <p class="demo-note">
-                Los fixtures muestran resultados esperados; no son ejecuciones ni evidencia de conformidad.
+                {{ t('intro.evidence') }}
             </p>
         </section>
-        <section class="demo-instance" aria-label="Instancia de runtime">
+        <section class="demo-instance" [attr.aria-label]="t('instance.region')">
             <div>
-                <span class="demo-eyebrow">Instancia seleccionada</span>
+                <span class="demo-eyebrow">{{ t('instance.selected') }}</span>
                 <h2 data-testid="runtime-label">{{ runtime().label }}</h2>
             </div>
             @for (instance of [runtime()]; track instance.id) {
-                <label class="demo-url">URL de la instancia
-                    <input data-testid="instance-url" type="url" placeholder="http://localhost:puerto"
+                <label class="demo-url">{{ t('instance.url') }}
+                    <input data-testid="instance-url" type="url" [placeholder]="t('instance.placeholder')"
                            [value]="url()" (input)="configureUrl($event)" aria-describedby="connection-note url-error">
                 </label>
             }
-            <p id="url-error" role="alert">{{ urlError() }}</p>
+            <p id="url-error" role="alert">{{ urlError() ? t(urlError()!) : '' }}</p>
             <p id="connection-note" data-testid="connection-status">
-                {{ url() ? 'URL configurada' : 'Sin URL configurada' }} · Sin adaptador de navegador
+                {{ t(url() ? 'instance.configured' : 'instance.unconfigured') }} · {{ t('instance.adapter') }}
             </p>
-            <p>Esta URL no se ha consultado. Un repositorio Git no es un servicio en ejecución.</p>
+            <p>{{ t('instance.unqueried') }}</p>
             <small>
-                Inventario: {{ runtime().commit }} · {{ runtime().branch }}.
-                No se detecta la instancia automáticamente.
+                {{ t('instance.inventory') }}: {{ runtime().commit }} · {{ runtime().branch }}.
+                {{ t('instance.noDiscovery') }}
             </small>
         </section>
-        <section aria-label="Capacidades disponibles" class="demo-capabilities">
+        <section [attr.aria-label]="t('capabilities.region')" class="demo-capabilities">
             @for (item of capabilities; track item.id) {
                 <button class="demo-card" [attr.data-capability]="item.id"
                         [attr.aria-pressed]="capability().id === item.id" (click)="selectCapability(item.id)">
                     <span class="demo-number">{{ item.mark }}</span>
-                    <strong>{{ item.label }}</strong>
-                    <span>{{ item.status }}</span>
+                    <strong>{{ t(item.label) }}</strong>
+                    <span>{{ t(item.status) }}</span>
                 </button>
             }
         </section>
-        <section class="demo-scenario" aria-label="Explorador de escenarios">
+        <section class="demo-scenario" [attr.aria-label]="t('scenario.region')">
             <div class="demo-scenario-heading">
                 <div>
-                    <span class="demo-eyebrow">Definiciones y escenarios</span>
-                    <h2>{{ capability().label }}</h2>
+                    <span class="demo-eyebrow">{{ t('scenario.heading') }}</span>
+                    <h2>{{ t(capability().label) }}</h2>
                 </div>
-                <span class="demo-badge">Solo lectura</span>
+                <span class="demo-badge">{{ t('scenario.readonly') }}</span>
             </div>
-            <p data-testid="capability-detail">{{ capability().detail }}</p>
-            <button data-testid="execute" disabled aria-describedby="execution-limit">Ejecutar en runtime</button>
-            <p id="execution-limit">Pendiente: implementación o adaptador del backend. No se simulan llamadas.</p>
-            <label class="demo-file">Archivo original
+            <p data-testid="capability-detail">{{ t(capability().detail) }}</p>
+            <button data-testid="execute" disabled aria-describedby="execution-limit">
+                {{ t('scenario.execute') }}
+            </button>
+            <p id="execution-limit">{{ t('scenario.limit') }}</p>
+            <label class="demo-file">{{ t('scenario.file') }}
                 <select data-testid="source" [value]="source()" (change)="selectFile($event)">
                     @for (file of capability().files; track file) { <option [value]="file">{{ file }}</option> }
                 </select>
             </label>
             <p class="demo-note">
-                Contenido original sin conversión numérica. «expected» es una expectativa del fixture.
+                {{ t('scenario.exact') }}
             </p>
-            @if (loading()) { <p role="status">Cargando definición…</p> }
-            @if (error()) { <p role="alert">{{ error() }}</p> }
+            @if (loading()) { <p role="status">{{ t('scenario.loading') }}</p> }
+            @if (error()) { <p role="alert">{{ t(error()!) }}</p> }
             <pre data-testid="source-content" tabindex="0" [attr.aria-label]="source()">{{ content() }}</pre>
-            <a [href]="'contract/' + source()" download>Descargar archivo original</a>
+            <a [href]="'contract/' + source()" download>{{ t('scenario.download') }}</a>
         </section>
     </div>
 </ng-template>
 <ng-template #footer>
     <p class="demo-footer">
-        Contrato: {{ revision() }} · Temas reales de angular-ui-runtime · Borrador de demostración
+        {{ t('footer.contract') }}: {{ revision() }} ({{ t('footer.workingTree') }})
+        · {{ t('footer.themes') }} · {{ t('footer.draft') }}
     </p>
 </ng-template>

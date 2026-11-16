@@ -1,5 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ThemeRegistry, ThemeService, ThemeShellOutlet } from '@alxarafe/ui-runtime';
+import { LanguageService } from './i18n/language.service';
+import type { TranslationKey } from './i18n/types';
 import { CAPABILITIES, RUNTIMES, type RuntimeId } from './catalog';
 
 @Component({
@@ -8,6 +10,8 @@ import { CAPABILITIES, RUNTIMES, type RuntimeId } from './catalog';
     templateUrl: './app.html',
 })
 export class DemoApp {
+    readonly i18n = inject(LanguageService);
+    readonly t = this.i18n.t;
     readonly themes = inject(ThemeService);
     readonly registry = inject(ThemeRegistry);
     readonly runtimes = RUNTIMES;
@@ -16,15 +20,15 @@ export class DemoApp {
     readonly runtime = computed(() => RUNTIMES.find(item => item.id === this.runtimeId())!);
     readonly capability = signal<typeof CAPABILITIES[number]>(CAPABILITIES[0]);
     readonly navigation = computed(() => CAPABILITIES.map(item => ({
-        id: item.id, label: item.label, current: item.id === this.capability().id,
+        id: item.id, label: this.t(item.label), current: item.id === this.capability().id,
     })));
     readonly urls = signal<Record<RuntimeId, string>>({ dotnet: '', java: '', php: '' });
     readonly url = computed(() => this.urls()[this.runtimeId()]);
-    readonly urlError = signal('');
+    readonly urlError = signal<TranslationKey | undefined>(undefined);
     readonly source = signal('');
     readonly content = signal('');
     readonly loading = signal(false);
-    readonly error = signal('');
+    readonly error = signal<TranslationKey | undefined>(undefined);
     readonly revision = signal('');
     private loadSequence = 0;
     private readonly editedUrls = new Set<RuntimeId>();
@@ -56,14 +60,14 @@ export class DemoApp {
             }));
             this.revision.set(await revisionResponse.text());
         } catch {
-            this.urlError.set('No se pudo cargar la configuración. Puedes indicar las URLs manualmente.');
+            this.urlError.set('error.configuration');
         }
     }
 
     selectRuntime(event: Event): void {
         const id = (event.target as HTMLSelectElement).value;
         if (RUNTIMES.some(item => item.id === id)) this.runtimeId.set(id as RuntimeId);
-        this.urlError.set('');
+        this.urlError.set(undefined);
     }
 
     private invalidUrl(value: string): boolean {
@@ -80,11 +84,15 @@ export class DemoApp {
         const value = (event.target as HTMLInputElement).value.trim();
         this.editedUrls.add(this.runtimeId());
         if (this.invalidUrl(value)) {
-            this.urlError.set('Usa una URL http(s) absoluta, sin credenciales.');
+            this.urlError.set('error.url');
             return;
         }
         this.urls.update(urls => ({ ...urls, [this.runtimeId()]: value }));
-        this.urlError.set('');
+        this.urlError.set(undefined);
+    }
+
+    selectLanguage(event: Event): void {
+        this.i18n.select((event.target as HTMLSelectElement).value);
     }
 
     selectTheme(event: Event): void {
@@ -107,7 +115,7 @@ export class DemoApp {
         const sequence = ++this.loadSequence;
         this.source.set(path);
         this.content.set('');
-        this.error.set('');
+        this.error.set(undefined);
         this.loading.set(true);
         try {
             const response = await fetch(`contract/${path}`);
@@ -115,7 +123,7 @@ export class DemoApp {
             const text = await response.text();
             if (sequence === this.loadSequence) this.content.set(text);
         } catch {
-            if (sequence === this.loadSequence) this.error.set('No se pudo cargar el archivo del contrato.');
+            if (sequence === this.loadSequence) this.error.set('error.source');
         } finally {
             if (sequence === this.loadSequence) this.loading.set(false);
         }

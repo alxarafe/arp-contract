@@ -61,6 +61,6 @@ button, input, select { font: inherit; }
 @media (max-width: 540px) {
     .demo-controls { align-items: flex-start; flex-direction: column; padding: 1rem; }
     .demo-capabilities { grid-template-columns: 1fr; }
-    .demo-selectors { width: 100%; }
+    .demo-selectors { width: 100%; flex-wrap: wrap; }
     .demo-selectors label { flex: 1; }
 }

@@ -8,10 +8,12 @@ cd /tmp/aur
 npm ci --no-audit --no-fund
 npm run pack
 cp /source/package*.json /source/angular.json /source/tsconfig.json /tmp/client/
-cp -R /source/src /source/scripts /source/config /tmp/client/
+cp -R /source/src /source/scripts /source/config /source/tests /tmp/client/
 cd /tmp/client
 npm ci --no-audit --no-fund
 node scripts/install-packages.mjs
+./node_modules/.bin/tsc -p tests/unit/tsconfig.json
+node --test tests/unit/*.test.mjs
 npm run build
 mkdir -p /artifacts/site
 cp -R dist/browser/. /artifacts/site/
