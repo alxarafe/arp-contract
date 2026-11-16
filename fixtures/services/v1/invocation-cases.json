@@ -1,0 +1,2689 @@
+{
+  "feature": "ARP-SERVICES-002",
+  "status": "unreleased-draft",
+  "notes": "Candidate names. host and observed are private fixture setup; synthetic atomic boundary only.",
+  "cases": [
+    {
+      "id": "empty-update",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {},
+          "baseline": {}
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": false
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "single-field-update",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [
+            "price"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "different-field-no-conflict",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "B",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [
+            "code"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "same-field-conflict",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "55",
+              "proposed": "60"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmed-overwrite",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "60",
+            "rating": "8"
+          },
+          "writtenFields": [
+            "price"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "stale-confirmation-new-conflict",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "56",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "56",
+              "proposed": "60"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "56",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "mixed-conflict-is-atomic",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B",
+            "price": "60"
+          },
+          "baseline": {
+            "code": "A",
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "55",
+              "proposed": "60"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "historical-rating-intact",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "11"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "B",
+            "price": "50",
+            "rating": "11"
+          },
+          "writtenFields": [
+            "code"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "historical-rating-resubmitted",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "rating": "11"
+          },
+          "baseline": {
+            "rating": "11"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "11"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "11"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "historical-rating-corrected",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "rating": "8"
+          },
+          "baseline": {
+            "rating": "11"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "11"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [
+            "rating"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "valid-rating-made-invalid",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "rating": "11"
+          },
+          "baseline": {
+            "rating": "8"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "null-is-explicit-write",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "rating": null
+          },
+          "baseline": {
+            "rating": "8"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "baseline-required",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {}
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "PRECONDITION_REQUIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "field-not-exposed",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "exposedFields": [
+          "code",
+          "rating"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "field-not-writable",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "writableFields": [
+          "code",
+          "rating"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "operation-disabled",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "enabled": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "operation-not-authorized",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "authorized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "conflict-current-not-readable",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "readableFields": [
+          "code",
+          "rating"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "dependent-rule-can-reject",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "dependentRuleReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "numeric-equality-no-write",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "50.00"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50.0",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": false
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50.0",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "concurrent-same-intended-value-still-conflict",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "55"
+          },
+          "baseline": {
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "55",
+              "proposed": "55"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-field-must-be-in-changes",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "code": "B"
+            },
+            "baseline": {
+              "code": "A"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "50"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_CONFIRMATION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "multiple-conflicts-all-reported",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B",
+            "price": "60"
+          },
+          "baseline": {
+            "code": "A",
+            "price": "50"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "C",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "code",
+              "original": "A",
+              "actual": "C",
+              "proposed": "B"
+            },
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "55",
+              "proposed": "60"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "C",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "historical-correction-concurrently-changed",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "rating": "9"
+          },
+          "baseline": {
+            "rating": "11"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "rating",
+              "original": "11",
+              "actual": "8",
+              "proposed": "9"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "unrecognized-field-not-writable",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "unknown": "x"
+          },
+          "baseline": {
+            "unknown": "old"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UPDATE_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "unknown-target",
+      "request": {
+        "target": "arbitrary.method",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "unknown-operation",
+      "request": {
+        "target": "demo.items",
+        "operation": "arbitrary.method",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "unregistered-handler",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "registered": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "inaccessible-record",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "recordAccessible": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "invalid-definition",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "definitionValid": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "incompatible-storage",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "capacity": "incompatible"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "physical-incompatible",
+              "code": "INCOMPATIBLE_STORAGE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "unverified-storage",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "capacity": "not-verified"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNVERIFIED_CAPABILITY"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "commit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "commitFailure": true
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "COMMIT_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "race-at-commit",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "currentAtCommit": {
+          "code": "C",
+          "price": "50",
+          "rating": "8"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "code",
+              "original": "A",
+              "actual": "C",
+              "proposed": "B"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "C",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "aba-not-detectable-by-value",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "history": [
+          {
+            "code": "A"
+          },
+          {
+            "code": "C"
+          },
+          {
+            "code": "A"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "B",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [
+            "code"
+          ],
+          "effects": 1,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "client-trust-context",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        },
+        "context": {
+          "authorized": true,
+          "subject": "admin"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "authorized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "null-inputs",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": null
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "absent-inputs",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE"
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "missing-key",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A"
+          }
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "null-baseline",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "code": "B"
+          },
+          "baseline": null
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "local-delegated-success",
+      "request": {
+        "target": "demo.items",
+        "operation": "inspect",
+        "inputs": {}
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "accepted": true
+          }
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 1
+        }
+      }
+    },
+    {
+      "id": "handler-failure",
+      "request": {
+        "target": "demo.items",
+        "operation": "inspect",
+        "inputs": {}
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "handlerFailure": true
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "HANDLER_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 1
+        }
+      }
+    },
+    {
+      "id": "business-rejection",
+      "request": {
+        "target": "demo.items",
+        "operation": "inspect",
+        "inputs": {}
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "businessReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "BUSINESS_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 1
+        }
+      }
+    },
+    {
+      "id": "confirmation-changed-proposal",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "70"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_CONFIRMATION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-changed-context",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "other-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_CONFIRMATION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-expired",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": false,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_CONFIRMATION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-lost-authorization",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        },
+        "authorized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-lost-read",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        },
+        "readableFields": [
+          "code"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "55",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "confirmation-race-at-commit",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": "item-1",
+          "changes": {
+            "price": "60"
+          },
+          "baseline": {
+            "price": "50"
+          },
+          "confirmation": "opaque-demo-confirmation"
+        }
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "confirmationEvidence": {
+          "handle": "opaque-demo-confirmation",
+          "active": true,
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "price": "60"
+            },
+            "baseline": {
+              "price": "50"
+            },
+            "context": {
+              "subject": "demo-user",
+              "scope": "demo-scope"
+            }
+          },
+          "confirmedCurrent": {
+            "price": "55"
+          }
+        },
+        "currentAtCommit": {
+          "code": "A",
+          "price": "56",
+          "rating": "8"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "price",
+              "original": "50",
+              "actual": "56",
+              "proposed": "60"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "56",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 0
+        }
+      }
+    },
+    {
+      "id": "delegated-failure-unknown-effects-0",
+      "request": {
+        "target": "demo.items",
+        "operation": "inspect",
+        "inputs": {}
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "handlerFailure": true,
+        "handlerFailureEffects": 0
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "HANDLER_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 0,
+          "dispatches": 1
+        }
+      }
+    },
+    {
+      "id": "delegated-failure-unknown-effects-1",
+      "request": {
+        "target": "demo.items",
+        "operation": "inspect",
+        "inputs": {}
+      },
+      "host": {
+        "current": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "context": {
+          "subject": "demo-user",
+          "scope": "demo-scope"
+        },
+        "handlerFailure": true,
+        "handlerFailureEffects": 1
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "HANDLER_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": {
+            "code": "A",
+            "price": "50",
+            "rating": "8"
+          },
+          "writtenFields": [],
+          "effects": 1,
+          "dispatches": 1
+        }
+      }
+    }
+  ]
+}
