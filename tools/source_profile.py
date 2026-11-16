@@ -190,7 +190,7 @@ def _yaml(text):
     return model
 
 
-def parse_bytes(data, encoding):
+def parse_bytes(data, encoding, *, dictionary_document=True):
     if len(data) > MAX_BYTES:
         raise IntakeLimit('document bytes')
     text = data.decode('utf-8', errors='strict')
@@ -203,7 +203,8 @@ def parse_bytes(data, encoding):
     else:
         raise IntakeInvalid('unknown encoding')
     unicode_scalars(model)
-    if isinstance(model, dict) and isinstance(model.get('elements'), list) and len(model['elements']) > MAX_ELEMENTS:
+    if (dictionary_document and isinstance(model, dict) and isinstance(model.get('elements'), list)
+            and len(model['elements']) > MAX_ELEMENTS):
         raise IntakeLimit('elements per source')
     return model
 

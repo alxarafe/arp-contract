@@ -1,0 +1,22 @@
+{
+  "apiVersion": "arp.dictionary/v1",
+  "elements": [
+    {
+      "id": "demo.bounded",
+      "type": "INT16",
+      "constraints": {
+        "minimum": "2",
+        "maximum": "8"
+      }
+    },
+    {
+      "id": "demo.even",
+      "type": "INT16",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "10",
+        "multipleOf": "2"
+      }
+    }
+  ]
+}

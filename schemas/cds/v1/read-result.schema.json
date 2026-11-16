@@ -1,0 +1,345 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alxarafe.org/arp/drafts/cds/v1/read-result.schema.json",
+  "title": "CDS read candidate resolution result, not an authoring format or HTTP protocol",
+  "$defs": {
+    "field": {
+      "type": "object",
+      "required": [
+        "name",
+        "compatibility"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "compatibility": {
+          "enum": [
+            "compatible",
+            "not-verified"
+          ]
+        },
+        "physical": {
+          "$ref": "physical.schema.json#/properties/columns/items"
+        },
+        "dictionary": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "BOOLEAN",
+            "STRING",
+            "TEXT",
+            "INT8",
+            "UINT8",
+            "INT16",
+            "UINT16",
+            "INT32",
+            "UINT32",
+            "INT64",
+            "DECIMAL",
+            "UUID",
+            "DATE",
+            "TIME",
+            "DATETIME",
+            "ENUM",
+            "BINARY"
+          ]
+        },
+        "intrinsicConstraints": {
+          "type": "object"
+        },
+        "contextualConstraints": {
+          "type": "object"
+        },
+        "constraints": {
+          "type": "object"
+        },
+        "enumValues": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "nullable": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "hint": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "required": [
+              "type"
+            ]
+          },
+          "then": {
+            "required": [
+              "constraints"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "valid",
+        "issues",
+        "models",
+        "projections"
+      ],
+      "properties": {
+        "valid": {
+          "const": true
+        },
+        "issues": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "models": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "physical",
+              "fields"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "physical": {
+                "$ref": "physical.schema.json"
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/field"
+                    },
+                    {
+                      "required": [
+                        "physical"
+                      ]
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "projections": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "source",
+              "entity",
+              "fields",
+              "operations"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "source": {
+                "$ref": "projection.schema.json#/properties/source"
+              },
+              "entity": {
+                "type": "string"
+              },
+              "operations": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "enum": [
+                    "LIST",
+                    "GET"
+                  ]
+                }
+              },
+              "fields": {
+                "type": "array",
+                "items": {
+                  "allOf": [
+                    {
+                      "$ref": "#/$defs/field"
+                    },
+                    {
+                      "not": {
+                        "anyOf": [
+                          {
+                            "required": [
+                              "physical"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "intrinsicConstraints"
+                            ]
+                          },
+                          {
+                            "required": [
+                              "contextualConstraints"
+                            ]
+                          }
+                        ]
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "valid",
+        "issues"
+      ],
+      "properties": {
+        "valid": {
+          "const": false
+        },
+        "issues": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "family",
+              "code",
+              "at"
+            ],
+            "properties": {
+              "family": {
+                "enum": [
+                  "definition-invalid",
+                  "physical-incompatible",
+                  "operation-not-allowed",
+                  "invalid-data",
+                  "execution-failure"
+                ]
+              },
+              "code": {
+                "enum": [
+                  "CDS_READ_SOURCE_INVALID",
+                  "CDS_READ_LIMIT",
+                  "CDS_READ_SCHEMA_INVALID",
+                  "CDS_READ_DUPLICATE_ID",
+                  "CDS_READ_PHYSICAL_INVALID",
+                  "CDS_READ_REFERENCE_NOT_FOUND",
+                  "CDS_READ_UNKNOWN_FIELD",
+                  "CDS_READ_PROFILE_UNSUPPORTED",
+                  "CDS_READ_CONSTRAINT_WEAKENING",
+                  "CDS_READ_CONSTRAINT_CONTRADICTION",
+                  "CDS_READ_REFERENCE_CYCLE",
+                  "CDS_READ_FIELD_NOT_EXPOSED",
+                  "CDS_READ_OPERATION_EXPANSION",
+                  "CDS_READ_DOMAIN_NOT_REPRESENTABLE",
+                  "CDS_READ_OPERATION_UNSUPPORTED",
+                  "CDS_READ_OBSERVATION_FAILED",
+                  "CDS_READ_SNAPSHOT_CHANGED"
+                ]
+              },
+              "at": {
+                "type": "string",
+                "pattern": "^/"
+              }
+            },
+            "additionalProperties": false,
+            "anyOf": [
+              {
+                "properties": {
+                  "family": {
+                    "const": "definition-invalid"
+                  },
+                  "code": {
+                    "enum": [
+                      "CDS_READ_SOURCE_INVALID",
+                      "CDS_READ_LIMIT",
+                      "CDS_READ_SCHEMA_INVALID",
+                      "CDS_READ_DUPLICATE_ID",
+                      "CDS_READ_PHYSICAL_INVALID",
+                      "CDS_READ_REFERENCE_NOT_FOUND",
+                      "CDS_READ_UNKNOWN_FIELD",
+                      "CDS_READ_PROFILE_UNSUPPORTED",
+                      "CDS_READ_CONSTRAINT_WEAKENING",
+                      "CDS_READ_CONSTRAINT_CONTRADICTION",
+                      "CDS_READ_REFERENCE_CYCLE",
+                      "CDS_READ_FIELD_NOT_EXPOSED",
+                      "CDS_READ_OPERATION_EXPANSION"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "family": {
+                    "const": "physical-incompatible"
+                  },
+                  "code": {
+                    "enum": [
+                      "CDS_READ_DOMAIN_NOT_REPRESENTABLE"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "family": {
+                    "const": "operation-not-allowed"
+                  },
+                  "code": {
+                    "enum": [
+                      "CDS_READ_OPERATION_UNSUPPORTED"
+                    ]
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "family": {
+                    "const": "execution-failure"
+                  },
+                  "code": {
+                    "enum": [
+                      "CDS_READ_OBSERVATION_FAILED",
+                      "CDS_READ_SNAPSHOT_CHANGED"
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  ]
+}

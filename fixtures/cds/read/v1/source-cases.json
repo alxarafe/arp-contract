@@ -1,0 +1,117 @@
+{
+  "feature": "ARP-CDS-READ-001",
+  "execution": "intake-only",
+  "cases": [
+    {
+      "id": "json",
+      "encoding": "json",
+      "text": "{\"apiVersion\": \"arp.logical/v1\", \"id\": \"demo.items\", \"physical\": \"storage.items\", \"fields\": {}}",
+      "expected": {
+        "apiVersion": "arp.logical/v1",
+        "id": "demo.items",
+        "physical": "storage.items",
+        "fields": {}
+      }
+    },
+    {
+      "id": "yaml-equivalent",
+      "encoding": "yaml",
+      "text": "apiVersion: arp.logical/v1\nid: demo.items\nphysical: storage.items\nfields: {}",
+      "expected": {
+        "apiVersion": "arp.logical/v1",
+        "id": "demo.items",
+        "physical": "storage.items",
+        "fields": {}
+      }
+    },
+    {
+      "id": "duplicate-json",
+      "encoding": "json",
+      "text": "{\"id\":\"a\",\"id\":\"b\"}",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "malformed-json",
+      "encoding": "json",
+      "text": "{",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "surrogate-json",
+      "encoding": "json",
+      "text": "{\"label\":\"\\ud800\"}",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "alias-yaml",
+      "encoding": "yaml",
+      "text": "a: &a {}\nb: *a",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "tag-yaml",
+      "encoding": "yaml",
+      "text": "!!python/object:Something {}",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "directive-yaml",
+      "encoding": "yaml",
+      "text": "%YAML 1.2\n---\na: 1",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "two-documents",
+      "encoding": "yaml",
+      "text": "a: 1\n---\nb: 2",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "invalid-utf8",
+      "encoding": "json",
+      "bytesHex": "ff",
+      "expectedError": {
+        "family": "definition-invalid",
+        "code": "CDS_READ_SOURCE_INVALID",
+        "at": "/sources/s"
+      }
+    },
+    {
+      "id": "exact-mathematical-integer",
+      "encoding": "json",
+      "text": "{\"ordinal\":1.0,\"capacity\":1e127}",
+      "expected": {
+        "ordinal": 1,
+        "capacity": 10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+      }
+    }
+  ]
+}
