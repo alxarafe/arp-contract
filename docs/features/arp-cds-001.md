@@ -5,6 +5,10 @@
 **Dependencia:** ARP-DICT-001. No modifica el contrato de los 17 tipos escalares.
 **Marco:** `docs/architecture.md` y [`docs/decisions/ARP_CDS_modelo_semantico_primera_integracion_Angular.md`](../decisions/ARP_CDS_modelo_semantico_primera_integracion_Angular.md).
 
+El subconjunto mínimo de lectura y sus cierres propuestos se especifican en
+[ARP-CDS-READ-001](arp-cds-read-001.md). Reutiliza los tres esquemas de autoría existentes;
+no los sustituye ni aprueba automáticamente los puntos más amplios de este documento.
+
 ## 1. Fronteras y finalidad
 
 ARP aporta contratos neutrales y mecanismos reutilizables. Las aplicaciones aportan los modelos propios, el registro de fuentes y módulos, los validadores y operaciones de dominio, las autorizaciones y la persistencia. **ARP no es un ERP.** El diccionario debe poder usarse sin SQL ni Angular; ningún módulo implica necesariamente CRUD.

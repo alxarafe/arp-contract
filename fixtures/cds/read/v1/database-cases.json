@@ -1,0 +1,296 @@
+{
+  "feature": "ARP-CDS-READ-001",
+  "status": "candidate-for-review",
+  "execution": "REQUIRES_REAL_DB_NOT_EXECUTED",
+  "inputs": "same logical/read projection declarations as pure cases",
+  "comparison": "Assert verified facts above; nativeType stays verbatim and must be nonempty. Feed the actual observation into the pure resolver; do not substitute illustrative observations.",
+  "engines": [
+    {
+      "engine": "postgresql",
+      "stacks": [
+        "java",
+        "dotnet"
+      ],
+      "setupSql": "examples/demo/sql/postgresql.sql",
+      "isolation": "new disposable database/schema owned by the test; never execute setup against an existing application",
+      "observedFacts": {
+        "source.dialect": "postgresql",
+        "source.engineVersion": "must equal independently queried connection version",
+        "source.provider": "primary",
+        "source.name": "items",
+        "source.schema": "must equal configured owned test scope",
+        "columnOrder": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "scalarTypes": {
+          "id": "INT32",
+          "code": "STRING",
+          "rating": "INT16"
+        },
+        "nullable": {
+          "id": false,
+          "code": false,
+          "rating": false
+        },
+        "primaryKey": [
+          "id"
+        ],
+        "rating.integerRange": {
+          "minimum": "-32768",
+          "maximum": "32767"
+        },
+        "code.characterLength": {
+          "value": 12,
+          "unit": "CHARACTERS"
+        }
+      },
+      "cases": [
+        {
+          "id": "lazy-generation",
+          "assert": {
+            "observationsBeforeFirstResolve": 0,
+            "observationsAfterFirstResolve": 1,
+            "logicalFieldNames": [
+              "code",
+              "id",
+              "rating"
+            ],
+            "publicFieldNames": [
+              "id",
+              "code",
+              "rating"
+            ],
+            "summaryFieldNames": [
+              "code",
+              "id"
+            ],
+            "ratingCompatibility": "compatible"
+          }
+        },
+        {
+          "id": "add-column-and-invalidate",
+          "ddl": "ALTER TABLE items ADD COLUMN internal_note TEXT",
+          "assert": {
+            "regenerateOnNextUse": true,
+            "logicalFieldNames": [
+              "code",
+              "id",
+              "internal_note",
+              "rating"
+            ],
+            "publicFieldNames": [
+              "id",
+              "code",
+              "rating"
+            ],
+            "summaryFieldNames": [
+              "code",
+              "id"
+            ],
+            "overlayBytesUnchanged": true
+          }
+        },
+        {
+          "id": "remove-specialized-column-and-invalidate",
+          "ddl": "ALTER TABLE items DROP COLUMN rating",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "definition-invalid",
+                "code": "CDS_READ_UNKNOWN_FIELD",
+                "at": "/logical/model/fields"
+              }
+            ]
+          },
+          "assert": {
+            "overlayBytesUnchanged": true,
+            "noCurrentPartialPublication": true
+          }
+        },
+        {
+          "id": "observation-fails-after-invalidation",
+          "fault": "make the owned registered connection unavailable",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "execution-failure",
+                "code": "CDS_READ_OBSERVATION_FAILED",
+                "at": "/providers/primary"
+              }
+            ]
+          },
+          "assert": {
+            "noStaleCurrentPublication": true,
+            "noExceptionTrace": true
+          }
+        },
+        {
+          "id": "invalidation-during-generation",
+          "fault": "invalidate the local generation before its result is published",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "execution-failure",
+                "code": "CDS_READ_SNAPSHOT_CHANGED",
+                "at": "/snapshot"
+              }
+            ]
+          },
+          "assert": {
+            "noStaleCurrentPublication": true
+          }
+        }
+      ],
+      "resolutionCase": "postgresql-same-logical-projections",
+      "dictionary": "fixtures/dictionary/v1/catalog.json"
+    },
+    {
+      "engine": "mariadb",
+      "stacks": [
+        "php"
+      ],
+      "setupSql": "examples/demo/sql/mariadb.sql",
+      "isolation": "new disposable database/schema owned by the test; never execute setup against an existing application",
+      "observedFacts": {
+        "source.dialect": "mariadb",
+        "source.engineVersion": "must equal independently queried connection version",
+        "source.provider": "primary",
+        "source.name": "items",
+        "source.schema": "must equal configured owned test scope",
+        "columnOrder": [
+          "id",
+          "code",
+          "rating"
+        ],
+        "scalarTypes": {
+          "id": "INT32",
+          "code": "STRING",
+          "rating": "INT8"
+        },
+        "nullable": {
+          "id": false,
+          "code": false,
+          "rating": false
+        },
+        "primaryKey": [
+          "id"
+        ],
+        "rating.integerRange": {
+          "minimum": "-128",
+          "maximum": "127"
+        },
+        "code.characterLength": {
+          "value": 12,
+          "unit": "CHARACTERS"
+        }
+      },
+      "cases": [
+        {
+          "id": "lazy-generation",
+          "assert": {
+            "observationsBeforeFirstResolve": 0,
+            "observationsAfterFirstResolve": 1,
+            "logicalFieldNames": [
+              "code",
+              "id",
+              "rating"
+            ],
+            "publicFieldNames": [
+              "id",
+              "code",
+              "rating"
+            ],
+            "summaryFieldNames": [
+              "code",
+              "id"
+            ],
+            "ratingCompatibility": "compatible"
+          }
+        },
+        {
+          "id": "add-column-and-invalidate",
+          "ddl": "ALTER TABLE items ADD COLUMN internal_note TEXT",
+          "assert": {
+            "regenerateOnNextUse": true,
+            "logicalFieldNames": [
+              "code",
+              "id",
+              "internal_note",
+              "rating"
+            ],
+            "publicFieldNames": [
+              "id",
+              "code",
+              "rating"
+            ],
+            "summaryFieldNames": [
+              "code",
+              "id"
+            ],
+            "overlayBytesUnchanged": true
+          }
+        },
+        {
+          "id": "remove-specialized-column-and-invalidate",
+          "ddl": "ALTER TABLE items DROP COLUMN rating",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "definition-invalid",
+                "code": "CDS_READ_UNKNOWN_FIELD",
+                "at": "/logical/model/fields"
+              }
+            ]
+          },
+          "assert": {
+            "overlayBytesUnchanged": true,
+            "noCurrentPartialPublication": true
+          }
+        },
+        {
+          "id": "observation-fails-after-invalidation",
+          "fault": "make the owned registered connection unavailable",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "execution-failure",
+                "code": "CDS_READ_OBSERVATION_FAILED",
+                "at": "/providers/primary"
+              }
+            ]
+          },
+          "assert": {
+            "noStaleCurrentPublication": true,
+            "noExceptionTrace": true
+          }
+        },
+        {
+          "id": "invalidation-during-generation",
+          "fault": "invalidate the local generation before its result is published",
+          "expected": {
+            "valid": false,
+            "issues": [
+              {
+                "family": "execution-failure",
+                "code": "CDS_READ_SNAPSHOT_CHANGED",
+                "at": "/snapshot"
+              }
+            ]
+          },
+          "assert": {
+            "noStaleCurrentPublication": true
+          }
+        }
+      ],
+      "resolutionCase": "mariadb-independent-identities",
+      "dictionary": "fixtures/dictionary/v1/catalog.json"
+    }
+  ]
+}

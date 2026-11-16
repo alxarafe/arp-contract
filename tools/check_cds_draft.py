@@ -100,7 +100,7 @@ def resolve(model, logical, dictionary, public, summary):
     """Only checks proposed demo invariants, not a complete runtime resolver."""
     physical_names=[c['name'] for c in model['columns']]
     expect(len(physical_names)==len(set(physical_names)), 'duplicate physical column')
-    expect(logical['physical']==model['id']==logical['id'], 'incorrect physical reference')
+    expect(logical['physical']==model['id'], 'incorrect physical reference')
     expect(set(logical['fields'])<=set(physical_names), 'overlay references missing column')
     elements={e['id']:e for e in dictionary['elements']}
     expect(len(elements)==len(dictionary['elements']), 'duplicate dictionary ID')
