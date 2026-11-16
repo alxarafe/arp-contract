@@ -17,11 +17,19 @@ Los formatos `arp.physical/v1`, `arp.logical/v1` y `arp.projection/v1` y los JSO
 
 El adaptador de almacenamiento observa una tabla o vista **real** y genera, si se necesita y no está disponible, su descripción física. La descripción es un artefacto regenerable y **no editable por el usuario**; la base de datos sigue siendo autoridad. No se inspecciona todo el esquema al arrancar ni se exige sondeo periódico.
 
-La propuesta `arp.physical/v1` identifica un objeto físico y su fuente registrada (`provider`, `dialect`, `schema`, `name`) y describe columnas comprobadas. `nativeType` conserva la información propia del motor; `scalarType`, `minimum`, `maximum`, `maximumLength`, `nullable` y `primaryKey` solo se declaran cuando el adaptador **pueda verificarlos**. Omitir una propiedad significa **no verificado**, nunca compatible por defecto. No debe inferirse negocio del nombre de una columna.
+La propuesta `arp.physical/v1` identifica un objeto físico y su fuente registrada (`provider`, `dialect`, `schema`, `name`) y describe columnas comprobadas. `nativeType` conserva la información propia del motor; `scalarType`, `integerRange`, `characterLength`, `nullable` y `primaryKey` solo se declaran cuando el adaptador **pueda verificarlos**. Omitir una propiedad significa **no verificado**, nunca compatible por defecto. No debe inferirse negocio del nombre de una columna.
 
 La invalidación explícita tras DDL controlado invalida tanto la descripción generada como los catálogos lógicos efectivos y las proyecciones compiladas dependientes. El siguiente acceso regenera y verifica. Cambios SQL externos requieren invalidación explícita/manual. La regeneración fallida no publica un resultado parcial. Los detalles de atomicidad, concurrencia, caché multinstancia y alcance por tenant están pendientes.
 
 La aplicación decide a qué módulo pertenece el recurso. Desactivar un módulo no borra tablas ni YAML del usuario; oculta los servicios activos. Reactivarlo exige resolver y validar de nuevo.
+
+La ampliación física de `ARP-CDS-PHY-001` ya se expresa en un **único esquema**
+`schemas/cds/v1/physical.schema.json`: incorpora `integerRange`, `characterLength`
+con unidad, geometría decimal, ordinal, claves primarias compuestas, índices,
+claves externas y columnas generadas, manteniendo `id`, `kind`, `source` y
+`scalarType`. `primaryKey` se declara a nivel de objeto; desaparece el booleano
+por columna. La fuente de verdad sigue siendo la BD real, no el fixture.
+Véase [`arp-cds-phy-001-borrador.md`](arp-cds-phy-001-borrador.md).
 
 ## 3. Overlay lógico y compatibilidad (D01, D07)
 

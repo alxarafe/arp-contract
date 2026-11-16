@@ -40,7 +40,7 @@ class CdsDraftTests(unittest.TestCase):
     def test_known_integer_capacity_without_explicit_maximum(self):
         physical=deepcopy(self.mdb)
         rating=next(x for x in physical['columns'] if x['name']=='rating')
-        rating.pop('maximum')
+        rating.pop('integerRange')
         self.assertEqual(c.integer_capacity_status(rating,{'minimum':'0','maximum':'10'}),
                          'compatible')
         effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
@@ -57,7 +57,7 @@ class CdsDraftTests(unittest.TestCase):
                              for c in physical['columns']]
         c.validate_document(self.schemas['physical'],physical)
         self.assertNotIn('scalarType',rating)
-        self.assertNotIn('maximum',rating)
+        self.assertNotIn('integerRange',rating)
         self.assertEqual(c.integer_capacity_status(rating,{'minimum':'0','maximum':'10'}),
                          'not-verified')
         effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],

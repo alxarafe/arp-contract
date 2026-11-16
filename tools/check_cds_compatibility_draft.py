@@ -83,10 +83,13 @@ def structural_status(case):
     if ptype not in INTEGER_RANGES:
         return 'not-verified'
     plo, phi = map(Decimal, INTEGER_RANGES[ptype])
-    if 'minimum' in phys:
-        plo = max(plo, _exact_bound(phys['minimum']))
-    if 'maximum' in phys:
-        phi = min(phi, _exact_bound(phys['maximum']))
+    extent = phys.get('integerRange', {})
+    lower_bound = extent.get('minimum')
+    upper_bound = extent.get('maximum')
+    if lower_bound is not None:
+        plo = max(plo, _exact_bound(lower_bound))
+    if upper_bound is not None:
+        phi = min(phi, _exact_bound(upper_bound))
     if plo > phi:
         return 'incompatible'
     return 'compatible' if plo <= lo and hi <= phi else 'incompatible'

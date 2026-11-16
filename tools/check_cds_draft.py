@@ -35,10 +35,13 @@ def integer_capacity_status(physical, logical_constraints):
     if integer_type not in INTEGER_RANGES:
         return 'not-verified'
     lower, upper = map(Decimal, INTEGER_RANGES[integer_type])
-    if 'minimum' in physical:
-        lower = max(lower, Decimal(physical['minimum']))
-    if 'maximum' in physical:
-        upper = min(upper, Decimal(physical['maximum']))
+    extent = physical.get('integerRange', {})
+    lower_bound = extent.get('minimum')
+    upper_bound = extent.get('maximum')
+    if lower_bound is not None:
+        lower = max(lower, Decimal(lower_bound))
+    if upper_bound is not None:
+        upper = min(upper, Decimal(upper_bound))
     if lower > upper:
         return 'incompatible'
     if ('minimum' in logical_constraints and
@@ -219,7 +222,7 @@ def check(root=ROOT):
             expect(physical['source']['dialect'] == 'opaque-test-adapter',
                    'unknown example must be labeled synthetic')
             expect('scalarType' not in rating and
-                   'minimum' not in rating and 'maximum' not in rating,
+                   'integerRange' not in rating,
                    'opaque rating accidentally exposes a known type or bound')
             expect(outcome['capacityStatuses']['rating'] == case['expected']['capacityStatus'],
                    'unknown numeric capacity must be reported not-verified')

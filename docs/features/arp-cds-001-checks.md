@@ -79,3 +79,19 @@ PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
 Estos vectores propuestos no constituyen aún una adopción contractual por Java,
 .NET o PHP; la formalización del protocolo de ejecución, restricciones no
 enteras, concurrencia y metadatos de UI permanece pendiente.
+
+
+## Integración del catálogo físico recuperado (ARP-CDS-PHY-001)
+
+El único esquema físico candidato es `schemas/cds/v1/physical.schema.json`.
+Los casos `fixtures/physical/v1` se validan contra ese mismo esquema; la
+antigua variante de `schemas/physical/v1` deja de existir. El checker de
+compatibilidad entera consume ahora `integerRange`, y la nulabilidad/longitud
+no verificada continúa expresándose mediante omisión. Se mantienen pruebas
+estáticas; no constituyen conformidad de los adaptadores reales.
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 -m unittest discover -s tests -v
+PYTHONDONTWRITEBYTECODE=1 python3 tools/check_cds_draft.py
+PYTHONDONTWRITEBYTECODE=1 python3 tools/check_cds_compatibility_draft.py
+```
