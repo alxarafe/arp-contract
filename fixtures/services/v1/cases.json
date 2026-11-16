@@ -1,0 +1,673 @@
+{
+  "feature": "ARP-SERVICES-001",
+  "status": "unreleased-draft",
+  "scope": "UPDATE-partial-field-concurrency",
+  "notes": "Synthetic in-memory comparison; no actual SQL, auth, or runtime conformance.",
+  "cases": [
+    {
+      "id": "empty-update",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {},
+      "changes": {},
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "single-field-update",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [
+          "price"
+        ]
+      }
+    },
+    {
+      "id": "different-field-no-conflict",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "code": "A"
+      },
+      "changes": {
+        "code": "B"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "B",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [
+          "code"
+        ]
+      }
+    },
+    {
+      "id": "same-field-conflict",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "60"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "price",
+            "original": "50",
+            "actual": "55",
+            "proposed": "60"
+          }
+        ]
+      }
+    },
+    {
+      "id": "confirmed-overwrite",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "60"
+      },
+      "confirmedCurrent": {
+        "price": "55"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "price": "60",
+          "rating": "8"
+        },
+        "writtenFields": [
+          "price"
+        ]
+      }
+    },
+    {
+      "id": "stale-confirmation-new-conflict",
+      "current": {
+        "code": "A",
+        "price": "56",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "60"
+      },
+      "confirmedCurrent": {
+        "price": "55"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "A",
+          "price": "56",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "price",
+            "original": "50",
+            "actual": "56",
+            "proposed": "60"
+          }
+        ]
+      }
+    },
+    {
+      "id": "mixed-conflict-is-atomic",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "code": "A",
+        "price": "50"
+      },
+      "changes": {
+        "code": "B",
+        "price": "60"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "price",
+            "original": "50",
+            "actual": "55",
+            "proposed": "60"
+          }
+        ]
+      }
+    },
+    {
+      "id": "historical-rating-intact",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "11"
+      },
+      "baseline": {
+        "code": "A"
+      },
+      "changes": {
+        "code": "B"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "B",
+          "price": "50",
+          "rating": "11"
+        },
+        "writtenFields": [
+          "code"
+        ]
+      }
+    },
+    {
+      "id": "historical-rating-resubmitted",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "11"
+      },
+      "baseline": {
+        "rating": "11"
+      },
+      "changes": {
+        "rating": "11"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "11"
+        },
+        "writtenFields": [],
+        "field": "rating"
+      }
+    },
+    {
+      "id": "historical-rating-corrected",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "11"
+      },
+      "baseline": {
+        "rating": "11"
+      },
+      "changes": {
+        "rating": "8"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": [
+          "rating"
+        ]
+      }
+    },
+    {
+      "id": "valid-rating-made-invalid",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "rating": "8"
+      },
+      "changes": {
+        "rating": "11"
+      },
+      "expected": {
+        "status": "invalid-data",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "field": "rating"
+      }
+    },
+    {
+      "id": "null-is-explicit-write",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "rating": "8"
+      },
+      "changes": {
+        "rating": null
+      },
+      "expected": {
+        "status": "invalid-data",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "field": "rating"
+      }
+    },
+    {
+      "id": "baseline-required",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {},
+      "changes": {
+        "price": "55"
+      },
+      "expected": {
+        "status": "precondition-required",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "field-not-exposed",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "exposedFields": [
+        "code",
+        "rating"
+      ],
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "field-not-writable",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "writableFields": [
+        "code",
+        "rating"
+      ],
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "operation-disabled",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "operationEnabled": false,
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "operation-not-authorized",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "authorized": false,
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "conflict-current-not-readable",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "60"
+      },
+      "readableFields": [
+        "code",
+        "rating"
+      ],
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "dependent-rule-can-reject",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "code": "A"
+      },
+      "changes": {
+        "code": "B"
+      },
+      "dependentRuleReject": true,
+      "expected": {
+        "status": "invalid-data",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "field": "_dependent"
+      }
+    },
+    {
+      "id": "numeric-equality-no-write",
+      "current": {
+        "code": "A",
+        "price": "50.0",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "50.00"
+      },
+      "expected": {
+        "status": "accepted",
+        "persisted": {
+          "code": "A",
+          "price": "50.0",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "concurrent-same-intended-value-still-conflict",
+      "current": {
+        "code": "A",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "price": "50"
+      },
+      "changes": {
+        "price": "55"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "A",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "price",
+            "original": "50",
+            "actual": "55",
+            "proposed": "55"
+          }
+        ]
+      }
+    },
+    {
+      "id": "confirmation-field-must-be-in-changes",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "code": "A"
+      },
+      "changes": {
+        "code": "B"
+      },
+      "confirmedCurrent": {
+        "price": "50"
+      },
+      "expected": {
+        "status": "definition-invalid",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    },
+    {
+      "id": "multiple-conflicts-all-reported",
+      "current": {
+        "code": "C",
+        "price": "55",
+        "rating": "8"
+      },
+      "baseline": {
+        "code": "A",
+        "price": "50"
+      },
+      "changes": {
+        "code": "B",
+        "price": "60"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "C",
+          "price": "55",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "code",
+            "original": "A",
+            "actual": "C",
+            "proposed": "B"
+          },
+          {
+            "field": "price",
+            "original": "50",
+            "actual": "55",
+            "proposed": "60"
+          }
+        ]
+      }
+    },
+    {
+      "id": "historical-correction-concurrently-changed",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "rating": "11"
+      },
+      "changes": {
+        "rating": "9"
+      },
+      "expected": {
+        "status": "conflict",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": [],
+        "conflicts": [
+          {
+            "field": "rating",
+            "original": "11",
+            "actual": "8",
+            "proposed": "9"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unrecognized-field-not-writable",
+      "current": {
+        "code": "A",
+        "price": "50",
+        "rating": "8"
+      },
+      "baseline": {
+        "unknown": "old"
+      },
+      "changes": {
+        "unknown": "x"
+      },
+      "expected": {
+        "status": "operation-not-allowed",
+        "persisted": {
+          "code": "A",
+          "price": "50",
+          "rating": "8"
+        },
+        "writtenFields": []
+      }
+    }
+  ]
+}
