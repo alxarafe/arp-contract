@@ -2,9 +2,9 @@ import type { TranslationKey } from './i18n/types';
 
 // Demo inventory, not runtime discovery or a normative capability protocol.
 export const RUNTIMES = [
-    { id: 'dotnet', label: '.NET', commit: 'd9a0acf', branch: 'main' },
-    { id: 'java', label: 'Java', commit: '5888272', branch: 'main' },
-    { id: 'php', label: 'PHP', commit: '6c4b781', branch: 'release/arp-dict-001-v0.1.0-rc1' },
+    { id: 'dotnet', label: '.NET', commit: '442cd19', branch: 'main' },
+    { id: 'java', label: 'Java', commit: 'a76f2d5', branch: 'main' },
+    { id: 'php', label: 'PHP', commit: '419cb8f', branch: 'main' },
 ] as const;
 export type RuntimeId = typeof RUNTIMES[number]['id'];
 

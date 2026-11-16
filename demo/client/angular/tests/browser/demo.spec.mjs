@@ -106,7 +106,7 @@ test('Spanish is initial and language changes immediately without a reload', asy
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page).toHaveTitle('ARP · Capability explorer');
     await expect(page.locator('aur-theme-shell nav')).toContainText('Dictionary and validation');
-    await expect(page.getByTestId('connection-status')).toContainText('Explicit .NET demo adapter');
+    await expect(page.getByTestId('connection-status')).toContainText('Explicit demo adapter');
     await expect(page.getByRole('link', { name: 'Download original file' })).toBeVisible();
     await page.getByTestId('language').selectOption('es');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Del contrato a la ejecución');

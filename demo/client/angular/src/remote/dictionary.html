@@ -8,8 +8,12 @@
     <p data-testid="remote-status" role="status">{{ t(status()) }}</p>
     @if (issue()) { <p role="alert">{{ t(issue()!) }}</p> }
     @if (connected()) {
+        <ul data-testid="remote-capabilities">
+            @for (capability of capabilities(); track capability) { <li>{{ capability }}</li> }
+        </ul>
+        @if (!can('dictionary.list')) { <p>{{ t('remote.noList') }}</p> }
         <label class="demo-file">{{ t('remote.element') }}
-            <select data-testid="remote-element" [value]="selected()" [disabled]="busy()"
+            <select data-testid="remote-element" [value]="selected()" [disabled]="busy() || !can('dictionary.list')"
                     (change)="selectElement($event)">
                 <option value="">{{ t('remote.choose') }}</option>
                 @for (item of elements(); track item.id) {
@@ -18,8 +22,10 @@
             </select>
         </label>
         @if (selected()) {
-            <h3>{{ t('remote.descriptor') }}</h3>
-            <pre data-testid="remote-descriptor" tabindex="0">{{ descriptor() }}</pre>
+            @if (can('dictionary.describe')) {
+                <h3>{{ t('remote.descriptor') }}</h3>
+                <pre data-testid="remote-descriptor" tabindex="0">{{ descriptor() }}</pre>
+            }
             <label class="demo-file">{{ t('remote.codec') }}
                 <select data-testid="remote-codec" [value]="codec()" (change)="setCodec($event)" [disabled]="busy()">
                     <option value="string">string</option>
@@ -39,7 +45,8 @@
                 } @else { <code>null</code> }
             </label>
             <p>{{ t('remote.exact') }}</p>
-            <button data-testid="remote-validate" [disabled]="busy()" (click)="validate()">
+            <button data-testid="remote-validate" [disabled]="busy() || !can('dictionary.validate')"
+                    (click)="validate()">
                 {{ t('remote.validate') }}
             </button>
         }

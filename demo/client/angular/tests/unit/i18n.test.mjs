@@ -1,8 +1,8 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { translate } from '../../out-unit/translate.js';
-import { EN } from '../../out-unit/en.js';
-import { ES } from '../../out-unit/es.js';
+import { translate } from '../../out-unit/i18n/translate.js';
+import { EN } from '../../out-unit/i18n/en.js';
+import { ES } from '../../out-unit/i18n/es.js';
 
 test('English reference covers declared translations and all reference keys resolve in both languages', () => {
     for (const key of Object.keys(ES)) assert.ok(Object.hasOwn(EN, key));
