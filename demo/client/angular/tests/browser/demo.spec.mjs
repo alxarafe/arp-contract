@@ -1,15 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { readFile } from 'node:fs/promises';
 
+const clientOrigin = process.env.ARP_DEMO_CLIENT_ORIGIN ?? 'http://127.0.0.1:4173';
 const capabilities = ['dictionary', 'entities', 'projections', 'crud', 'services'];
 
 test('runtime selection retains independent URLs without calling a fabricated API', async ({ page }) => {
     const remote = [];
     page.on('request', request => {
-        if (!request.url().startsWith('http://127.0.0.1:4173/')) remote.push(request.url());
+        if (!request.url().startsWith(`${clientOrigin}/`)) remote.push(request.url());
     });
     await page.goto('/');
     await expect(page.getByTestId('runtime-label')).toHaveText('.NET');
+    await expect(page.getByTestId('theme')).toHaveValue('default');
     await page.getByTestId('instance-url').fill('http://localhost:8001/demo');
     await page.getByTestId('instance-url').press('Tab');
     await page.getByTestId('runtime').selectOption('java');
@@ -21,7 +23,7 @@ test('runtime selection retains independent URLs without calling a fabricated AP
     await expect(page.getByTestId('runtime-label')).toHaveText('PHP');
     await page.getByTestId('runtime').selectOption('dotnet');
     await expect(page.getByTestId('instance-url')).toHaveValue('http://localhost:8001/demo');
-    await expect(page.getByTestId('connection-status')).toContainText('Sin adaptador');
+    await expect(page.getByTestId('connection-status')).toContainText('Adaptador explícito');
     expect(remote).toEqual([]);
 });
 
@@ -104,7 +106,7 @@ test('Spanish is initial and language changes immediately without a reload', asy
     await expect(page.locator('html')).toHaveAttribute('lang', 'en');
     await expect(page).toHaveTitle('ARP · Capability explorer');
     await expect(page.locator('aur-theme-shell nav')).toContainText('Dictionary and validation');
-    await expect(page.getByTestId('connection-status')).toContainText('No browser adapter');
+    await expect(page.getByTestId('connection-status')).toContainText('Explicit .NET demo adapter');
     await expect(page.getByRole('link', { name: 'Download original file' })).toBeVisible();
     await page.getByTestId('language').selectOption('es');
     await expect(page.getByRole('heading', { level: 1 })).toHaveText('Del contrato a la ejecución');

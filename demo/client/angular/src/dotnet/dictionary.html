@@ -1,0 +1,51 @@
+<section class="demo-scenario" [attr.aria-label]="t('remote.heading')">
+    <h2>{{ t('remote.heading') }}</h2>
+    <p>{{ t('remote.scope') }}</p>
+    <button data-testid="remote-connect" [disabled]="!baseUrl() || busy()" (click)="connect()">
+        {{ t('remote.connect') }}
+    </button>
+    <button data-testid="remote-disconnect" (click)="disconnect()">{{ t('remote.disconnect') }}</button>
+    <p data-testid="remote-status" role="status">{{ t(status()) }}</p>
+    @if (issue()) { <p role="alert">{{ t(issue()!) }}</p> }
+    @if (connected()) {
+        <label class="demo-file">{{ t('remote.element') }}
+            <select data-testid="remote-element" [value]="selected()" [disabled]="busy()"
+                    (change)="selectElement($event)">
+                <option value="">{{ t('remote.choose') }}</option>
+                @for (item of elements(); track item.id) {
+                    <option [value]="item.id">{{ item.id }} · {{ item.type }}</option>
+                }
+            </select>
+        </label>
+        @if (selected()) {
+            <h3>{{ t('remote.descriptor') }}</h3>
+            <pre data-testid="remote-descriptor" tabindex="0">{{ descriptor() }}</pre>
+            <label class="demo-file">{{ t('remote.codec') }}
+                <select data-testid="remote-codec" [value]="codec()" (change)="setCodec($event)" [disabled]="busy()">
+                    <option value="string">string</option>
+                    <option value="boolean">boolean</option>
+                    <option value="null">null</option>
+                </select>
+            </label>
+            <label class="demo-file">{{ t('remote.value') }}
+                @if (codec() === 'boolean') {
+                    <select data-testid="remote-value" [value]="value()" (change)="setValue($event)"
+                            [disabled]="busy()">
+                        <option value="true">true</option><option value="false">false</option>
+                    </select>
+                } @else if (codec() === 'string') {
+                    <input data-testid="remote-value" type="text" [value]="value()" (input)="setValue($event)"
+                           [disabled]="busy()">
+                } @else { <code>null</code> }
+            </label>
+            <p>{{ t('remote.exact') }}</p>
+            <button data-testid="remote-validate" [disabled]="busy()" (click)="validate()">
+                {{ t('remote.validate') }}
+            </button>
+        }
+    }
+    @if (result()) {
+        <h3>{{ t('remote.result') }}</h3>
+        <pre data-testid="remote-result" tabindex="0">{{ result() }}</pre>
+    }
+</section>

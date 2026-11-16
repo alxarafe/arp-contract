@@ -14,7 +14,16 @@ PHP se inspeccionó en `release/arp-dict-001-v0.1.0-rc1`; los demás en `main`.
 Las bibliotecas fijan `contract.ref` en `4c0f4bd0337c01c15a036910b6462e6f0e674927`.
 La evidencia de sus tests corresponde a ese candidato; no certifica el contrato actual ni esta demo.
 
-## Capacidades y acceso
+## Actualización ARP-DEMO-002
+
+La inspección original siguiente se conserva como referencia histórica. Esta tarea añade un host HTTP de demo
+separado en `arp-dotnet/demo/DictionaryHost/` y un adaptador Angular específico para .NET/diccionario. Las APIs
+nativas de la biblioteca no cambian. .NET permite ahora listar elementos, ver descriptores y validar valores
+**cuando se conecta una instancia de ese host**. Java/PHP y las demás capacidades conservan sus pendientes.
+Los endpoints implementados, el origen CORS, arranque/parada y pruebas se detallan en [DOTNET-HOST.md](DOTNET-HOST.md)
+y en `arp-dotnet/demo/README.md`. No son un nuevo contrato normativo.
+
+## Capacidades y acceso (inspección original)
 
 - **Diccionario y validaciones:** las tres bibliotecas implementan catálogo, resolución, validación y normalización
   de los 17 tipos escalares. Fuente: sus README, `CatalogBuilder`, `Catalog`, pruebas y `contract.ref`.
