@@ -1,6 +1,32 @@
 import type { TranslationCatalogue } from './types.js';
 
 export const ES = {
+    "instance.dotnetAdapter": "Adaptador explícito de demo .NET disponible",
+    "instance.dotnetNote":
+        "Usa Conectar en el panel de diccionario para consultar la instancia. Un repositorio Git no es un servicio.",
+    "dictionary.dotnetStatus": "Biblioteca y adaptador demo · conexión requerida",
+    "dictionary.dotnetDetail":
+        "Consulta el diccionario real .NET y valida valores abajo. Las demás capacidades siguen pendientes.",
+    "remote.heading": "Diccionario .NET en vivo",
+    "remote.scope": "API HTTP solo de demo. Sin autenticación, CRUD, almacenamiento ni dispatcher.",
+    "remote.connect": "Conectar",
+    "remote.disconnect": "Desconectar",
+    "remote.idle": "Sin conexión",
+    "remote.connecting": "Conectando…",
+    "remote.connected": "Conexión confirmada por la última petición",
+    "remote.failed": "Conexión no disponible",
+    "remote.incompatible": "La instancia no ofrece las capacidades de demo .NET esperadas.",
+    "remote.httpError": "El host devolvió un error HTTP. Consulta la respuesta estructurada.",
+    "remote.element": "Elemento de diccionario",
+    "remote.choose": "Selecciona un elemento",
+    "remote.descriptor": "JSON original del descriptor",
+    "remote.codec": "Tipo de valor portable",
+    "remote.value": "Valor",
+    "remote.exact": "Los valores escalares numéricos son cadenas. null y los booleanos mantienen sus tipos JSON.",
+    "remote.validate": "Validar mediante .NET",
+    "remote.result": "Respuesta observada del host",
+    "remote.fixtureLimit":
+        "El panel en vivo está separado de estas expectativas originales de fixtures, de solo lectura.",
     'app.title': 'ARP · Explorador de capacidades',
     'app.brand': 'Laboratorio de contrato',
     'selector.runtime': 'Runtime',

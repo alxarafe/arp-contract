@@ -27,7 +27,8 @@ const server = createServer(async (request, response) => {
         response.writeHead(404).end('Not found');
     }
 });
-server.listen(4173, process.env.ARP_DEMO_HOST ?? '127.0.0.1', () => {
-    console.log('ARP demo: http://127.0.0.1:4173');
+const port = Number(process.env.ARP_DEMO_CLIENT_PORT ?? '4173');
+server.listen(port, process.env.ARP_DEMO_HOST ?? '127.0.0.1', () => {
+    console.log(`ARP demo: http://127.0.0.1:${port}`);
 });
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close());

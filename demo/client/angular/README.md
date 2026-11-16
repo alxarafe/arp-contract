@@ -43,15 +43,14 @@ textos internos de paquetes de terceros. Se utilizan señales y servicios de Ang
 
 ## Qué requiere backend
 
-**No hay endpoints de navegador en los runtimes inspeccionados.** El botón de ejecución permanece deshabilitado en
-los cinco grupos, incluso con una URL configurada. No se hacen peticiones a esas URLs ni se simulan validaciones,
-CRUD o servicios. La aplicación es funcional como explorador y consumidor real de temas; la ejecución remota no
-está disponible todavía. Esto vale para los tres runtimes y se muestra explícitamente en la interfaz.
+**.NET/diccionario dispone ahora de un host real y un adaptador de demo**, documentados en
+[DOTNET-HOST.md](DOTNET-HOST.md). Permite consultar elementos/descriptores y validar valores con la biblioteca .NET
+real. Configurar la URL no conecta automáticamente: es necesario pulsar Conectar y superar la comprobación de
+información/capacidades del host. La UI distingue respuesta observada del host y expectativas estáticas de fixtures.
 
-Los 17 tipos de diccionario sí están implementados como bibliotecas nativas. Su acceso desde el navegador necesita
-un anfitrión demo en cada runtime. Las otras capacidades necesitan primero implementación real. Las rutas y los
-formatos de transporte no se deducen de SERVICES-002 ni del nombre del repositorio. El inventario describe las
-llamadas nativas, los requisitos del anfitrión y el siguiente cambio del cliente, sin proponer una API ficticia.
+Java y PHP siguen sin endpoints ni adaptadores de navegador en los repositorios inspeccionados. Las otras
+capacidades continúan pendientes en todos los runtimes. Sus acciones no se habilitan ni se simulan validaciones,
+CRUD o servicios. El [inventario](INVENTORY.md) conserva la inspección inicial y registra la ampliación .NET.
 
 ## Arranque reproducible
 
@@ -93,11 +92,12 @@ editar `config/instances.json`, conservar las claves `dotnet`, `java`, `php` y v
 introducirse durante la sesión. Solo se admiten URLs absolutas http(s) sin credenciales; indicar una URL nunca
 habilita una capacidad ni afirma que esté conectada. No introducir secretos en la configuración.
 
-Actualmente no existe un backend disponible que arrancar para conectar esta UI. Ejecutar `dotnet test`, `mvn verify`
+El host .NET se arranca con `arp-dotnet/demo/run build` y `arp-dotnet/demo/run start`, con el contrato montado en
+solo lectura; se detiene con `arp-dotnet/demo/run stop`. Por defecto la URL es `http://127.0.0.1:5100` y CORS autoriza
+solo `http://127.0.0.1:4173`. Los detalles están en [DOTNET-HOST.md](DOTNET-HOST.md).
+Ejecutar `dotnet test`, `mvn verify`
 o `composer test` en los repositorios de bibliotecas ejecuta sus pruebas; **no levanta un servicio**.
-Cuando exista un anfitrión real, habrá que documentar su comando de arranque, rutas y política de origen en su
-repositorio y añadir aquí el adaptador con pruebas contra esa instancia. Hasta entonces no hay comando de conexión
-ni ruta que la demo pueda probar legítimamente.
+Para Java/PHP siguen pendientes anfitriones equivalentes; no se inventan rutas para conectarlos.
 
 ## Comprobaciones
 
@@ -127,8 +127,8 @@ Ninguno de esos comandos necesita instalar el frontend. No se cambian los contra
 
 ## Próximos pasos y límites
 
-1. Crear anfitriones demo mínimos de diccionario en arp-dotnet, arp-java y arp-php según el inventario.
-2. Acordar su acceso de navegador y codec exacto, y probar cada adaptador del cliente contra una instancia real.
+1. Revisar el host/adaptador de demo .NET y crear anfitriones de diccionario en arp-java y arp-php.
+2. Acordar el transporte general y ampliar pruebas reales por runtime, sin convertir la API demo en normativa.
 3. Implementar progresivamente recursos, CDS, CRUD e invocaciones antes de habilitar sus acciones.
 
 No se decide el origen declarativo de CRUD, ni se añaden formularios de negocio, workflows, roles o endpoints

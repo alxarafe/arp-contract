@@ -8,7 +8,9 @@
         </label>
         <label>{{ t('selector.theme') }}
             <select data-testid="theme" [value]="themes.current().id" (change)="selectTheme($event)">
-                @for (theme of registry.all; track theme.id) { <option [value]="theme.id">{{ theme.id }}</option> }
+                @for (theme of registry.all; track theme.id) {
+                    <option [value]="theme.id" [selected]="themes.current().id === theme.id">{{ theme.id }}</option>
+                }
             </select>
         </label>
         <label>{{ t('selector.language') }}
@@ -46,9 +48,10 @@
             }
             <p id="url-error" role="alert">{{ urlError() ? t(urlError()!) : '' }}</p>
             <p id="connection-note" data-testid="connection-status">
-                {{ t(url() ? 'instance.configured' : 'instance.unconfigured') }} · {{ t('instance.adapter') }}
+                {{ t(url() ? 'instance.configured' : 'instance.unconfigured') }} ·
+                {{ t(runtimeId() === 'dotnet' ? 'instance.dotnetAdapter' : 'instance.adapter') }}
             </p>
-            <p>{{ t('instance.unqueried') }}</p>
+            <p>{{ t(runtimeId() === 'dotnet' ? 'instance.dotnetNote' : 'instance.unqueried') }}</p>
             <small>
                 {{ t('instance.inventory') }}: {{ runtime().commit }} · {{ runtime().branch }}.
                 {{ t('instance.noDiscovery') }}
@@ -60,7 +63,8 @@
                         [attr.aria-pressed]="capability().id === item.id" (click)="selectCapability(item.id)">
                     <span class="demo-number">{{ item.mark }}</span>
                     <strong>{{ t(item.label) }}</strong>
-                    <span>{{ t(item.status) }}</span>
+                    <span>{{ t(item.id === 'dictionary' && runtimeId() === 'dotnet'
+                        ? 'dictionary.dotnetStatus' : item.status) }}</span>
                 </button>
             }
         </section>
@@ -72,11 +76,16 @@
                 </div>
                 <span class="demo-badge">{{ t('scenario.readonly') }}</span>
             </div>
-            <p data-testid="capability-detail">{{ t(capability().detail) }}</p>
+            <p data-testid="capability-detail">{{ t(capability().id === 'dictionary' && runtimeId() === 'dotnet'
+                ? 'dictionary.dotnetDetail' : capability().detail) }}</p>
+            @if (runtimeId() === 'dotnet' && capability().id === 'dictionary') {
+                <arp-dotnet-dictionary [baseUrl]="urlError() ? '' : url()" />
+            }
             <button data-testid="execute" disabled aria-describedby="execution-limit">
                 {{ t('scenario.execute') }}
             </button>
-            <p id="execution-limit">{{ t('scenario.limit') }}</p>
+            <p id="execution-limit">{{ t(runtimeId() === 'dotnet' && capability().id === 'dictionary'
+                ? 'remote.fixtureLimit' : 'scenario.limit') }}</p>
             <label class="demo-file">{{ t('scenario.file') }}
                 <select data-testid="source" [value]="source()" (change)="selectFile($event)">
                     @for (file of capability().files; track file) { <option [value]="file">{{ file }}</option> }
