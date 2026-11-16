@@ -1,4 +1,4 @@
-# ARP-DEMO-001 — Cliente Angular común
+# ARP-DEMO-004 — Cliente Angular común para tres runtimes
 
 Cliente local y privado de demostración en `arp-contract/demo/client/angular/`.
 El [inventario](INVENTORY.md) identifica las revisiones inspeccionadas y los adaptadores pendientes por repositorio.
@@ -43,14 +43,14 @@ textos internos de paquetes de terceros. Se utilizan señales y servicios de Ang
 
 ## Qué requiere backend
 
-**.NET/diccionario dispone ahora de un host real y un adaptador de demo**, documentados en
-[DOTNET-HOST.md](DOTNET-HOST.md). Permite consultar elementos/descriptores y validar valores con la biblioteca .NET
-real. Configurar la URL no conecta automáticamente: es necesario pulsar Conectar y superar la comprobación de
-información/capacidades del host. La UI distingue respuesta observada del host y expectativas estáticas de fixtures.
+Los hosts de diccionario .NET, Java y PHP se consumen mediante **un único componente y negociación común**.
+Configurar una URL no conecta automáticamente: pulsar Conectar verifica identidad, protocolo reconocido y
+capacidades anunciadas antes de habilitar operaciones. La UI conserva las respuestas originales, separadas de
+las expectativas estáticas. Las demás capacidades continúan pendientes en los tres runtimes.
 
-Java y PHP siguen sin endpoints ni adaptadores de navegador en los repositorios inspeccionados. Las otras
-capacidades continúan pendientes en todos los runtimes. Sus acciones no se habilitan ni se simulan validaciones,
-CRUD o servicios. El [inventario](INVENTORY.md) conserva la inspección inicial y registra la ampliación .NET.
+El listado, descriptor y validación se habilitan según `dictionary.list`, `dictionary.describe` y
+`dictionary.validate`. Un host sin alguna capacidad no la adquiere por pertenecer a un runtime reconocido.
+Los detalles del protocolo de demo, arranque, pruebas y límites están en [MULTIRUNTIME-HOSTS.md](MULTIRUNTIME-HOSTS.md).
 
 ## Arranque reproducible
 
@@ -92,12 +92,12 @@ editar `config/instances.json`, conservar las claves `dotnet`, `java`, `php` y v
 introducirse durante la sesión. Solo se admiten URLs absolutas http(s) sin credenciales; indicar una URL nunca
 habilita una capacidad ni afirma que esté conectada. No introducir secretos en la configuración.
 
-El host .NET se arranca con `arp-dotnet/demo/run build` y `arp-dotnet/demo/run start`, con el contrato montado en
-solo lectura; se detiene con `arp-dotnet/demo/run stop`. Por defecto la URL es `http://127.0.0.1:5100` y CORS autoriza
-solo `http://127.0.0.1:4173`. Los detalles están en [DOTNET-HOST.md](DOTNET-HOST.md).
-Ejecutar `dotnet test`, `mvn verify`
-o `composer test` en los repositorios de bibliotecas ejecuta sus pruebas; **no levanta un servicio**.
-Para Java/PHP siguen pendientes anfitriones equivalentes; no se inventan rutas para conectarlos.
+En cada repositorio de runtime, `./demo/run build`, `./demo/run start` y `./demo/run stop` construyen, arrancan y
+detienen su propio host. Puertos predeterminados: .NET 5100, Java 5200 y PHP 5300, siempre en 127.0.0.1.
+Usar `ARP_CONTRACT_PATH` para el contrato y `ARP_DEMO_ORIGIN` para el origen Angular exacto; por defecto 4173.
+`ARP_DEMO_PORT` y `ARP_DEMO_CONTAINER` permiten puertos/nombres alternativos. Las instrucciones completas figuran en
+[MULTIRUNTIME-HOSTS.md](MULTIRUNTIME-HOSTS.md) y en `demo/README.md` de cada runtime.
+Ejecutar tests de una biblioteca no levanta un servicio. Tampoco se descubre una instancia desde su repositorio Git.
 
 ## Comprobaciones
 
@@ -125,13 +125,26 @@ git diff --check
 
 Ninguno de esos comandos necesita instalar el frontend. No se cambian los contratos normativos ni las bibliotecas.
 
+Para integración real de los tres hosts, desde este directorio:
+
+```sh
+./bin/integration-multiruntime
+```
+
+Usa copias temporales de revisiones limpias de los runtimes, preservando sus repositorios. Prueba Chromium en
+escritorio/móvil, ES/EN, cinco temas, cambios sucesivos, abortos y resultados reales. Los casos de negociación
+incompleta modifican deliberadamente el sobre de información; no se usan como prueba de capacidades del backend.
+`bin/integration-dotnet` queda como alias de la batería completa, que ahora necesita los tres hosts.
+
 ## Próximos pasos y límites
 
-1. Revisar el host/adaptador de demo .NET y crear anfitriones de diccionario en arp-java y arp-php.
+1. Revisar la integración común y mantener sus pruebas contra las revisiones reconocidas de los tres hosts.
 2. Acordar el transporte general y ampliar pruebas reales por runtime, sin convertir la API demo en normativa.
 3. Implementar progresivamente recursos, CDS, CRUD e invocaciones antes de habilitar sus acciones.
 
 No se decide el origen declarativo de CRUD, ni se añaden formularios de negocio, workflows, roles o endpoints
-contractuales. La lista de capacidades es un inventario estático por revisión, no descubrimiento de una instancia.
+contractuales. Las tarjetas de capacidades son un inventario; el panel de diccionario negocia las operaciones
+de la instancia.
+La negociación de demo no acredita conformidad normativa ni descubre capacidades de otros módulos.
 Esta versión no presenta un editor/validador Angular como sustituto de la autoridad del servidor y no automatiza
 reintentos de mutaciones ni confirmaciones de conflicto. El build no crea releases, etiquetas o publicaciones.

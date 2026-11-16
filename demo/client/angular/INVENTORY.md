@@ -1,3 +1,25 @@
+# ARP-DEMO-004 — Inventario de integración actualizado
+
+Referencias inspeccionadas el 2026-11-16; son código, no instancias descubiertas automáticamente.
+
+| Repositorio | Revisión | Capacidad integrada |
+| --- | --- | --- |
+| arp-dotnet | `442cd19556a3381d47e7e26b0351aa9ee567a791` | Host ASP.NET Core de diccionario, endurecido |
+| arp-java | `a76f2d59feb66eb2beca6e94c00814b3512f384d` | Host JDK HTTP de diccionario |
+| arp-php | `419cb8faa9f7775968e52e08688642fb416365f1` | Host nativo PHP de diccionario |
+| angular-ui-runtime | `ee60123d03f095a14c4004632c214dbd822332c2` | Core y cinco temas reales APF |
+
+Los tres hosts usan la biblioteca real y los fixtures originales. Sus identidades/protocolos son distintos y
+reconocidos explícitamente. Un único cliente consume listado, descriptor y validación según capacidades anunciadas.
+Las bibliotecas mantienen `contract.ref` en `4c0f4bd0337c01c15a036910b6462e6f0e674927`.
+No se implementan entidades, proyecciones, CRUD ni invocaciones. Los contratos normativos no cambian.
+
+La ejecución real y sus límites se registran en [VALIDATION.md](VALIDATION.md). Rutas y arranque:
+[MULTIRUNTIME-HOSTS.md](MULTIRUNTIME-HOSTS.md). La inspección siguiente es **histórica** y no describe el acceso
+HTTP actual de Java/PHP.
+
+---
+
 # ARP-DEMO-001 — Inventario inspeccionado
 
 Inspección de checkouts locales el 2026-11-16. Son repositorios de código, **no instancias de servicio**.

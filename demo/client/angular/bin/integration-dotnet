@@ -1,34 +1,5 @@
 #!/usr/bin/env bash
 set -euo pipefail
-here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
-contract="$(cd "$here/../../.." && pwd -P)"
-dotnet="${ARP_DOTNET_PATH:-$contract/../arp-dotnet}"
-export ARP_CONTRACT_PATH="$contract"
-export ARP_DEMO_CONTAINER="arp-demo-integration-${UID}-$$"
-export ARP_DEMO_PORT="${ARP_DEMO_PORT:-5100}"
-export ARP_DEMO_CLIENT_PORT="${ARP_DEMO_CLIENT_PORT:-4174}"
-export ARP_DEMO_CLIENT_ORIGIN="http://127.0.0.1:$ARP_DEMO_CLIENT_PORT"
-export ARP_DEMO_ORIGIN="$ARP_DEMO_CLIENT_ORIGIN"
-"$dotnet/demo/run" build
-"$here/bin/run" build
-"$dotnet/demo/run" start
-trap '"$dotnet/demo/run" stop' EXIT
-export ARP_DEMO_URL="http://127.0.0.1:$ARP_DEMO_PORT"
-python3 "$dotnet/demo/scripts/check-http.py"
-browser_image='mcr.microsoft.com/playwright:v1.58.2-noble@sha256:'
-browser_image+='65cefd09a5e943921ecd3a6e5414c603db2eb161e9eb48f2e2ccc63486dc7dc0'
-# Linux host networking lets Chromium reach the actual loopback-published backend, not a mock proxy.
-docker run --rm --init --network host --shm-size=1g --user "$(id -u):$(id -g)" \
-    --env HOME=/tmp --env PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 --env "ARP_DOTNET_DEMO_URL=$ARP_DEMO_URL" \
-    --env "ARP_DEMO_CLIENT_PORT=$ARP_DEMO_CLIENT_PORT" --env "ARP_DEMO_CLIENT_ORIGIN=$ARP_DEMO_CLIENT_ORIGIN" \
-    --mount "type=bind,src=$here/tests/browser,dst=/tests,readonly" \
-    --mount "type=bind,src=$here/scripts,dst=/scripts,readonly" \
-    --mount "type=bind,src=$contract,dst=/contract,readonly" \
-    --mount "type=bind,src=$here/artifacts,dst=/artifacts" \
-    "$browser_image" sh -eu -c '
-        mkdir /tmp/tests
-        cp -R /tests/. /tmp/tests/
-        cd /tmp/tests
-        npm ci --no-audit --no-fund
-        npx playwright test
-    '
+# Compatibility entry point: the integration suite now verifies all three real hosts.
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
+exec "$here/integration-multiruntime" "$@"

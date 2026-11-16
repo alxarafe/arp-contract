@@ -1,0 +1,98 @@
+#!/usr/bin/env bash
+set -euo pipefail
+here="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+contract="$(cd "$here/../../.." && pwd -P)"
+work="$(mktemp -d /tmp/arp-demo-004.XXXXXX)"
+export ARP_CONTRACT_PATH="$contract"
+export ARP_DEMO_CLIENT_PORT="${ARP_DEMO_CLIENT_PORT:-4174}"
+export ARP_DEMO_CLIENT_ORIGIN="http://127.0.0.1:$ARP_DEMO_CLIENT_PORT"
+export ARP_DEMO_ORIGIN="$ARP_DEMO_CLIENT_ORIGIN"
+ids=()
+owners=()
+runtimes=(dotnet java php)
+ports=("${ARP_DOTNET_DEMO_PORT:-5199}" "${ARP_JAVA_DEMO_PORT:-5299}" "${ARP_PHP_DEMO_PORT:-5399}")
+roots=("${ARP_DOTNET_PATH:-$contract/../arp-dotnet}" "${ARP_JAVA_PATH:-$contract/../arp-java}"
+    "${ARP_PHP_PATH:-$contract/../arp-php}")
+mkdir -p "$here/artifacts/multiruntime"
+printf '[]' > "$work/baseline.json"
+cleanup() {
+    local status=$? id owner kind index
+    set +e
+    trap - EXIT INT TERM
+    for index in "${!ids[@]}"; do
+        id="${ids[$index]}"
+        if docker container inspect "$id" >/dev/null 2>&1; then
+            owner="$(docker inspect --format '{{index .Config.Labels "arp.demo.owner"}}' "$id")"
+            kind="$(docker inspect --format '{{index .Config.Labels "arp.demo"}}' "$id")"
+            if [[ "$owner" == "${owners[$index]}" && "$kind" == "${runtimes[$index]}-dictionary" ]]; then
+                docker stop --time 10 "$id" >/dev/null || status=1
+                docker rm "$id" >/dev/null || status=1
+            else
+                echo 'Refusing cleanup: unexpected container ownership.' >&2
+                status=1
+            fi
+        fi
+    done
+    python3 - "$work/baseline.json" <<'PY'
+import json
+import subprocess
+import sys
+baseline = json.loads(open(sys.argv[1]).read() or '[]')
+for original in baseline:
+    current = json.loads(subprocess.check_output(['docker', 'inspect', original['Id']]))[0]
+    assert (current['State']['Status'], current['State']['StartedAt'], current['RestartCount']) == (
+        original['State']['Status'], original['State']['StartedAt'], original['RestartCount']), original['Name']
+print('PASS: pre-existing running containers unchanged')
+PY
+    local checked=$?
+    if [[ "$checked" != 0 ]]; then status=1; fi
+    rm -rf "$work"
+    exit "$status"
+}
+trap cleanup EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
+docker ps -q | xargs -r docker inspect > "$work/baseline.json"
+: > "$here/artifacts/multiruntime/revisions.txt"
+for index in "${!runtimes[@]}"; do
+    runtime="${runtimes[$index]}"
+    root="${roots[$index]}"
+    [[ -z "$(git -C "$root" status --porcelain)" ]] || { echo "Use a clean $runtime reference." >&2; exit 1; }
+    mkdir "$work/$runtime"
+    git -C "$root" archive HEAD | tar -xf - -C "$work/$runtime"
+    printf '%s %s\n' "$runtime" "$(git -C "$root" rev-parse HEAD)" \
+        >> "$here/artifacts/multiruntime/revisions.txt"
+    "$work/$runtime/demo/run" build > "$here/artifacts/multiruntime/$runtime-build.log" 2>&1
+    name="arp-demo-004-${runtime}-${UID}-$$"
+    ARP_DEMO_CONTAINER="$name" ARP_DEMO_PORT="${ports[$index]}" "$work/$runtime/demo/run" start
+    # Record the exact ID, never stop by a guessed name if startup fails.
+    ids+=("$(docker container inspect --format '{{.Id}}' "$name")")
+    owners+=("$work/$runtime")
+    check="$work/$runtime/demo/check-http.py"
+    if [[ "$runtime" == dotnet ]]; then check="$work/$runtime/demo/scripts/check-http.py"; fi
+    ARP_DEMO_RUNTIME="$runtime" ARP_DEMO_URL="http://127.0.0.1:${ports[$index]}" python3 "$check"
+done
+"$here/bin/run" build
+export ARP_DEMO_HOSTS
+ARP_DEMO_HOSTS="$(python3 - "${ports[@]}" <<'PY'
+import json
+import sys
+print(json.dumps(dict(zip(('dotnet', 'java', 'php'), ('http://127.0.0.1:' + p for p in sys.argv[1:])))))
+PY
+)"
+browser_image='mcr.microsoft.com/playwright:v1.58.2-noble@sha256:'
+browser_image+='65cefd09a5e943921ecd3a6e5414c603db2eb161e9eb48f2e2ccc63486dc7dc0'
+docker run --rm --init --network host --shm-size=1g --user "$(id -u):$(id -g)" \
+    --env HOME=/tmp --env PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1 --env "ARP_DEMO_HOSTS=$ARP_DEMO_HOSTS" \
+    --env "ARP_DEMO_CLIENT_PORT=$ARP_DEMO_CLIENT_PORT" --env "ARP_DEMO_CLIENT_ORIGIN=$ARP_DEMO_CLIENT_ORIGIN" \
+    --mount "type=bind,src=$here/tests/browser,dst=/tests,readonly" \
+    --mount "type=bind,src=$here/scripts,dst=/scripts,readonly" \
+    --mount "type=bind,src=$contract,dst=/contract,readonly" \
+    --mount "type=bind,src=$here/artifacts,dst=/artifacts" \
+    "$browser_image" sh -eu -c '
+        mkdir /tmp/tests
+        cp -R /tests/. /tmp/tests/
+        cd /tmp/tests
+        npm ci --no-audit --no-fund
+        npx playwright test
+    '

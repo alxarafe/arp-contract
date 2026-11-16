@@ -1,6 +1,8 @@
 import { Component, DestroyRef, effect, inject, input, signal } from '@angular/core';
 import { LanguageService } from '../i18n/language.service';
 import type { TranslationKey } from '../i18n/types';
+import type { RuntimeId } from '../catalog';
+import { negotiate, type DictionaryCapability } from './protocol';
 
 interface ElementSummary { id: string; type: string; }
 const TYPES = new Set([
@@ -8,13 +10,15 @@ const TYPES = new Set([
     'INT64', 'DECIMAL', 'UUID', 'DATE', 'TIME', 'DATETIME', 'ENUM', 'BINARY',
 ]);
 
-/** Consumer of the documented .NET demo API only; not a generic ARP transport contract. */
+/** Shared consumer of recognized demo APIs; not a normative ARP transport contract. */
 @Component({
-    selector: 'arp-dotnet-dictionary',
+    selector: 'arp-remote-dictionary',
     templateUrl: './dictionary.html',
 })
-export class DotnetDictionary {
+export class RemoteDictionary {
     readonly baseUrl = input.required<string>();
+    readonly runtimeId = input.required<RuntimeId>();
+    readonly capabilities = signal<readonly DictionaryCapability[]>([]);
     readonly t = inject(LanguageService).t;
     readonly status = signal<TranslationKey>('remote.idle');
     readonly connected = signal(false);
@@ -31,7 +35,7 @@ export class DotnetDictionary {
     private target = '';
 
     constructor() {
-        effect(() => { this.baseUrl(); this.disconnect(); });
+        effect(() => { this.baseUrl(); this.runtimeId(); this.disconnect(); });
         inject(DestroyRef).onDestroy(() => this.controller.abort());
     }
 
@@ -44,6 +48,9 @@ export class DotnetDictionary {
     disconnect(): void {
         this.cancel();
         this.target = '';
+        this.capabilities.set([]);
+        this.value.set('');
+        this.codec.set('string');
         this.connected.set(false);
         this.busy.set(false);
         this.status.set('remote.idle');
@@ -52,6 +59,10 @@ export class DotnetDictionary {
         this.descriptor.set('');
         this.result.set('');
         this.issue.set(undefined);
+    }
+
+    can(capability: DictionaryCapability): boolean {
+        return this.connected() && this.capabilities().includes(capability);
     }
 
     private async request(path: string, body?: string): Promise<Response> {
@@ -68,6 +79,12 @@ export class DotnetDictionary {
         if (sequence !== this.sequence) return;
         this.connected.set(false);
         this.status.set('remote.failed');
+        this.capabilities.set([]);
+        this.elements.set([]);
+        this.selected.set('');
+        this.descriptor.set('');
+        this.value.set('');
+        this.codec.set('string');
         this.issue.set(key);
     }
 
@@ -82,11 +99,16 @@ export class DotnetDictionary {
             const infoResponse = await this.request('/demo/info');
             if (!infoResponse.ok) throw new Error('HTTP');
             const info = await infoResponse.json(); // This envelope contains strings only, no numeric descriptors.
-            if (info.demoProtocol !== 'arp-demo-dotnet/1' || info.runtime !== 'dotnet'
-                || !Array.isArray(info.capabilities)
-                || !['dictionary.list', 'dictionary.describe', 'dictionary.validate']
-                    .every(capability => info.capabilities.includes(capability))) {
+            if (sequence !== this.sequence) return;
+            const capabilities = negotiate(this.runtimeId(), info);
+            if (!capabilities) {
                 this.failed(sequence, 'remote.incompatible');
+                return;
+            }
+            this.capabilities.set(capabilities);
+            if (!capabilities.includes('dictionary.list')) {
+                this.connected.set(true);
+                this.status.set('remote.connected');
                 return;
             }
             const response = await this.request('/demo/dictionary/elements');
@@ -110,6 +132,7 @@ export class DotnetDictionary {
     }
 
     async selectElement(event: Event): Promise<void> {
+        if (!this.can('dictionary.list')) return;
         const id = (event.target as HTMLSelectElement).value;
         const item = this.elements().find(element => element.id === id);
         const sequence = this.cancel();
@@ -117,9 +140,13 @@ export class DotnetDictionary {
         this.descriptor.set('');
         this.result.set('');
         this.issue.set(undefined);
+        this.busy.set(false);
+        this.value.set('');
+        this.codec.set('string');
         if (!item || !this.connected()) return;
         this.codec.set(item.type === 'BOOLEAN' ? 'boolean' : 'string');
         this.value.set(item.type === 'BOOLEAN' ? 'true' : '');
+        if (!this.can('dictionary.describe')) return;
         this.busy.set(true);
         try {
             const response = await this.request(`/demo/dictionary/elements/${encodeURIComponent(id)}`);
@@ -144,7 +171,7 @@ export class DotnetDictionary {
     }
 
     async validate(): Promise<void> {
-        if (!this.connected() || !this.selected() || this.busy()) return;
+        if (!this.can('dictionary.validate') || !this.selected() || this.busy()) return;
         const sequence = this.cancel();
         this.busy.set(true);
         this.result.set('');

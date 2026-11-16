@@ -5,10 +5,11 @@
     "moduleResolution": "NodeNext",
     "strict": true,
     "skipLibCheck": true,
-    "rootDir": "../../src/i18n",
+    "rootDir": "../../src",
     "outDir": "../../out-unit"
   },
   "files": [
-    "../../src/i18n/translate.ts"
+    "../../src/i18n/translate.ts",
+    "../../src/remote/protocol.ts"
   ]
 }

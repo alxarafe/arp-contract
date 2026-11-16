@@ -1,13 +1,8 @@
 import type { TranslationCatalogue } from './types.js';
 
 export const ES = {
-    "instance.dotnetAdapter": "Adaptador explícito de demo .NET disponible",
-    "instance.dotnetNote":
-        "Usa Conectar en el panel de diccionario para consultar la instancia. Un repositorio Git no es un servicio.",
-    "dictionary.dotnetStatus": "Biblioteca y adaptador demo · conexión requerida",
-    "dictionary.dotnetDetail":
-        "Consulta el diccionario real .NET y valida valores abajo. Las demás capacidades siguen pendientes.",
-    "remote.heading": "Diccionario .NET en vivo",
+    "remote.noList": "La instancia no anuncia listado de diccionario.",
+    "remote.heading": "Diccionario en vivo",
     "remote.scope": "API HTTP solo de demo. Sin autenticación, CRUD, almacenamiento ni dispatcher.",
     "remote.connect": "Conectar",
     "remote.disconnect": "Desconectar",
@@ -15,7 +10,7 @@ export const ES = {
     "remote.connecting": "Conectando…",
     "remote.connected": "Conexión confirmada por la última petición",
     "remote.failed": "Conexión no disponible",
-    "remote.incompatible": "La instancia no ofrece las capacidades de demo .NET esperadas.",
+    "remote.incompatible": "La identidad o el protocolo de demo no corresponde al runtime seleccionado.",
     "remote.httpError": "El host devolvió un error HTTP. Consulta la respuesta estructurada.",
     "remote.element": "Elemento de diccionario",
     "remote.choose": "Selecciona un elemento",
@@ -23,7 +18,7 @@ export const ES = {
     "remote.codec": "Tipo de valor portable",
     "remote.value": "Valor",
     "remote.exact": "Los valores escalares numéricos son cadenas. null y los booleanos mantienen sus tipos JSON.",
-    "remote.validate": "Validar mediante .NET",
+    "remote.validate": "Validar valor",
     "remote.result": "Respuesta observada del host",
     "remote.fixtureLimit":
         "El panel en vivo está separado de estas expectativas originales de fixtures, de solo lectura.",
@@ -44,14 +39,15 @@ export const ES = {
     'instance.placeholder': 'http://localhost:puerto',
     'instance.configured': 'URL configurada',
     'instance.unconfigured': 'Sin URL configurada',
-    'instance.adapter': 'Sin adaptador de navegador',
-    'instance.unqueried': 'Esta URL no se ha consultado. Un repositorio Git no es un servicio en ejecución.',
+    'instance.adapter': 'Adaptador explícito de demo disponible',
+    'instance.unqueried': 'Usa Conectar para consultar identidad y capacidades. Un repositorio Git no es un servicio.',
     'instance.inventory': 'Inventario',
     'instance.noDiscovery': 'No se detecta la instancia automáticamente.',
     'capabilities.region': 'Capacidades disponibles',
     'dictionary.label': 'Diccionario y validaciones',
-    'dictionary.status': 'Biblioteca disponible · adaptador pendiente',
-    'dictionary.detail': '17 tipos escalares en los tres runtimes. No hay un endpoint de validación en esta demo.',
+    'dictionary.status': 'Adaptador de demo · conexión requerida',
+    'dictionary.detail':
+        'Consulta el diccionario real y valida valores. Las operaciones dependen de las capacidades anunciadas.',
     'entities.label': 'Entidades y estructuras',
     'entities.status': 'Pendiente de implementación',
     'entities.detail': 'ARP-RES-001 es un borrador. Las estructuras compuestas no están implementadas.',

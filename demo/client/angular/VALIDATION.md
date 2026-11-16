@@ -1,3 +1,73 @@
+# Validación de ARP-DEMO-004
+
+Ejecutada el 2026-11-16 en `feature/arp-demo-004-multiruntime`, desde `arp-contract/main`
+`85c94e4a26dd1cdd1f97e0498e0b21b6afd441fb`. Solo cambia la demo Angular, sus pruebas y documentación.
+Las secciones posteriores conservan resultados históricos; la tabla siguiente es la evidencia de esta tarea.
+
+| Comprobación | Resultado |
+| --- | --- |
+| Core y cinco temas APF reales, instalación y Angular estricto | Correctos, sin cambios en dependencias/lockfiles |
+| Unitarias de traducción | 4/4; ES inicial, respaldo EN y referencia ausente |
+| Unitarias de negociación | 6/6; tres identidades, protocolos y capacidades conocidas/parciales/incorrectas |
+| Chromium completo con los tres hosts reales | **74/74**, sin reintentos; escritorio 1440×1000 y móvil 390×844 |
+| HTTP de cada host antes del navegador | Correcto; 18 elementos, 17 tipos, exactitud, Unicode/JSON, límites y CORS |
+| Contenedores preexistentes al terminar integración | Estado, hora de arranque y reinicios sin cambios |
+| Arranque con 5100 ocupado | Fallo esperado, limpieza propia y propietario del puerto intacto |
+| Pruebas del contrato | **82/82**, independientes de Angular |
+| Cinco verificadores contractuales existentes | Correctos; su evidencia es estática, no conformidad de runtimes |
+
+## Comprobación de cierre
+
+Se repitieron `bin/integration-multiruntime`, las 82 pruebas contractuales y los cinco verificadores antes del
+commit: todos correctos, incluyendo 74 Chromium sin reintentos y las 10 unitarias. Se revisaron visualmente las
+capturas de escritorio con Java/default/ES y móvil con cyberpunk/EN, sin problemas observados de disposición o
+legibilidad en esas vistas. Esta revisión no sustituye una auditoría exhaustiva de accesibilidad.
+
+Se comprobó el índice: solo rutas de la demo Angular, sin artefactos, dependencias instaladas ni temporales.
+Paquetes/lockfiles, contratos, fixtures y repositorios de referencia permanecen intactos. El único ajuste de cierre
+es una corrección de sangría en el archivo de pruebas, sin cambio de comportamiento. Formato, sintaxis y diff
+comprobados de nuevo. La evidencia generada permanece ignorada por Git.
+
+## Cobertura real y casos negativos
+
+Chromium conecta, consulta los 18 elementos y sus descriptores, valida valores válidos/incorrectos y desconecta
+contra .NET, Java y PHP. Cada runtime se prueba en ambas ventanas, los cinco temas y ES/EN. Se verifican INT64
+máximo y DECIMAL grande sin redondeo, booleanos, null, cadena vacía, códigos y omisión de normalizedValue al rechazar.
+El texto del descriptor y de resultados se compara directamente con el cuerpo HTTP original. Metadatos `1e127`
+se comparan con BigInt: PHP puede usar notación entera completa sin ser distinto en valor.
+
+Se realizan seis cambios sucesivos entre runtimes en cada ventana; no quedan selección, entradas ni resultados
+anteriores. Un host real con identidad incorrecta no habilita operaciones, incluso con URL igual al cambiar runtime.
+Los errores de conexión son reales, no respuestas inventadas.
+
+Las pruebas de capacidades parciales modifican deliberadamente solo el sobre de información obtenido del host:
+son tests negativos del consumidor, no evidencia de conformidad del backend. Comprueban que no se llama a listado
+o descriptor no anunciado y que no se habilita validación ausente. Las pruebas de cancelación ejecutan el host real,
+retienen su respuesta en información/listado/descriptor/validación y cambian runtime o URL: comprueban la señal de
+aborto y que una respuesta tardía no repuebla el estado. No hay backend simulado en las pruebas de ejecución.
+
+La batería incluye las 24 regresiones autónomas previas: fixtures byte a byte, navegación, idiomas, persistencia,
+almacenamiento bloqueado, errores, temas y URLs. Los resultados no certifican un transporte normativo, CRUD,
+servicios, persistencia ni autorización de producción.
+
+## Entorno y reproducción
+
+Referencias: .NET `442cd19556a3381d47e7e26b0351aa9ee567a791`, Java
+`a76f2d59feb66eb2beca6e94c00814b3512f384d`, PHP `419cb8faa9f7775968e52e08688642fb416365f1` y
+angular-ui-runtime `ee60123d03f095a14c4004632c214dbd822332c2`. Los hosts se construyeron desde git archive en
+copias temporales; sus repositorios permanecen limpios. Fuentes originales del contrato montadas en solo lectura.
+
+`bin/integration-multiruntime` registra revisiones y logs bajo `artifacts/multiruntime/`, y resultados JSON,
+trazas/capturas bajo `artifacts/browser/`. Las imágenes Node y Chromium están fijadas por digest. Se usaron frontend
+4174 y hosts 5199/5299/5399 en loopback, sin intervenir los servicios preexistentes en 4173/5100.
+
+Instrucciones y variables en [MULTIRUNTIME-HOSTS.md](MULTIRUNTIME-HOSTS.md). La ejecución automatizada usa Docker
+host networking de Linux; otras plataformas requieren conectividad equivalente. La limpieza depende de Docker
+operativo y no se garantiza ante SIGKILL/caída del daemon. CORS no es autenticación; la conexión representa la última
+petición confirmada, no un heartbeat. No se añaden reintentos automáticos ni se amplía el alcance contractual.
+
+---
+
 # Validación de ARP-DEMO-001
 
 Ejecutada el 2026-11-16, en `feature/arp-demo-001`, partiendo del contrato
