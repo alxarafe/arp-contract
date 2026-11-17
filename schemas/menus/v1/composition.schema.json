@@ -1,0 +1,134 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alxarafe.org/arp/drafts/menus/v1/composition.schema.json",
+  "title": "Explicit application menu edits, no implicit precedence",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "arp.menu-composition/v1"
+    },
+    "edits": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "menu": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "entry": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "whenMissing": {
+            "enum": [
+              "error",
+              "ignore"
+            ]
+          },
+          "changes": {
+            "type": "object",
+            "properties": {
+              "parent": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                    "maxLength": 128
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "order": {
+                "type": "integer",
+                "minimum": -1000000,
+                "maximum": 1000000
+              },
+              "label": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "labelKey": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 128
+              },
+              "destination": {
+                "anyOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "kind": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                        "maxLength": 128
+                      },
+                      "target": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      },
+                      "operation": {
+                        "type": "string",
+                        "minLength": 1,
+                        "maxLength": 128
+                      }
+                    },
+                    "required": [
+                      "kind",
+                      "target"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [],
+            "additionalProperties": false,
+            "minProperties": 1,
+            "not": {
+              "required": [
+                "label",
+                "labelKey"
+              ]
+            }
+          },
+          "exclude": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "menu",
+          "entry"
+        ],
+        "additionalProperties": false,
+        "anyOf": [
+          {
+            "required": [
+              "changes"
+            ]
+          },
+          {
+            "required": [
+              "exclude"
+            ]
+          }
+        ]
+      },
+      "maxItems": 4096
+    }
+  },
+  "required": [
+    "apiVersion",
+    "edits"
+  ],
+  "additionalProperties": false
+}

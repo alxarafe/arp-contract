@@ -1,0 +1,246 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alxarafe.org/arp/drafts/menus/v1/menu-source.schema.json",
+  "title": "Candidate menu declarations and contributions",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "arp.menu/v1"
+    },
+    "menus": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "scope": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                  "maxLength": 128
+                },
+                "parent": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                      "maxLength": 128
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "order": {
+                  "type": "integer",
+                  "minimum": -1000000,
+                  "maximum": 1000000
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "labelKey": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "destination": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                      "maxLength": 128
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "operation": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "target"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "required": [
+                    "label"
+                  ],
+                  "not": {
+                    "required": [
+                      "labelKey"
+                    ]
+                  }
+                },
+                {
+                  "required": [
+                    "labelKey"
+                  ],
+                  "not": {
+                    "required": [
+                      "label"
+                    ]
+                  }
+                }
+              ]
+            },
+            "maxItems": 4096
+          }
+        },
+        "required": [
+          "id",
+          "scope",
+          "entries"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 256,
+      "description": "Omitted and empty arrays both declare zero menus."
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "menu": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "entries": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                  "maxLength": 128
+                },
+                "parent": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                      "maxLength": 128
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "order": {
+                  "type": "integer",
+                  "minimum": -1000000,
+                  "maximum": 1000000
+                },
+                "label": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "labelKey": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 128
+                },
+                "destination": {
+                  "type": "object",
+                  "properties": {
+                    "kind": {
+                      "type": "string",
+                      "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+                      "maxLength": 128
+                    },
+                    "target": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    },
+                    "operation": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "required": [
+                    "kind",
+                    "target"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "additionalProperties": false,
+              "oneOf": [
+                {
+                  "required": [
+                    "label"
+                  ],
+                  "not": {
+                    "required": [
+                      "labelKey"
+                    ]
+                  }
+                },
+                {
+                  "required": [
+                    "labelKey"
+                  ],
+                  "not": {
+                    "required": [
+                      "label"
+                    ]
+                  }
+                }
+              ]
+            },
+            "maxItems": 4096
+          }
+        },
+        "required": [
+          "menu",
+          "entries"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 256,
+      "description": "Omitted and empty arrays both add zero contributions."
+    }
+  },
+  "required": [
+    "apiVersion"
+  ],
+  "additionalProperties": false,
+  "description": "A version-only source or empty arrays is valid and contributes no menus or entries."
+}

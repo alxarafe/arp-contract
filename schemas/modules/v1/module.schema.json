@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alxarafe.org/arp/drafts/modules/v1/module.schema.json",
+  "title": "Candidate module registration; no package layout",
+  "type": "object",
+  "properties": {
+    "apiVersion": {
+      "const": "arp.module/v1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+      "maxLength": 128
+    },
+    "dependencies": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+        "maxLength": 128
+      },
+      "maxItems": 256,
+      "uniqueItems": true
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "providerId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "sourceId": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "revision": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "kind": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*(\\.[A-Za-z][A-Za-z0-9_-]*)*$",
+            "maxLength": 128
+          },
+          "handle": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          }
+        },
+        "required": [
+          "providerId",
+          "sourceId",
+          "revision",
+          "kind",
+          "handle"
+        ],
+        "additionalProperties": false
+      },
+      "maxItems": 256
+    }
+  },
+  "required": [
+    "apiVersion",
+    "id",
+    "dependencies",
+    "sources"
+  ],
+  "additionalProperties": false
+}

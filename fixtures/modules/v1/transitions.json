@@ -1,0 +1,4622 @@
+{
+  "features": [
+    "ARP-MODULES-001",
+    "ARP-MENUS-001"
+  ],
+  "status": "unreleased-draft",
+  "cases": [
+    {
+      "id": "disable-reports-selective",
+      "before": {},
+      "after": {
+        "active": [
+          "catalog"
+        ]
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary",
+            "reports.summary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "disable-catalog-with-dependent-rejected",
+      "before": {},
+      "after": {
+        "active": [
+          "reports"
+        ]
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "family": "definition-invalid",
+            "code": "MODULES_DEPENDENCY_INACTIVE",
+            "at": "/dependencies"
+          }
+        ],
+        "published": "before",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "disable-both-keeps-host-physical",
+      "before": {},
+      "after": {
+        "active": []
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [],
+        "cache": {
+          "invalidated": [
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "labels.primary.es",
+            "menu.primary",
+            "reports.summary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "activate-reports-invalidates-existing-menu-selection",
+      "before": {
+        "active": [
+          "catalog"
+        ]
+      },
+      "after": {},
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "reactivate-catalog-with-manual-application",
+      "before": {
+        "active": []
+      },
+      "after": {
+        "active": [
+          "catalog"
+        ]
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog"
+        ],
+        "cache": {
+          "invalidated": [
+            "menu.primary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "dictionary-change-invalidates-cross-module-derived",
+      "before": {},
+      "after": {
+        "payloads": {
+          "app-physical": {
+            "apiVersion": "arp.physical/v1",
+            "id": "storage.articles",
+            "kind": "table",
+            "source": {
+              "provider": "host-db",
+              "dialect": "postgresql",
+              "schema": "application",
+              "name": "articles",
+              "engineVersion": "illustrative-not-observed"
+            },
+            "columns": [
+              {
+                "name": "id",
+                "nativeType": "int64",
+                "scalarType": "INT64",
+                "nullable": false,
+                "ordinal": 1
+              },
+              {
+                "name": "code",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 2
+              },
+              {
+                "name": "name",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 3
+              },
+              {
+                "name": "rating",
+                "nativeType": "int16",
+                "scalarType": "INT16",
+                "nullable": false,
+                "ordinal": 4
+              }
+            ],
+            "primaryKey": [
+              "id"
+            ]
+          },
+          "app-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "app.status",
+                "type": "STRING"
+              }
+            ]
+          },
+          "app-menus": {
+            "apiVersion": "arp.menu/v1",
+            "menus": [
+              {
+                "id": "app.primary",
+                "scope": "primary",
+                "entries": [
+                  {
+                    "id": "app.home",
+                    "label": "Inicio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.home"
+                    }
+                  },
+                  {
+                    "id": "app.business",
+                    "label": "Negocio",
+                    "order": 10
+                  }
+                ]
+              },
+              {
+                "id": "app.secondary",
+                "scope": "secondary",
+                "entries": [
+                  {
+                    "id": "app.help",
+                    "label": "Ayuda",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.context",
+                "scope": "contextual",
+                "entries": [
+                  {
+                    "id": "app.details",
+                    "label": "Detalles",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.details"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.system",
+                "scope": "system",
+                "entries": [
+                  {
+                    "id": "app.settings",
+                    "label": "Preferencias",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.settings"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.workspace",
+                "scope": "workspace",
+                "entries": [
+                  {
+                    "id": "app.workspace.help",
+                    "label": "Ayuda del espacio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "app-future": [
+            {
+              "id": "app.note",
+              "fixtureText": "Extension supplied by a registered host handler"
+            }
+          ],
+          "catalog-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "catalog.code",
+                "type": "STRING",
+                "label": "Código de artículo"
+              },
+              {
+                "id": "catalog.name",
+                "type": "STRING"
+              }
+            ]
+          },
+          "catalog-logical": {
+            "apiVersion": "arp.logical/v1",
+            "id": "catalog.articles",
+            "physical": "storage.articles",
+            "fields": {
+              "code": {
+                "dictionary": "catalog.code"
+              },
+              "name": {
+                "dictionary": "catalog.name"
+              },
+              "rating": {
+                "constraints": {
+                  "minimum": "0",
+                  "maximum": "10"
+                }
+              }
+            }
+          },
+          "catalog-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "catalog.articles.public",
+            "source": {
+              "entity": "catalog.articles"
+            },
+            "fields": [
+              "code",
+              "name",
+              "rating"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "catalog-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "catalog.articles",
+                    "parent": "app.business",
+                    "labelKey": "catalog.menu.articles",
+                    "order": 10,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "catalog.articles.public",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "catalog-translations": [
+            {
+              "id": "catalog.labels",
+              "fixtureLabels": {
+                "catalog.menu.articles": {
+                  "es": "Artículos",
+                  "en": "Articles"
+                }
+              }
+            }
+          ],
+          "reports-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "reports.articles.summary",
+            "source": {
+              "projection": "catalog.articles.public"
+            },
+            "fields": [
+              "code",
+              "name"
+            ],
+            "operations": [
+              "LIST"
+            ]
+          },
+          "reports-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "reports.summary",
+                    "parent": "app.business",
+                    "labelKey": "reports.menu.summary",
+                    "order": 20,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "reports.articles.summary",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "reports-translations": [
+            {
+              "id": "reports.labels",
+              "fixtureLabels": {
+                "reports.menu.summary": {
+                  "es": "Resumen",
+                  "en": "Summary"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "labels.primary.es",
+            "menu.primary",
+            "reports.summary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "translation-change-only-invalidates-label-artifact",
+      "before": {},
+      "after": {
+        "payloads": {
+          "app-physical": {
+            "apiVersion": "arp.physical/v1",
+            "id": "storage.articles",
+            "kind": "table",
+            "source": {
+              "provider": "host-db",
+              "dialect": "postgresql",
+              "schema": "application",
+              "name": "articles",
+              "engineVersion": "illustrative-not-observed"
+            },
+            "columns": [
+              {
+                "name": "id",
+                "nativeType": "int64",
+                "scalarType": "INT64",
+                "nullable": false,
+                "ordinal": 1
+              },
+              {
+                "name": "code",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 2
+              },
+              {
+                "name": "name",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 3
+              },
+              {
+                "name": "rating",
+                "nativeType": "int16",
+                "scalarType": "INT16",
+                "nullable": false,
+                "ordinal": 4
+              }
+            ],
+            "primaryKey": [
+              "id"
+            ]
+          },
+          "app-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "app.status",
+                "type": "STRING"
+              }
+            ]
+          },
+          "app-menus": {
+            "apiVersion": "arp.menu/v1",
+            "menus": [
+              {
+                "id": "app.primary",
+                "scope": "primary",
+                "entries": [
+                  {
+                    "id": "app.home",
+                    "label": "Inicio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.home"
+                    }
+                  },
+                  {
+                    "id": "app.business",
+                    "label": "Negocio",
+                    "order": 10
+                  }
+                ]
+              },
+              {
+                "id": "app.secondary",
+                "scope": "secondary",
+                "entries": [
+                  {
+                    "id": "app.help",
+                    "label": "Ayuda",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.context",
+                "scope": "contextual",
+                "entries": [
+                  {
+                    "id": "app.details",
+                    "label": "Detalles",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.details"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.system",
+                "scope": "system",
+                "entries": [
+                  {
+                    "id": "app.settings",
+                    "label": "Preferencias",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.settings"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.workspace",
+                "scope": "workspace",
+                "entries": [
+                  {
+                    "id": "app.workspace.help",
+                    "label": "Ayuda del espacio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "app-future": [
+            {
+              "id": "app.note",
+              "fixtureText": "Extension supplied by a registered host handler"
+            }
+          ],
+          "catalog-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "catalog.code",
+                "type": "STRING"
+              },
+              {
+                "id": "catalog.name",
+                "type": "STRING"
+              }
+            ]
+          },
+          "catalog-logical": {
+            "apiVersion": "arp.logical/v1",
+            "id": "catalog.articles",
+            "physical": "storage.articles",
+            "fields": {
+              "code": {
+                "dictionary": "catalog.code"
+              },
+              "name": {
+                "dictionary": "catalog.name"
+              },
+              "rating": {
+                "constraints": {
+                  "minimum": "0",
+                  "maximum": "10"
+                }
+              }
+            }
+          },
+          "catalog-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "catalog.articles.public",
+            "source": {
+              "entity": "catalog.articles"
+            },
+            "fields": [
+              "code",
+              "name",
+              "rating"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "catalog-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "catalog.articles",
+                    "parent": "app.business",
+                    "labelKey": "catalog.menu.articles",
+                    "order": 10,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "catalog.articles.public",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "catalog-translations": [
+            {
+              "id": "catalog.labels",
+              "fixtureLabels": {
+                "catalog.menu.articles": {
+                  "es": "Catálogo",
+                  "en": "Articles"
+                }
+              }
+            }
+          ],
+          "reports-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "reports.articles.summary",
+            "source": {
+              "projection": "catalog.articles.public"
+            },
+            "fields": [
+              "code",
+              "name"
+            ],
+            "operations": [
+              "LIST"
+            ]
+          },
+          "reports-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "reports.summary",
+                    "parent": "app.business",
+                    "labelKey": "reports.menu.summary",
+                    "order": 20,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "reports.articles.summary",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "reports-translations": [
+            {
+              "id": "reports.labels",
+              "fixtureLabels": {
+                "reports.menu.summary": {
+                  "es": "Resumen",
+                  "en": "Summary"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "context-change-keeps-context-free-models",
+      "before": {},
+      "after": {
+        "contextRevision": "es-policy-2"
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "no-change-retains-entire-general-cache",
+      "before": {},
+      "after": {},
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "menu-conflict-does-not-publish-module-plan",
+      "before": {},
+      "after": {
+        "payloads": {
+          "app-physical": {
+            "apiVersion": "arp.physical/v1",
+            "id": "storage.articles",
+            "kind": "table",
+            "source": {
+              "provider": "host-db",
+              "dialect": "postgresql",
+              "schema": "application",
+              "name": "articles",
+              "engineVersion": "illustrative-not-observed"
+            },
+            "columns": [
+              {
+                "name": "id",
+                "nativeType": "int64",
+                "scalarType": "INT64",
+                "nullable": false,
+                "ordinal": 1
+              },
+              {
+                "name": "code",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 2
+              },
+              {
+                "name": "name",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 3
+              },
+              {
+                "name": "rating",
+                "nativeType": "int16",
+                "scalarType": "INT16",
+                "nullable": false,
+                "ordinal": 4
+              }
+            ],
+            "primaryKey": [
+              "id"
+            ]
+          },
+          "app-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "app.status",
+                "type": "STRING"
+              }
+            ]
+          },
+          "app-menus": {
+            "apiVersion": "arp.menu/v1",
+            "menus": [
+              {
+                "id": "app.primary",
+                "scope": "primary",
+                "entries": [
+                  {
+                    "id": "app.home",
+                    "label": "Inicio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.home"
+                    }
+                  },
+                  {
+                    "id": "app.business",
+                    "label": "Negocio",
+                    "order": 10
+                  }
+                ]
+              },
+              {
+                "id": "app.secondary",
+                "scope": "secondary",
+                "entries": [
+                  {
+                    "id": "app.help",
+                    "label": "Ayuda",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.context",
+                "scope": "contextual",
+                "entries": [
+                  {
+                    "id": "app.details",
+                    "label": "Detalles",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.details"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.system",
+                "scope": "system",
+                "entries": [
+                  {
+                    "id": "app.settings",
+                    "label": "Preferencias",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.settings"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.workspace",
+                "scope": "workspace",
+                "entries": [
+                  {
+                    "id": "app.workspace.help",
+                    "label": "Ayuda del espacio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "app-future": [
+            {
+              "id": "app.note",
+              "fixtureText": "Extension supplied by a registered host handler"
+            }
+          ],
+          "catalog-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "catalog.code",
+                "type": "STRING"
+              },
+              {
+                "id": "catalog.name",
+                "type": "STRING"
+              }
+            ]
+          },
+          "catalog-logical": {
+            "apiVersion": "arp.logical/v1",
+            "id": "catalog.articles",
+            "physical": "storage.articles",
+            "fields": {
+              "code": {
+                "dictionary": "catalog.code"
+              },
+              "name": {
+                "dictionary": "catalog.name"
+              },
+              "rating": {
+                "constraints": {
+                  "minimum": "0",
+                  "maximum": "10"
+                }
+              }
+            }
+          },
+          "catalog-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "catalog.articles.public",
+            "source": {
+              "entity": "catalog.articles"
+            },
+            "fields": [
+              "code",
+              "name",
+              "rating"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "catalog-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "catalog.articles",
+                    "parent": "app.business",
+                    "labelKey": "catalog.menu.articles",
+                    "order": 10,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "catalog.articles.public",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "catalog-translations": [
+            {
+              "id": "catalog.labels",
+              "fixtureLabels": {
+                "catalog.menu.articles": {
+                  "es": "Artículos",
+                  "en": "Articles"
+                }
+              }
+            }
+          ],
+          "reports-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "reports.articles.summary",
+            "source": {
+              "projection": "catalog.articles.public"
+            },
+            "fields": [
+              "code",
+              "name"
+            ],
+            "operations": [
+              "LIST"
+            ]
+          },
+          "reports-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "reports.summary",
+                    "parent": "app.business",
+                    "labelKey": "reports.menu.summary",
+                    "order": 20,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "reports.articles.summary",
+                      "operation": "LIST"
+                    }
+                  },
+                  {
+                    "id": "catalog.articles",
+                    "parent": "app.business",
+                    "labelKey": "catalog.menu.articles",
+                    "order": 10,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "catalog.articles.public",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "reports-translations": [
+            {
+              "id": "reports.labels",
+              "fixtureLabels": {
+                "reports.menu.summary": {
+                  "es": "Resumen",
+                  "en": "Summary"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "family": "definition-invalid",
+            "code": "MENUS_ENTRY_CONFLICT",
+            "at": "/entries"
+          }
+        ],
+        "published": "before",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "cache-scope-isolation",
+      "before": {},
+      "after": {},
+      "cache": {
+        "applicationId": "other.application",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "family": "definition-invalid",
+            "code": "MODULES_CACHE_SCOPE",
+            "at": "/cache"
+          }
+        ],
+        "published": "before",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "cache-cycle-rejected",
+      "before": {},
+      "after": {},
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "app.dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "family": "definition-invalid",
+            "code": "MODULES_CACHE_GRAPH",
+            "at": "/cache"
+          }
+        ],
+        "published": "before",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "unknown-dependency-completeness-invalidates-conservatively",
+      "before": {},
+      "after": {
+        "active": [
+          "catalog"
+        ]
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          },
+          {
+            "id": "uncertain.extension",
+            "complete": false,
+            "dependsOn": []
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary",
+            "reports.summary",
+            "uncertain.extension"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.system",
+            "physical.articles"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "application-edit-invalidates-only-target-menu",
+      "before": {},
+      "after": {
+        "composition": {
+          "apiVersion": "arp.menu-composition/v1",
+          "edits": [
+            {
+              "menu": "app.primary",
+              "entry": "catalog.articles",
+              "changes": {
+                "label": "Nuestros artículos"
+              }
+            }
+          ]
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "undeclared-definition-dependency-rejects-whole-plan",
+      "before": {},
+      "after": {
+        "modules": [
+          {
+            "apiVersion": "arp.module/v1",
+            "id": "catalog",
+            "dependencies": [],
+            "sources": [
+              {
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary",
+                "revision": "r1",
+                "kind": "dictionary",
+                "handle": "catalog-dictionary"
+              },
+              {
+                "providerId": "pkg.catalog",
+                "sourceId": "logical",
+                "revision": "r1",
+                "kind": "logical",
+                "handle": "catalog-logical"
+              },
+              {
+                "providerId": "pkg.catalog",
+                "sourceId": "projection",
+                "revision": "r1",
+                "kind": "projection",
+                "handle": "catalog-projection"
+              },
+              {
+                "providerId": "pkg.catalog",
+                "sourceId": "menus",
+                "revision": "r1",
+                "kind": "menu",
+                "handle": "catalog-menus"
+              },
+              {
+                "providerId": "pkg.catalog",
+                "sourceId": "translations",
+                "revision": "r1",
+                "kind": "translations",
+                "handle": "catalog-translations"
+              }
+            ]
+          },
+          {
+            "apiVersion": "arp.module/v1",
+            "id": "reports",
+            "dependencies": [],
+            "sources": [
+              {
+                "providerId": "pkg.reports",
+                "sourceId": "projection",
+                "revision": "r1",
+                "kind": "projection",
+                "handle": "reports-projection"
+              },
+              {
+                "providerId": "pkg.reports",
+                "sourceId": "menus",
+                "revision": "r1",
+                "kind": "menu",
+                "handle": "reports-menus"
+              },
+              {
+                "providerId": "pkg.reports",
+                "sourceId": "translations",
+                "revision": "r1",
+                "kind": "translations",
+                "handle": "reports-translations"
+              }
+            ]
+          }
+        ]
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "family": "definition-invalid",
+            "code": "MODULES_DEPENDENCY_UNDECLARED",
+            "at": "/dependencies"
+          }
+        ],
+        "published": "before",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "operation-access-change-invalidates-context-menus",
+      "before": {},
+      "after": {
+        "projectionAccess": {
+          "catalog.articles.public": {
+            "available": [
+              "LIST",
+              "GET"
+            ],
+            "authorized": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "reports.articles.summary": {
+            "available": [
+              "LIST"
+            ],
+            "authorized": [
+              "LIST"
+            ]
+          }
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary",
+            "menu.system"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    },
+    {
+      "id": "empty-source-retires-only-its-menu-contribution",
+      "before": {},
+      "after": {
+        "payloads": {
+          "app-physical": {
+            "apiVersion": "arp.physical/v1",
+            "id": "storage.articles",
+            "kind": "table",
+            "source": {
+              "provider": "host-db",
+              "dialect": "postgresql",
+              "schema": "application",
+              "name": "articles",
+              "engineVersion": "illustrative-not-observed"
+            },
+            "columns": [
+              {
+                "name": "id",
+                "nativeType": "int64",
+                "scalarType": "INT64",
+                "nullable": false,
+                "ordinal": 1
+              },
+              {
+                "name": "code",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 2
+              },
+              {
+                "name": "name",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 3
+              },
+              {
+                "name": "rating",
+                "nativeType": "int16",
+                "scalarType": "INT16",
+                "nullable": false,
+                "ordinal": 4
+              }
+            ],
+            "primaryKey": [
+              "id"
+            ]
+          },
+          "app-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "app.status",
+                "type": "STRING"
+              }
+            ]
+          },
+          "app-menus": {
+            "apiVersion": "arp.menu/v1",
+            "menus": [
+              {
+                "id": "app.primary",
+                "scope": "primary",
+                "entries": [
+                  {
+                    "id": "app.home",
+                    "label": "Inicio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.home"
+                    }
+                  },
+                  {
+                    "id": "app.business",
+                    "label": "Negocio",
+                    "order": 10
+                  }
+                ]
+              },
+              {
+                "id": "app.secondary",
+                "scope": "secondary",
+                "entries": [
+                  {
+                    "id": "app.help",
+                    "label": "Ayuda",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.context",
+                "scope": "contextual",
+                "entries": [
+                  {
+                    "id": "app.details",
+                    "label": "Detalles",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.details"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.system",
+                "scope": "system",
+                "entries": [
+                  {
+                    "id": "app.settings",
+                    "label": "Preferencias",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.settings"
+                    }
+                  }
+                ]
+              },
+              {
+                "id": "app.workspace",
+                "scope": "workspace",
+                "entries": [
+                  {
+                    "id": "app.workspace.help",
+                    "label": "Ayuda del espacio",
+                    "order": 0,
+                    "destination": {
+                      "kind": "route",
+                      "target": "app.help"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "app-future": [
+            {
+              "id": "app.note",
+              "fixtureText": "Extension supplied by a registered host handler"
+            }
+          ],
+          "catalog-dictionary": {
+            "apiVersion": "arp.dictionary/v1",
+            "elements": [
+              {
+                "id": "catalog.code",
+                "type": "STRING"
+              },
+              {
+                "id": "catalog.name",
+                "type": "STRING"
+              }
+            ]
+          },
+          "catalog-logical": {
+            "apiVersion": "arp.logical/v1",
+            "id": "catalog.articles",
+            "physical": "storage.articles",
+            "fields": {
+              "code": {
+                "dictionary": "catalog.code"
+              },
+              "name": {
+                "dictionary": "catalog.name"
+              },
+              "rating": {
+                "constraints": {
+                  "minimum": "0",
+                  "maximum": "10"
+                }
+              }
+            }
+          },
+          "catalog-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "catalog.articles.public",
+            "source": {
+              "entity": "catalog.articles"
+            },
+            "fields": [
+              "code",
+              "name",
+              "rating"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "catalog-menus": {
+            "apiVersion": "arp.menu/v1",
+            "contributions": [
+              {
+                "menu": "app.primary",
+                "entries": [
+                  {
+                    "id": "catalog.articles",
+                    "parent": "app.business",
+                    "labelKey": "catalog.menu.articles",
+                    "order": 10,
+                    "destination": {
+                      "kind": "projection",
+                      "target": "catalog.articles.public",
+                      "operation": "LIST"
+                    }
+                  }
+                ]
+              }
+            ]
+          },
+          "catalog-translations": [
+            {
+              "id": "catalog.labels",
+              "fixtureLabels": {
+                "catalog.menu.articles": {
+                  "es": "Artículos",
+                  "en": "Articles"
+                }
+              }
+            }
+          ],
+          "reports-projection": {
+            "apiVersion": "arp.projection/v1",
+            "id": "reports.articles.summary",
+            "source": {
+              "projection": "catalog.articles.public"
+            },
+            "fields": [
+              "code",
+              "name"
+            ],
+            "operations": [
+              "LIST"
+            ]
+          },
+          "reports-menus": {
+            "apiVersion": "arp.menu/v1"
+          },
+          "reports-translations": [
+            {
+              "id": "reports.labels",
+              "fixtureLabels": {
+                "reports.menu.summary": {
+                  "es": "Resumen",
+                  "en": "Summary"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "cache": {
+        "applicationId": "demo.shop",
+        "entries": [
+          {
+            "id": "app.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "physical.articles",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "physical"
+              }
+            ]
+          },
+          {
+            "id": "custom.note",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "future"
+              }
+            ]
+          },
+          {
+            "id": "menu.system",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.system"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.system"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "catalog.dictionary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "dictionary"
+              }
+            ]
+          },
+          {
+            "id": "catalog.model",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "logical"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.dictionary"
+              },
+              {
+                "kind": "artifact",
+                "id": "physical.articles"
+              }
+            ]
+          },
+          {
+            "id": "catalog.public",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.model"
+              }
+            ]
+          },
+          {
+            "id": "reports.summary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "projection"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              }
+            ]
+          },
+          {
+            "id": "menu.primary",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "source",
+                "providerId": "application",
+                "sourceId": "menus"
+              },
+              {
+                "kind": "selection",
+                "type": "menu",
+                "id": "app.primary"
+              },
+              {
+                "kind": "artifact",
+                "id": "catalog.public"
+              },
+              {
+                "kind": "artifact",
+                "id": "reports.summary"
+              },
+              {
+                "kind": "configuration",
+                "id": "composition:app.primary"
+              },
+              {
+                "kind": "context",
+                "id": "reader"
+              }
+            ]
+          },
+          {
+            "id": "labels.primary.es",
+            "complete": true,
+            "dependsOn": [
+              {
+                "kind": "artifact",
+                "id": "menu.primary"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.catalog",
+                "sourceId": "translations"
+              },
+              {
+                "kind": "source",
+                "providerId": "pkg.reports",
+                "sourceId": "translations"
+              }
+            ]
+          }
+        ]
+      },
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "published": "after",
+        "activeModules": [
+          "catalog",
+          "reports"
+        ],
+        "cache": {
+          "invalidated": [
+            "labels.primary.es",
+            "menu.primary"
+          ],
+          "retained": [
+            "app.dictionary",
+            "catalog.dictionary",
+            "catalog.model",
+            "catalog.public",
+            "custom.note",
+            "menu.system",
+            "physical.articles",
+            "reports.summary"
+          ]
+        },
+        "sourceSnapshotsPreserved": true
+      }
+    }
+  ]
+}
