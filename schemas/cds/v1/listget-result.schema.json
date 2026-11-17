@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alxarafe.org/arp/drafts/cds/v1/listget-result.schema.json",
+  "title": "Candidate LIST/GET result profile of SERVICES-002; not a published transport",
+  "oneOf": [
+    {
+      "type": "object",
+      "required": [
+        "status",
+        "diagnostics",
+        "output"
+      ],
+      "properties": {
+        "status": {
+          "const": "success"
+        },
+        "diagnostics": {
+          "type": "array",
+          "maxItems": 0
+        },
+        "output": {
+          "oneOf": [
+            {
+              "type": "object",
+              "required": [
+                "found"
+              ],
+              "properties": {
+                "found": {
+                  "const": false
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "found",
+                "record"
+              ],
+              "properties": {
+                "found": {
+                  "const": true
+                },
+                "record": {
+                  "type": "object",
+                  "required": [
+                    "key",
+                    "values"
+                  ],
+                  "properties": {
+                    "key": {
+                      "oneOf": [
+                        {
+                          "type": "object",
+                          "required": [
+                            "components"
+                          ],
+                          "properties": {
+                            "components": {
+                              "type": "array",
+                              "minItems": 1,
+                              "items": {
+                                "type": "object",
+                                "required": [
+                                  "field",
+                                  "type",
+                                  "value"
+                                ],
+                                "properties": {
+                                  "field": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  },
+                                  "type": {
+                                    "enum": [
+                                      "INT8",
+                                      "UINT8",
+                                      "INT16",
+                                      "UINT16",
+                                      "INT32",
+                                      "UINT32",
+                                      "INT64"
+                                    ]
+                                  },
+                                  "value": {
+                                    "type": "string",
+                                    "minLength": 1
+                                  }
+                                },
+                                "additionalProperties": false
+                              }
+                            }
+                          },
+                          "additionalProperties": false
+                        },
+                        {
+                          "type": "object",
+                          "required": [
+                            "reference"
+                          ],
+                          "properties": {
+                            "reference": {
+                              "type": "string",
+                              "minLength": 1,
+                              "maxLength": 128
+                            }
+                          },
+                          "additionalProperties": false
+                        }
+                      ]
+                    },
+                    "values": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": [
+                          "string",
+                          "boolean",
+                          "null"
+                        ]
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "required": [
+                "records",
+                "page"
+              ],
+              "properties": {
+                "records": {
+                  "type": "array",
+                  "maxItems": 100,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "key",
+                      "values"
+                    ],
+                    "properties": {
+                      "key": {
+                        "oneOf": [
+                          {
+                            "type": "object",
+                            "required": [
+                              "components"
+                            ],
+                            "properties": {
+                              "components": {
+                                "type": "array",
+                                "minItems": 1,
+                                "items": {
+                                  "type": "object",
+                                  "required": [
+                                    "field",
+                                    "type",
+                                    "value"
+                                  ],
+                                  "properties": {
+                                    "field": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    },
+                                    "type": {
+                                      "enum": [
+                                        "INT8",
+                                        "UINT8",
+                                        "INT16",
+                                        "UINT16",
+                                        "INT32",
+                                        "UINT32",
+                                        "INT64"
+                                      ]
+                                    },
+                                    "value": {
+                                      "type": "string",
+                                      "minLength": 1
+                                    }
+                                  },
+                                  "additionalProperties": false
+                                }
+                              }
+                            },
+                            "additionalProperties": false
+                          },
+                          {
+                            "type": "object",
+                            "required": [
+                              "reference"
+                            ],
+                            "properties": {
+                              "reference": {
+                                "type": "string",
+                                "minLength": 1,
+                                "maxLength": 128
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        ]
+                      },
+                      "values": {
+                        "type": "object",
+                        "additionalProperties": {
+                          "type": [
+                            "string",
+                            "boolean",
+                            "null"
+                          ]
+                        }
+                      }
+                    },
+                    "additionalProperties": false
+                  }
+                },
+                "page": {
+                  "type": "object",
+                  "required": [
+                    "limit",
+                    "hasMore",
+                    "next"
+                  ],
+                  "properties": {
+                    "limit": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "hasMore": {
+                      "type": "boolean"
+                    },
+                    "next": {
+                      "type": [
+                        "string",
+                        "null"
+                      ],
+                      "minLength": 1,
+                      "maxLength": 128
+                    }
+                  },
+                  "additionalProperties": false,
+                  "allOf": [
+                    {
+                      "if": {
+                        "properties": {
+                          "hasMore": {
+                            "const": true
+                          }
+                        }
+                      },
+                      "then": {
+                        "properties": {
+                          "next": {
+                            "type": "string"
+                          }
+                        }
+                      },
+                      "else": {
+                        "properties": {
+                          "next": {
+                            "type": "null"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "additionalProperties": false
+    },
+    {
+      "type": "object",
+      "required": [
+        "status",
+        "diagnostics"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "rejected",
+            "failed"
+          ]
+        },
+        "diagnostics": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "family",
+              "code"
+            ],
+            "properties": {
+              "family": {
+                "enum": [
+                  "definition-invalid",
+                  "physical-incompatible",
+                  "invalid-data",
+                  "operation-not-allowed",
+                  "execution-failure"
+                ]
+              },
+              "code": {
+                "enum": [
+                  "CDS_LISTGET_CAPABILITY_UNAVAILABLE",
+                  "CDS_LISTGET_GENERATION_CHANGED",
+                  "CDS_LISTGET_GENERATION_EXPIRED",
+                  "CDS_LISTGET_INCOMPATIBLE_STORAGE",
+                  "CDS_LISTGET_INPUT_SHAPE",
+                  "CDS_LISTGET_INVALID_CURSOR",
+                  "CDS_LISTGET_INVALID_DEFINITION",
+                  "CDS_LISTGET_INVALID_KEY",
+                  "CDS_LISTGET_READ_FAILED",
+                  "CDS_LISTGET_ROW_DECODE_FAILED",
+                  "CDS_LISTGET_ROW_IDENTITY_INVALID",
+                  "CDS_LISTGET_UNAVAILABLE"
+                ]
+              }
+            },
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "family": {
+                      "const": "definition-invalid"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "CDS_LISTGET_INVALID_DEFINITION"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "family": {
+                      "const": "physical-incompatible"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "CDS_LISTGET_INCOMPATIBLE_STORAGE"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "family": {
+                      "const": "invalid-data"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "CDS_LISTGET_INPUT_SHAPE",
+                        "CDS_LISTGET_INVALID_KEY",
+                        "CDS_LISTGET_INVALID_CURSOR"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "family": {
+                      "const": "operation-not-allowed"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "CDS_LISTGET_UNAVAILABLE",
+                        "CDS_LISTGET_CAPABILITY_UNAVAILABLE",
+                        "CDS_LISTGET_GENERATION_EXPIRED"
+                      ]
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "family": {
+                      "const": "execution-failure"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "code": {
+                      "enum": [
+                        "CDS_LISTGET_GENERATION_CHANGED",
+                        "CDS_LISTGET_READ_FAILED",
+                        "CDS_LISTGET_ROW_DECODE_FAILED",
+                        "CDS_LISTGET_ROW_IDENTITY_INVALID"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "status": {
+                "const": "failed"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "diagnostics": {
+                "items": {
+                  "properties": {
+                    "family": {
+                      "const": "execution-failure"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "else": {
+            "properties": {
+              "diagnostics": {
+                "items": {
+                  "properties": {
+                    "family": {
+                      "not": {
+                        "const": "execution-failure"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

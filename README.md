@@ -56,6 +56,13 @@ updated stack conformance has not been evaluated. See
 source activation, manual/modular menu composition and selective invalidation in one application cache.
 Their shared fixtures and offline verifiers remain candidates for review; no installer, cache backend or UI is added.
 
+## Candidate record reads
+
+[ARP-CDS-LISTGET-001](docs/features/arp-cds-listget-001.md) proposes minimal LIST/GET semantics over an existing
+table, with 88 shared product vectors, active catalog/reports projections, a SERVICES-002 result profile and
+an adapter responsibility boundary. It remains subject to review; it does not implement SQL, HTTP, permissions
+or native runtime conformance. The original 74 vectors are preserved; the verifier also covers modular activation.
+
 ## Previously published Erbas contracts
 
 Existing `erbas-contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.

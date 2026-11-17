@@ -39,3 +39,4 @@ jobs:
           python3 tools/check_cds_read_draft.py
           python3 tools/check_modules_draft.py
           python3 tools/check_menus_draft.py
+          python3 tools/check_cds_listget_draft.py
