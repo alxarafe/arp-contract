@@ -50,6 +50,12 @@ unreleased. Historical PHP/Java/.NET results cover the earlier `0172ab6` candida
 updated stack conformance has not been evaluated. See
 [portability decisions and implementation impact](docs/dictionary-portability-002.md).
 
+## Candidate modules and menus
+
+[ARP-MODULES-001](docs/features/arp-modules-001.md) and [ARP-MENUS-001](docs/features/arp-menus-001.md) propose
+source activation, manual/modular menu composition and selective invalidation in one application cache.
+Their shared fixtures and offline verifiers remain candidates for review; no installer, cache backend or UI is added.
+
 ## Previously published Erbas contracts
 
 Existing `erbas-contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.
