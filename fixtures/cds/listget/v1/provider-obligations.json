@@ -1,0 +1,42 @@
+{
+  "feature": "ARP-CDS-LISTGET-001",
+  "status": "unreleased-draft",
+  "executed": false,
+  "engines": {
+    "dotnet": "postgresql",
+    "java": "postgresql",
+    "php": "mariadb"
+  },
+  "data": "products.json",
+  "requirements": [
+    "existing-products-table",
+    "actual-primary-key-and-nullability",
+    "lossless-dict-scalar-decoding",
+    "host-row-and-field-restrictions-before-paging",
+    "stable-keyset-order-with-hidden-key",
+    "hidden-key-reference-binding-and-unforgeability",
+    "continuation-binding-and-limit",
+    "invalidation-during-read-no-stale-publication",
+    "rebuild-new-column-does-not-expand-projection",
+    "removed-column-no-stale-fallback",
+    "read-failure-no-partial-page",
+    "logical-documents-unchanged",
+    "no-business-writes",
+    "equivalent-neutral-results-for-shared-cases",
+    "bounded-page-and-one-authorized-lookahead",
+    "active-module-projection-only",
+    "reports-derived-projection-catalog-dependency",
+    "independent-list-get-host-authorization",
+    "module-deactivation-inflight-and-before-dispatch",
+    "single-application-cache-query-metadata-invalidation"
+  ],
+  "columnRequirements": {
+    "tenant_id": "signed INT32, NOT NULL",
+    "product_id": "signed INT64, NOT NULL",
+    "price": "exact DECIMAL, capacity for 24 integral and 18 fractional digits",
+    "cost": "exact DECIMAL, hidden",
+    "description": "nullable Unicode text",
+    "available": "lossless BOOLEAN decoding, no native-name inference",
+    "released": "DATE without time zone"
+  }
+}

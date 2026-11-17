@@ -1,0 +1,5360 @@
+{
+  "feature": "ARP-CDS-LISTGET-001",
+  "status": "unreleased-draft",
+  "defaults": {
+    "target": "demo.products",
+    "projection": "products.catalog",
+    "context": {
+      "principal": "commercial-reader",
+      "scope": "company-7",
+      "policyRevision": "policy-1"
+    },
+    "authorized": true,
+    "registered": true,
+    "enabledOperations": [
+      "LIST",
+      "GET"
+    ],
+    "readableFields": [
+      "tenant_id",
+      "product_id",
+      "sku",
+      "name",
+      "price",
+      "rating",
+      "description",
+      "available",
+      "released",
+      "cost",
+      "internal_note"
+    ],
+    "readCapability": true,
+    "generation": "g1",
+    "currentGeneration": "g1",
+    "allowedRows": [
+      "p1",
+      "p2",
+      "p3",
+      "p4",
+      "p5"
+    ],
+    "defaultLimit": 2,
+    "maxLimit": 3,
+    "referenceFor": {
+      "p1": "rec-69f204cbda087e13",
+      "p2": "rec-cd83e76a902f4b51",
+      "p3": "rec-a2d98cf460be7135",
+      "p4": "rec-30b61e9af2c748d0",
+      "p5": "rec-e83a4d09b6271fc5",
+      "other-scope": "rec-785cd01a9f26be43"
+    },
+    "cursorFor": {
+      "p1": "page-c09a3f71d5e824b6",
+      "p2": "page-3f58b1e609a72cd4",
+      "p3": "page-a70f41692c8e5bd3",
+      "p4": "page-2b91f78a046dc3e5"
+    },
+    "references": {
+      "rec-69f204cbda087e13": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "7",
+          "2"
+        ]
+      },
+      "rec-cd83e76a902f4b51": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "7",
+          "10"
+        ]
+      },
+      "rec-a2d98cf460be7135": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "7",
+          "9007199254740993"
+        ]
+      },
+      "rec-30b61e9af2c748d0": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "7",
+          "9007199254740994"
+        ]
+      },
+      "rec-e83a4d09b6271fc5": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "7",
+          "9223372036854775807"
+        ]
+      },
+      "rec-785cd01a9f26be43": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "key": [
+          "8",
+          "2"
+        ]
+      }
+    },
+    "continuations": {
+      "page-c09a3f71d5e824b6": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "limit": 2,
+        "after": [
+          "7",
+          "2"
+        ]
+      },
+      "page-3f58b1e609a72cd4": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "limit": 2,
+        "after": [
+          "7",
+          "10"
+        ]
+      },
+      "page-a70f41692c8e5bd3": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "limit": 2,
+        "after": [
+          "7",
+          "9007199254740993"
+        ]
+      },
+      "page-2b91f78a046dc3e5": {
+        "target": "demo.products",
+        "projection": "products.catalog",
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        },
+        "generation": "g1",
+        "limit": 2,
+        "after": [
+          "7",
+          "9007199254740994"
+        ]
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "get-authorized-hidden-key",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-69f204cbda087e13"
+              },
+              "values": {
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g",
+                "price": "7.95",
+                "rating": "8",
+                "description": null,
+                "available": true,
+                "released": "2025-02-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-null-preserved",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-69f204cbda087e13"
+              },
+              "values": {
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g",
+                "price": "7.95",
+                "rating": "8",
+                "description": null,
+                "available": true,
+                "released": "2025-02-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-historical-rating",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-a2d98cf460be7135"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-a2d98cf460be7135"
+              },
+              "values": {
+                "sku": "CAL-01",
+                "name": "Calibración de balanza comercial",
+                "price": "125.000000000000000001",
+                "rating": "11",
+                "description": "Tarifa histórica",
+                "available": false,
+                "released": "2024-12-31"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p3"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-exact-decimal",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-30b61e9af2c748d0"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-30b61e9af2c748d0"
+              },
+              "values": {
+                "sku": "TOR-M6",
+                "name": "Tornillo M6, caja de 100",
+                "price": "999999999999999999999999.123456789",
+                "rating": "0",
+                "description": "",
+                "available": true,
+                "released": "2026-01-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p4"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-unicode-and-empty-values",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-e83a4d09b6271fc5"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-e83a4d09b6271fc5"
+              },
+              "values": {
+                "sku": "TE-ES",
+                "name": "Té verde 🍵",
+                "price": "0",
+                "rating": "10",
+                "description": "Lote de muestra",
+                "available": true,
+                "released": "2026-06-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p5"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-unknown-reference",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-unknown-unissued"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-existing-but-row-denied",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-785cd01a9f26be43"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "get-scope-binding-denied",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-8",
+          "policyRevision": "policy-1"
+        }
+      }
+    },
+    {
+      "id": "get-principal-binding-denied",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "context": {
+          "principal": "other-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-1"
+        }
+      }
+    },
+    {
+      "id": "get-policy-binding-denied",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-2"
+        }
+      }
+    },
+    {
+      "id": "get-projection-binding-denied",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.summary",
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "get-simple-typed-key",
+      "layout": "simple",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "9007199254740993"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "components": [
+                  {
+                    "field": "product_id",
+                    "type": "INT64",
+                    "value": "9007199254740993"
+                  }
+                ]
+              },
+              "values": {
+                "tenant_id": "7",
+                "product_id": "9007199254740993",
+                "sku": "CAL-01",
+                "name": "Calibración de balanza comercial"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p3"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "get-composite-typed-key",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "10"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "components": [
+                  {
+                    "field": "tenant_id",
+                    "type": "INT32",
+                    "value": "7"
+                  },
+                  {
+                    "field": "product_id",
+                    "type": "INT64",
+                    "value": "10"
+                  }
+                ]
+              },
+              "values": {
+                "tenant_id": "7",
+                "product_id": "10",
+                "sku": "ACE-1L",
+                "name": "Aceite de oliva virgen extra 1 L"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p2"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "get-missing-typed-key",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "123"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": false
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "get-raw-hidden-key-rejected",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "2"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "key-null",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": null
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-incomplete",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-reordered",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "2"
+              },
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-extra",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "2"
+              }
+            ],
+            "scope": "company-7"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-number-not-string",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": 2
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-wrong-type",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT32",
+                "value": "2"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "key-out-of-range",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "tenant_id",
+                "type": "INT32",
+                "value": "7"
+              },
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "9223372036854775808"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "list-first-page",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g",
+                  "price": "7.95",
+                  "rating": "8",
+                  "description": null,
+                  "available": true,
+                  "released": "2025-02-01"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-cd83e76a902f4b51"
+                },
+                "values": {
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L",
+                  "price": "12.5",
+                  "rating": "9",
+                  "description": "Primera extracción",
+                  "available": true,
+                  "released": "2025-03-15"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": true,
+              "next": "page-3f58b1e609a72cd4"
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1",
+            "p2"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-second-page",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-3f58b1e609a72cd4"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-a2d98cf460be7135"
+                },
+                "values": {
+                  "sku": "CAL-01",
+                  "name": "Calibración de balanza comercial",
+                  "price": "125.000000000000000001",
+                  "rating": "11",
+                  "description": "Tarifa histórica",
+                  "available": false,
+                  "released": "2024-12-31"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-30b61e9af2c748d0"
+                },
+                "values": {
+                  "sku": "TOR-M6",
+                  "name": "Tornillo M6, caja de 100",
+                  "price": "999999999999999999999999.123456789",
+                  "rating": "0",
+                  "description": "",
+                  "available": true,
+                  "released": "2026-01-01"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": true,
+              "next": "page-2b91f78a046dc3e5"
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p3",
+            "p4"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-last-page",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-2b91f78a046dc3e5"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-e83a4d09b6271fc5"
+                },
+                "values": {
+                  "sku": "TE-ES",
+                  "name": "Té verde 🍵",
+                  "price": "0",
+                  "rating": "10",
+                  "description": "Lote de muestra",
+                  "available": true,
+                  "released": "2026-06-01"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p5"
+          ],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-server-clamps-limit",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 100
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g",
+                  "price": "7.95",
+                  "rating": "8",
+                  "description": null,
+                  "available": true,
+                  "released": "2025-02-01"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-cd83e76a902f4b51"
+                },
+                "values": {
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L",
+                  "price": "12.5",
+                  "rating": "9",
+                  "description": "Primera extracción",
+                  "available": true,
+                  "released": "2025-03-15"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-a2d98cf460be7135"
+                },
+                "values": {
+                  "sku": "CAL-01",
+                  "name": "Calibración de balanza comercial",
+                  "price": "125.000000000000000001",
+                  "rating": "11",
+                  "description": "Tarifa histórica",
+                  "available": false,
+                  "released": "2024-12-31"
+                }
+              }
+            ],
+            "page": {
+              "limit": 3,
+              "hasMore": true,
+              "next": "page-a70f41692c8e5bd3"
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1",
+            "p2",
+            "p3"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "continuations": {
+          "page-c09a3f71d5e824b6": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "2"
+            ]
+          },
+          "page-3f58b1e609a72cd4": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "10"
+            ]
+          },
+          "page-a70f41692c8e5bd3": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 3,
+            "after": [
+              "7",
+              "9007199254740993"
+            ]
+          },
+          "page-2b91f78a046dc3e5": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "9007199254740994"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-empty-authorized-set",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "allowedRows": []
+      }
+    },
+    {
+      "id": "list-numeric-order-simple-keys",
+      "layout": "simple",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "components": [
+                    {
+                      "field": "product_id",
+                      "type": "INT64",
+                      "value": "2"
+                    }
+                  ]
+                },
+                "values": {
+                  "tenant_id": "7",
+                  "product_id": "2",
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g"
+                }
+              },
+              {
+                "key": {
+                  "components": [
+                    {
+                      "field": "product_id",
+                      "type": "INT64",
+                      "value": "10"
+                    }
+                  ]
+                },
+                "values": {
+                  "tenant_id": "7",
+                  "product_id": "10",
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1",
+            "p2"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified",
+        "allowedRows": [
+          "p1",
+          "p2"
+        ]
+      }
+    },
+    {
+      "id": "list-derived-projection",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-cd83e76a902f4b51"
+                },
+                "values": {
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1",
+            "p2"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.summary",
+        "allowedRows": [
+          "p1",
+          "p2"
+        ],
+        "references": {
+          "rec-69f204cbda087e13": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "2"
+            ]
+          },
+          "rec-cd83e76a902f4b51": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "10"
+            ]
+          },
+          "rec-a2d98cf460be7135": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "9007199254740993"
+            ]
+          },
+          "rec-30b61e9af2c748d0": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "9007199254740994"
+            ]
+          },
+          "rec-e83a4d09b6271fc5": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "9223372036854775807"
+            ]
+          },
+          "rec-785cd01a9f26be43": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "8",
+              "2"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-limit-zero",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 0
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-limit-negative",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": -1
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-limit-bool",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": true
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-limit-fraction",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 1.5
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-limit-too-large",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 101
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-limit-null",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": null
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-arbitrary-filter",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "filter": {
+            "cost": 0
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-arbitrary-sort",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "sort": [
+            "cost"
+          ]
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-fields-injection",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "fields": [
+            "cost"
+          ]
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "list-offset-rejected",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "offset": 2
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "cursor-unknown",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-unissued-unknown"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_CURSOR"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {}
+    },
+    {
+      "id": "cursor-null",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": null
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_CURSOR"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {}
+    },
+    {
+      "id": "cursor-limit-changed",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-3f58b1e609a72cd4",
+          "limit": 3
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_CURSOR"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {}
+    },
+    {
+      "id": "cursor-context-changed",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-3f58b1e609a72cd4"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_CURSOR"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "context": {
+          "principal": "commercial-reader",
+          "scope": "other",
+          "policyRevision": "policy-1"
+        }
+      }
+    },
+    {
+      "id": "operation-not-authorized",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "authorized": false
+      }
+    },
+    {
+      "id": "target-not-registered",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "registered": false
+      }
+    },
+    {
+      "id": "module-disabled",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "registered": false
+      }
+    },
+    {
+      "id": "operation-not-enabled",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "enabledOperations": [
+          "LIST"
+        ]
+      }
+    },
+    {
+      "id": "derived-operation-not-exposed",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.summary"
+      }
+    },
+    {
+      "id": "selected-field-not-readable",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "readableFields": [
+          "sku",
+          "name"
+        ]
+      }
+    },
+    {
+      "id": "client-context-injection",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {},
+        "context": {
+          "scope": "company-8"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "client-context-cannot-authorize",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {},
+        "authorized": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "authorized": false
+      }
+    },
+    {
+      "id": "input-null",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": null
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      }
+    },
+    {
+      "id": "read-capability-not-proven",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "readCapability": false
+      }
+    },
+    {
+      "id": "table-without-key",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": []
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid-definition",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "CDS_LISTGET_INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released",
+                "absent_column"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "unauthorized-definition-error-concealed",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released",
+                "absent_column"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        },
+        "authorized": false
+      }
+    },
+    {
+      "id": "physical-incompatibility",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "physical-incompatible",
+              "code": "CDS_LISTGET_INCOMPATIBLE_STORAGE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "stale-catalog-generation",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_GENERATION_EXPIRED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "currentGeneration": "g2"
+      }
+    },
+    {
+      "id": "stale-record-reference",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_GENERATION_EXPIRED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "generation": "g2",
+        "currentGeneration": "g2"
+      }
+    },
+    {
+      "id": "stale-continuation",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-3f58b1e609a72cd4"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_GENERATION_EXPIRED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "generation": "g2",
+        "currentGeneration": "g2"
+      }
+    },
+    {
+      "id": "invalidation-during-read",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_GENERATION_CHANGED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "generationAtPublish": "g2"
+      }
+    },
+    {
+      "id": "authorization-lost-before-publication",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "authorizedAtPublish": false
+      }
+    },
+    {
+      "id": "provider-failure",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_READ_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "readFailure": true
+      }
+    },
+    {
+      "id": "last-row-decode-failure-no-partial-page",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_ROW_DECODE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "decodeFailures": [
+          "p2"
+        ]
+      }
+    },
+    {
+      "id": "unexpected-null-nonnullable",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_ROW_DECODE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "p1",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "2",
+              "sku": null,
+              "name": "Café de Colombia 250 g",
+              "price": "7.95",
+              "rating": "8",
+              "description": null,
+              "available": true,
+              "released": "2025-02-01",
+              "cost": "4.123456789",
+              "internal_note": "Acuerdo proveedor A"
+            }
+          },
+          {
+            "id": "p2",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "10",
+              "sku": "ACE-1L",
+              "name": "Aceite de oliva virgen extra 1 L",
+              "price": "12.5",
+              "rating": "9",
+              "description": "Primera extracción",
+              "available": true,
+              "released": "2025-03-15",
+              "cost": "8.02",
+              "internal_note": "Margen reservado"
+            }
+          },
+          {
+            "id": "p3",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740993",
+              "sku": "CAL-01",
+              "name": "Calibración de balanza comercial",
+              "price": "125.000000000000000001",
+              "rating": "11",
+              "description": "Tarifa histórica",
+              "available": false,
+              "released": "2024-12-31",
+              "cost": "80",
+              "internal_note": "Dato histórico fuera de 0..10"
+            }
+          },
+          {
+            "id": "p4",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740994",
+              "sku": "TOR-M6",
+              "name": "Tornillo M6, caja de 100",
+              "price": "999999999999999999999999.123456789",
+              "rating": "0",
+              "description": "",
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "1.2",
+              "internal_note": null
+            }
+          },
+          {
+            "id": "p5",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9223372036854775807",
+              "sku": "TE-ES",
+              "name": "Té verde 🍵",
+              "price": "0",
+              "rating": "10",
+              "description": "Lote de muestra",
+              "available": true,
+              "released": "2026-06-01",
+              "cost": "0",
+              "internal_note": "No normalizar Unicode"
+            }
+          },
+          {
+            "id": "other-scope",
+            "values": {
+              "tenant_id": "8",
+              "product_id": "2",
+              "sku": "PRIV-01",
+              "name": "Producto de otra empresa",
+              "price": "999.99",
+              "rating": "6",
+              "description": null,
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "700",
+              "internal_note": "No divulgar"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "duplicate-record-identity",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_ROW_IDENTITY_INVALID"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "p1",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "2",
+              "sku": "CAF-250",
+              "name": "Café de Colombia 250 g",
+              "price": "7.95",
+              "rating": "8",
+              "description": null,
+              "available": true,
+              "released": "2025-02-01",
+              "cost": "4.123456789",
+              "internal_note": "Acuerdo proveedor A"
+            }
+          },
+          {
+            "id": "p2",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "10",
+              "sku": "ACE-1L",
+              "name": "Aceite de oliva virgen extra 1 L",
+              "price": "12.5",
+              "rating": "9",
+              "description": "Primera extracción",
+              "available": true,
+              "released": "2025-03-15",
+              "cost": "8.02",
+              "internal_note": "Margen reservado"
+            }
+          },
+          {
+            "id": "p3",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740993",
+              "sku": "CAL-01",
+              "name": "Calibración de balanza comercial",
+              "price": "125.000000000000000001",
+              "rating": "11",
+              "description": "Tarifa histórica",
+              "available": false,
+              "released": "2024-12-31",
+              "cost": "80",
+              "internal_note": "Dato histórico fuera de 0..10"
+            }
+          },
+          {
+            "id": "p4",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740994",
+              "sku": "TOR-M6",
+              "name": "Tornillo M6, caja de 100",
+              "price": "999999999999999999999999.123456789",
+              "rating": "0",
+              "description": "",
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "1.2",
+              "internal_note": null
+            }
+          },
+          {
+            "id": "p5",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9223372036854775807",
+              "sku": "TE-ES",
+              "name": "Té verde 🍵",
+              "price": "0",
+              "rating": "10",
+              "description": "Lote de muestra",
+              "available": true,
+              "released": "2026-06-01",
+              "cost": "0",
+              "internal_note": "No normalizar Unicode"
+            }
+          },
+          {
+            "id": "other-scope",
+            "values": {
+              "tenant_id": "8",
+              "product_id": "2",
+              "sku": "PRIV-01",
+              "name": "Producto de otra empresa",
+              "price": "999.99",
+              "rating": "6",
+              "description": null,
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "700",
+              "internal_note": "No divulgar"
+            }
+          },
+          {
+            "id": "duplicate",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "2",
+              "sku": "CAF-250",
+              "name": "Café de Colombia 250 g",
+              "price": "7.95",
+              "rating": "8",
+              "description": null,
+              "available": true,
+              "released": "2025-02-01",
+              "cost": "4.123456789",
+              "internal_note": "Acuerdo proveedor A"
+            }
+          }
+        ],
+        "allowedRows": [
+          "p1",
+          "p2",
+          "p3",
+          "p4",
+          "p5",
+          "duplicate"
+        ]
+      }
+    },
+    {
+      "id": "new-column-not-published-after-rebuild",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-7b6ad450e21c9f83"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-7b6ad450e21c9f83"
+              },
+              "values": {
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g",
+                "price": "7.95",
+                "rating": "8",
+                "description": null,
+                "available": true,
+                "released": "2025-02-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "sku",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 3
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                },
+                {
+                  "name": "supplier_reference",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 12
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        },
+        "generation": "g2",
+        "currentGeneration": "g2",
+        "referenceFor": {
+          "p1": "rec-7b6ad450e21c9f83"
+        },
+        "references": {
+          "rec-7b6ad450e21c9f83": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g2",
+            "key": [
+              "7",
+              "2"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "removed-published-column-rebuild-rejected",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "CDS_LISTGET_INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "definitions": {
+          "physical": {
+            "observed": {
+              "apiVersion": "arp.physical/v1",
+              "id": "storage.products",
+              "kind": "table",
+              "source": {
+                "provider": "commercial-db",
+                "dialect": "postgresql",
+                "schema": "commerce",
+                "name": "products",
+                "engineVersion": "fixture-observation-not-real-db"
+              },
+              "columns": [
+                {
+                  "name": "tenant_id",
+                  "nativeType": "int32",
+                  "scalarType": "INT32",
+                  "nullable": false,
+                  "ordinal": 1
+                },
+                {
+                  "name": "product_id",
+                  "nativeType": "int64",
+                  "scalarType": "INT64",
+                  "nullable": false,
+                  "ordinal": 2
+                },
+                {
+                  "name": "name",
+                  "nativeType": "string",
+                  "scalarType": "STRING",
+                  "nullable": false,
+                  "ordinal": 4
+                },
+                {
+                  "name": "price",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 5
+                },
+                {
+                  "name": "rating",
+                  "nativeType": "int16",
+                  "scalarType": "INT16",
+                  "nullable": false,
+                  "ordinal": 6
+                },
+                {
+                  "name": "description",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 7
+                },
+                {
+                  "name": "available",
+                  "nativeType": "boolean",
+                  "scalarType": "BOOLEAN",
+                  "nullable": false,
+                  "ordinal": 8
+                },
+                {
+                  "name": "released",
+                  "nativeType": "date",
+                  "scalarType": "DATE",
+                  "nullable": false,
+                  "ordinal": 9
+                },
+                {
+                  "name": "cost",
+                  "nativeType": "decimal",
+                  "scalarType": "DECIMAL",
+                  "nullable": false,
+                  "ordinal": 10
+                },
+                {
+                  "name": "internal_note",
+                  "nativeType": "text",
+                  "scalarType": "TEXT",
+                  "nullable": true,
+                  "ordinal": 11
+                }
+              ],
+              "primaryKey": [
+                "tenant_id",
+                "product_id"
+              ]
+            }
+          },
+          "logical": {
+            "authored": {
+              "apiVersion": "arp.logical/v1",
+              "id": "commerce.products",
+              "physical": "storage.products",
+              "fields": {
+                "tenant_id": {
+                  "dictionary": "products.tenant_id"
+                },
+                "product_id": {
+                  "dictionary": "products.product_id"
+                },
+                "sku": {
+                  "dictionary": "products.sku"
+                },
+                "name": {
+                  "dictionary": "products.name"
+                },
+                "price": {
+                  "dictionary": "products.price"
+                },
+                "rating": {
+                  "dictionary": "products.rating",
+                  "constraints": {
+                    "minimum": "0",
+                    "maximum": "10"
+                  }
+                },
+                "description": {
+                  "dictionary": "products.description"
+                },
+                "available": {
+                  "dictionary": "products.available"
+                },
+                "released": {
+                  "dictionary": "products.released"
+                },
+                "cost": {
+                  "dictionary": "products.cost"
+                },
+                "internal_note": {
+                  "dictionary": "products.internal_note"
+                }
+              }
+            }
+          },
+          "projections": {
+            "catalog": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.catalog",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "sku",
+                "name",
+                "price",
+                "rating",
+                "description",
+                "available",
+                "released"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "identified": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.identified",
+              "source": {
+                "entity": "commerce.products"
+              },
+              "fields": [
+                "tenant_id",
+                "product_id",
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "summary": {
+              "apiVersion": "arp.projection/v1",
+              "id": "products.summary",
+              "source": {
+                "projection": "products.catalog"
+              },
+              "fields": [
+                "sku",
+                "name"
+              ],
+              "operations": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "public-application-without-principal",
+      "layout": "simple",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INT64",
+                "value": "2"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "components": [
+                  {
+                    "field": "product_id",
+                    "type": "INT64",
+                    "value": "2"
+                  }
+                ]
+              },
+              "values": {
+                "tenant_id": "7",
+                "product_id": "2",
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified",
+        "context": {
+          "scope": "public",
+          "policyRevision": "public-1"
+        }
+      }
+    },
+    {
+      "id": "empty-get-still-checks-publication-generation",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-unknown-unissued"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_GENERATION_CHANGED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "generationAtPublish": "g2"
+      }
+    },
+    {
+      "id": "context-changed-before-publication",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "contextAtPublish": {
+          "principal": "commercial-reader",
+          "scope": "company-7",
+          "policyRevision": "policy-2"
+        }
+      }
+    },
+    {
+      "id": "list-limit-one",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 1
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g",
+                  "price": "7.95",
+                  "rating": "8",
+                  "description": null,
+                  "available": true,
+                  "released": "2025-02-01"
+                }
+              }
+            ],
+            "page": {
+              "limit": 1,
+              "hasMore": true,
+              "next": "page-c09a3f71d5e824b6"
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "continuations": {
+          "page-c09a3f71d5e824b6": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 1,
+            "after": [
+              "7",
+              "2"
+            ]
+          },
+          "page-3f58b1e609a72cd4": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "10"
+            ]
+          },
+          "page-a70f41692c8e5bd3": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "9007199254740993"
+            ]
+          },
+          "page-2b91f78a046dc3e5": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "9007199254740994"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "list-after-last-empty",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "continuation": "page-51f48a37e9bd60c2"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "continuations": {
+          "page-51f48a37e9bd60c2": {
+            "target": "demo.products",
+            "projection": "products.catalog",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "limit": 2,
+            "after": [
+              "7",
+              "9223372036854775807"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "invalid-server-limit-registration",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "CDS_LISTGET_INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "maxLimit": 0
+      }
+    },
+    {
+      "id": "modules-catalog-list",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g",
+                  "price": "7.95",
+                  "rating": "8",
+                  "description": null,
+                  "available": true,
+                  "released": "2025-02-01"
+                }
+              },
+              {
+                "key": {
+                  "reference": "rec-cd83e76a902f4b51"
+                },
+                "values": {
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L",
+                  "price": "12.5",
+                  "rating": "9",
+                  "description": "Primera extracción",
+                  "available": true,
+                  "released": "2025-03-15"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": true,
+              "next": "page-3f58b1e609a72cd4"
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1",
+            "p2"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {}
+      }
+    },
+    {
+      "id": "modules-catalog-get-denied-independently",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {}
+      }
+    },
+    {
+      "id": "modules-catalog-get-authorized",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "reference": "rec-69f204cbda087e13"
+              },
+              "values": {
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g",
+                "price": "7.95",
+                "rating": "8",
+                "description": null,
+                "available": true,
+                "released": "2025-02-01"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {
+          "projectionAccess": {
+            "products.catalog": {
+              "available": [
+                "LIST",
+                "GET"
+              ],
+              "authorized": [
+                "LIST",
+                "GET"
+              ]
+            },
+            "products.summary": {
+              "available": [
+                "LIST"
+              ],
+              "authorized": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "modules-reports-derived-list",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "reference": "rec-69f204cbda087e13"
+                },
+                "values": {
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g"
+                }
+              }
+            ],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {},
+        "projection": "products.summary",
+        "allowedRows": [
+          "p1"
+        ],
+        "references": {
+          "rec-69f204cbda087e13": {
+            "target": "demo.products",
+            "projection": "products.summary",
+            "context": {
+              "principal": "commercial-reader",
+              "scope": "company-7",
+              "policyRevision": "policy-1"
+            },
+            "generation": "g1",
+            "key": [
+              "7",
+              "2"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "modules-reports-get-unavailable",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "reference": "rec-69f204cbda087e13"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {},
+        "projection": "products.summary"
+      }
+    },
+    {
+      "id": "modules-reports-inactive",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {
+          "active": [
+            "catalog"
+          ]
+        },
+        "projection": "products.summary"
+      }
+    },
+    {
+      "id": "modules-all-inactive",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {
+          "active": []
+        }
+      }
+    },
+    {
+      "id": "modules-reports-without-catalog",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "CDS_LISTGET_INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {
+          "active": [
+            "reports"
+          ]
+        }
+      }
+    },
+    {
+      "id": "modules-undeclared-projection-dependency",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "definition-invalid",
+              "code": "CDS_LISTGET_INVALID_DEFINITION"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {
+          "modules": [
+            {
+              "apiVersion": "arp.module/v1",
+              "id": "catalog",
+              "dependencies": [],
+              "sources": [
+                {
+                  "providerId": "pkg.catalog",
+                  "sourceId": "dictionary",
+                  "revision": "r1",
+                  "kind": "dictionary",
+                  "handle": "catalog-dictionary"
+                },
+                {
+                  "providerId": "pkg.catalog",
+                  "sourceId": "logical",
+                  "revision": "r1",
+                  "kind": "logical",
+                  "handle": "catalog-logical"
+                },
+                {
+                  "providerId": "pkg.catalog",
+                  "sourceId": "projection",
+                  "revision": "r1",
+                  "kind": "projection",
+                  "handle": "catalog-projection"
+                },
+                {
+                  "providerId": "pkg.catalog",
+                  "sourceId": "menus",
+                  "revision": "r1",
+                  "kind": "menu",
+                  "handle": "catalog-menus"
+                },
+                {
+                  "providerId": "pkg.catalog",
+                  "sourceId": "translations",
+                  "revision": "r1",
+                  "kind": "translations",
+                  "handle": "catalog-translations"
+                }
+              ]
+            },
+            {
+              "apiVersion": "arp.module/v1",
+              "id": "reports",
+              "dependencies": [],
+              "sources": [
+                {
+                  "providerId": "pkg.reports",
+                  "sourceId": "projection",
+                  "revision": "r1",
+                  "kind": "projection",
+                  "handle": "reports-projection"
+                },
+                {
+                  "providerId": "pkg.reports",
+                  "sourceId": "menus",
+                  "revision": "r1",
+                  "kind": "menu",
+                  "handle": "reports-menus"
+                },
+                {
+                  "providerId": "pkg.reports",
+                  "sourceId": "translations",
+                  "revision": "r1",
+                  "kind": "translations",
+                  "handle": "reports-translations"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "modules-deactivation-during-read",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_GENERATION_CHANGED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {},
+        "moduleStateAtPublish": {
+          "active": []
+        }
+      }
+    },
+    {
+      "id": "modules-row-restriction-still-authoritative",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [],
+            "page": {
+              "limit": 2,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "allowedRows": [],
+        "moduleState": {}
+      }
+    },
+    {
+      "id": "modules-client-cannot-activate",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "active": [
+            "catalog",
+            "reports"
+          ]
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {}
+      }
+    },
+    {
+      "id": "modules-field-access-still-authoritative",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {},
+        "readableFields": [
+          "sku"
+        ]
+      }
+    },
+    {
+      "id": "modules-permission-revoked-before-publication",
+      "layout": "composite",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {}
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CDS_LISTGET_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "moduleState": {},
+        "moduleStateAtPublish": {
+          "projectionAccess": {
+            "products.catalog": {
+              "available": [
+                "LIST",
+                "GET"
+              ],
+              "authorized": []
+            },
+            "products.summary": {
+              "available": [
+                "LIST"
+              ],
+              "authorized": [
+                "LIST"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ]
+}
