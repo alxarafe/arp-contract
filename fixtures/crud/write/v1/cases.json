@@ -1,0 +1,5699 @@
+{
+  "defaults": {
+    "projection": "demo.items.public",
+    "context": {
+      "scope": "demo"
+    },
+    "generation": "g1",
+    "accessRevision": "p1",
+    "capacity": "verified",
+    "atomicBoundary": true,
+    "effectsCharacterized": true,
+    "singleRowEffects": true,
+    "constraintsVerified": true,
+    "rows": [
+      {
+        "id": "7",
+        "code": "A-007",
+        "rating": "5"
+      }
+    ],
+    "preconditions": {
+      "delete-read-7": {
+        "binding": {
+          "purpose": "DELETE",
+          "target": "demo.items",
+          "projection": "demo.items.public",
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "context": {
+            "scope": "demo"
+          },
+          "generation": "g1",
+          "accessRevision": "p1"
+        },
+        "state": {
+          "code": "A-007",
+          "rating": "5"
+        },
+        "active": true
+      }
+    }
+  },
+  "cases": [
+    {
+      "id": "create-valid",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-postgresql",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "engine": "postgresql"
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-duplicate-key",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "7",
+            "code": "A-007",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CONSTRAINT_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-required-id",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "REQUIRED_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-required-code",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "REQUIRED_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-required-rating",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "REQUIRED_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-null-id",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": null,
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-null-code",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": null,
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-null-rating",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": null
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-rating-range",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "11"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-id-overflow",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "2147483648",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-id-json-number",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": 8,
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-rating-boolean",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": true
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-code-too-long",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "ABCDEFGHIJKLM",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-code-empty",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-unknown-field",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5",
+            "arbitrary": "x"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-hidden-field",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5",
+            "internal_note": "private"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-field-not-authorized",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "writableFields": [
+          "id",
+          "code"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-summary-readonly",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "projection": "demo.items.summary"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-denied",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "authorized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-permissions-revoked",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "authorizedAtBoundary": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-inactive",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "active": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-context-changed",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "contextAtBoundary": {
+          "scope": "other"
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-rule-rejected",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "ruleReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "BUSINESS_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-unicode-preserved",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": " Á😀 ",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": " Á😀 ",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-int32-exact-upper-bound",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "2147483647",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "2147483647"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "2147483647",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-missing-inputs",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE"
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-null-inputs",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": null
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-client-trust-context",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        },
+        "context": {
+          "scope": "demo"
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INPUT_SHAPE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-unknown-target",
+      "request": {
+        "target": "unknown",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-verified-default",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008"
+          }
+        }
+      },
+      "host": {
+        "verifiedDefaults": {
+          "rating": {
+            "verified": true,
+            "value": "3"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "3"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-unverified-default",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008"
+          }
+        }
+      },
+      "host": {
+        "verifiedDefaults": {
+          "rating": {
+            "verified": false,
+            "value": "3"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "REQUIRED_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-null-does-not-use-default",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": null
+          }
+        }
+      },
+      "host": {
+        "verifiedDefaults": {
+          "rating": {
+            "verified": true,
+            "value": "3"
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-nullable-explicit",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": null,
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "code": {
+            "nullable": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": null,
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-nullable-absent",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "code": {
+            "nullable": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": null,
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "create-constraint-rejected",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "constraintReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CONSTRAINT_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "create-new-hidden-column-not-published",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "additionalColumns": [
+          {
+            "name": "internal_note",
+            "nativeType": "text",
+            "scalarType": "TEXT",
+            "nullable": true
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "8"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "5",
+              "internal_note": null
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "internal_note",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-valid",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-postgresql",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "engine": "postgresql"
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-absent",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "rows": []
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": false
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-inaccessible",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "recordAccessible": false
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": false
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-no-precondition",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "PRECONDITION_REQUIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-blind-baseline",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "baseline": {
+            "code": "A-007",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "PRECONDITION_REQUIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-unknown-evidence",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "unknown"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-expired-evidence",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5"
+            },
+            "active": false
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-wrong-context-binding",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "other"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-get-purpose-not-delete",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "GET",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-missing-state-field",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "PRECONDITION_REQUIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-stale-precondition",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "4"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE"
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-concurrent-change",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "6"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE"
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-hidden-field-covered",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "additionalColumns": [
+          {
+            "name": "internal_note",
+            "nativeType": "text",
+            "scalarType": "TEXT",
+            "nullable": true
+          }
+        ],
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "5",
+            "internal_note": "private-old"
+          }
+        ],
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5",
+              "internal_note": "private-old"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-hidden-concurrent-change",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "additionalColumns": [
+          {
+            "name": "internal_note",
+            "nativeType": "text",
+            "scalarType": "TEXT",
+            "nullable": true
+          }
+        ],
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "5",
+            "internal_note": "private-old"
+          }
+        ],
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "5",
+            "internal_note": "private-new"
+          }
+        ],
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5",
+              "internal_note": "private-old"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE"
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5",
+              "internal_note": "private-new"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-uncovered-new-column",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "additionalColumns": [
+          {
+            "name": "internal_note",
+            "nativeType": "text",
+            "scalarType": "TEXT",
+            "nullable": true
+          }
+        ],
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "5",
+            "internal_note": "private-old"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "PRECONDITION_REQUIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5",
+              "internal_note": "private-old"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-historical-value",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "11"
+          }
+        ],
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "11"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-null-is-state",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "7",
+            "code": null,
+            "rating": "5"
+          }
+        ],
+        "columnOverrides": {
+          "code": {
+            "nullable": true
+          }
+        },
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INT32",
+                    "value": "7"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": null,
+              "rating": "5"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-unverified",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "capacity": "not-verified"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-incompatible",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "capacity": "incompatible"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "physical-incompatible",
+              "code": "INCOMPATIBLE_STORAGE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-non-atomic",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "atomicBoundary": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-view",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "physicalKind": "view"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-uncharacterized-effects",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "effectsCharacterized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-unprotected-rule",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "ruleDependenciesProtected": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-permissions-revoked",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "authorizedAtBoundary": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-access-revision-changed",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "accessRevisionAtBoundary": "p2"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-generation-changed",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "generationAtBoundary": "g2"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "GENERATION_EXPIRED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-rule-rejected",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "ruleReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "BUSINESS_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-relation-restricts",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "constraintReject": true
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CONSTRAINT_REJECTED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "delete-opaque-key-valid",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "reference": "delete-key-7"
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "readableFields": [
+          "code",
+          "rating"
+        ],
+        "keyReferences": {
+          "delete-key-7": {
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "7"
+                }
+              ]
+            },
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            }
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-hidden-key-rejects-raw",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "readableFields": [
+          "code",
+          "rating"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-get-key-not-reusable",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "reference": "get-key-7"
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "readableFields": [
+          "code",
+          "rating"
+        ],
+        "keyReferences": {
+          "get-key-7": {
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "7"
+                }
+              ]
+            },
+            "binding": {
+              "purpose": "GET",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            }
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-rounded-key",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": 7
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-pending-integer",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-precommit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "before-commit"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "PERSISTENCE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "create-commit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-rolled-back"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "COMMIT_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "create-uncertain-0",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": false
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "create-uncertain-1",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": true
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "delete-precommit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "before-commit"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "PERSISTENCE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "delete-commit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-rolled-back"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "COMMIT_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "delete-uncertain-0",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": false
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "delete-uncertain-1",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": true
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "update-precommit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "before-commit"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "PERSISTENCE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "update-commit-rollback",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-rolled-back"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "COMMIT_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "rolled-back"
+        }
+      }
+    },
+    {
+      "id": "update-uncertain-0",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": false
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "update-uncertain-1",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "commit-unknown",
+        "unknownCommitted": true
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "create-rollback-unproven",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "persistenceFailure": "rollback-unproven"
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "OUTCOME_UNKNOWN"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "update-demo-partial",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-demo-independent-change",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "B",
+            "rating": "5"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "B",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-demo-noop",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "5"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": false
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "update-demo-historical-omitted",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "code": "B"
+          },
+          "baseline": {
+            "code": "A-007"
+          }
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "11"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "B",
+              "rating": "11"
+            }
+          ],
+          "writtenFields": [
+            "code"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-demo-historical-resent",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "11"
+          },
+          "baseline": {
+            "rating": "11"
+          }
+        }
+      },
+      "host": {
+        "rows": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "11"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "11"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "update-primary-key-immutable",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "id": "8"
+          },
+          "baseline": {
+            "id": "7"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delegated-specialized-delete",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated",
+        "handlerRegistered": true,
+        "effectsCharacterized": false
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "accepted": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 1,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "delegated-missing-handler",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated"
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delegated-failure-effects-0",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated",
+        "handlerRegistered": true,
+        "handlerFailure": true,
+        "handlerEffects": 0
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "HANDLER_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 1,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "delegated-failure-effects-1",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated",
+        "handlerRegistered": true,
+        "handlerFailure": true,
+        "handlerEffects": 1
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "HANDLER_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 1,
+          "dispatches": 1,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "create-field-permission-revoked",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "writableFieldsAtBoundary": [
+          "id",
+          "code"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-postcommit-output-revoked",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "authorizedAtPublish": false
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "RESPONSE_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "8",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-postcommit-output-revoked",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "authorizedAtPublish": false
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "RESPONSE_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-revoked-field-before-noop",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "5"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "writableFieldsAtBoundary": [
+          "id",
+          "code"
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "update-conflict-after-interleave",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "7"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "rating",
+              "original": "5",
+              "actual": "7",
+              "proposed": "6"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "7"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-negative-zero-canonical",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "-0",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {},
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "0"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "0",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-cascades-unavailable",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "singleRowEffects": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-required-rule-unavailable",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "ruleRequired": true,
+        "ruleAvailable": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "CAPABILITY_UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-physical-length-incompatible",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "code": {
+            "characterLength": {
+              "value": 4,
+              "unit": "CHARACTERS"
+            }
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "physical-incompatible",
+              "code": "INCOMPATIBLE_STORAGE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-physical-range-incompatible",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "rating": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "4"
+            }
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "physical-incompatible",
+              "code": "INCOMPATIBLE_STORAGE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-row-scope-rejected",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "8",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "candidateAuthorized": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delegated-row-inaccessible",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated",
+        "handlerRegistered": true,
+        "recordAccessible": false
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delegated-view-explicit",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          }
+        }
+      },
+      "host": {
+        "mode": "delegated",
+        "handlerRegistered": true,
+        "physicalKind": "view"
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "accepted": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 1,
+          "certainty": "unknown"
+        }
+      }
+    },
+    {
+      "id": "update-confirmation-valid",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          },
+          "confirmation": "confirm-7"
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "7"
+          }
+        ],
+        "confirmationEvidence": {
+          "handle": "confirm-7",
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "7"
+                }
+              ]
+            },
+            "changes": {
+              "rating": "6"
+            },
+            "baseline": {
+              "rating": "5"
+            },
+            "context": {
+              "scope": "demo"
+            }
+          },
+          "confirmedCurrent": {
+            "rating": "7"
+          },
+          "active": true
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-confirmation-obsolete",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          },
+          "confirmation": "confirm-7"
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "8"
+          }
+        ],
+        "confirmationEvidence": {
+          "handle": "confirm-7",
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INT32",
+                  "value": "7"
+                }
+              ]
+            },
+            "changes": {
+              "rating": "6"
+            },
+            "baseline": {
+              "rating": "5"
+            },
+            "context": {
+              "scope": "demo"
+            }
+          },
+          "confirmedCurrent": {
+            "rating": "7"
+          },
+          "active": true
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE",
+          "conflicts": [
+            {
+              "field": "rating",
+              "original": "5",
+              "actual": "8",
+              "proposed": "6"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "8"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "update-confirmation-wrong-key-binding",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INT32",
+                "value": "7"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          },
+          "confirmation": "confirm-7"
+        }
+      },
+      "host": {
+        "rowsAtBoundary": [
+          {
+            "id": "7",
+            "code": "A-007",
+            "rating": "7"
+          }
+        ],
+        "confirmationEvidence": {
+          "handle": "confirm-7",
+          "binding": {
+            "target": "demo.items",
+            "operation": "UPDATE",
+            "key": "item-1",
+            "changes": {
+              "rating": "6"
+            },
+            "baseline": {
+              "rating": "5"
+            },
+            "context": {
+              "scope": "demo"
+            }
+          },
+          "confirmedCurrent": {
+            "rating": "7"
+          },
+          "active": true
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_CONFIRMATION"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "7"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    }
+  ]
+}

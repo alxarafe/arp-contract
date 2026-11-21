@@ -80,3 +80,11 @@ Existing `previous consumer contract` releases are historical inputs, not implic
 Make changes on a feature branch, review specification and fixture changes together, and follow [`docs/release-process.md`](docs/release-process.md). Do not assign a release tag solely for architecture documentation.
 
 License: see [`LICENSE`](LICENSE).
+
+## Candidate record writes
+
+[ARP-CRUD-001A](docs/features/arp-crud-001a.md) proposes CREATE and physical DELETE over the existing `demo.items`
+definitions and registration, reusing SERVICES-001/002 partial UPDATE and LIST/GET identities.
+Its fixtures and finite in-memory oracle distinguish missing/null/default values, read-bound deletion,
+authorization, concurrency, integrity restrictions and uncertain commit outcomes. No runtime, transport,
+new scalar type or general rules engine is introduced; the candidate requires review.
