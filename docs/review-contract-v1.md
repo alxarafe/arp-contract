@@ -1,10 +1,19 @@
 # Revisión de docs/arp-contract-v1
 
-**Estado:** propuesta para revisión, 21/11/2026. Sin fusión, etiquetas ni publicación de versiones.
+**Estado histórico de esta revisión:** propuesta para revisión, 21/11/2026.
+Sin fusión, etiquetas ni publicación de versiones.
 **Base contrastada:** `eb38cb96e6ccd218734df2a181908de46067e0c7`.
 El commit previo `0cd2573` añadió el archivo documental; no aprobó un contrato 1.0.
 
-## Clasificación del diff pendiente
+## Actualización ARP-INTEGER-001
+
+La revisión que sigue conserva el diagnóstico del estado anterior. Sus afirmaciones de que INTEGER está
+pendiente y aislado, y de que esquemas y fixtures no cambian, describen esa revisión histórica.
+[ARP-INTEGER-001](features/arp-integer-001.md) la sustituye exclusivamente para los enteros del candidato activo.
+Se acepta una ruptura deliberada en preproducción, manteniendo `arp.dictionary/v1`, sin alias, nueva versión
+ni capa transitoria. No se adopta el resto del borrador 1.0. No se reescriben evidencias ni hashes históricos.
+
+## Clasificación del diff de la revisión anterior
 
 | Responsabilidad | Archivos | Evaluación |
 | --- | --- | --- |

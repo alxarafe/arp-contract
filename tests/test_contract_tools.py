@@ -65,11 +65,12 @@ class ContractChecks(unittest.TestCase):
         values = checker.load(checker.ROOT / 'fixtures/dictionary/v1/values.json')
         ranges = [v for v in values if v['id'].endswith(('-above','-below')) and any(i.get('constraint') == 'typeRange'
                   for i in v['expected']['issues'])]
-        self.assertEqual(len(ranges), 11)
+        self.assertEqual(len(ranges), 14)
         self.assertTrue(all('unresolvedContract' not in v for v in values))
         for v in values:
             if v['id'].startswith('UINT') and v['id'].endswith('-below'):
-                self.assertEqual(v['expected']['issues'][0]['code'], 'DICTIONARY_VALUE_TYPE')
+                self.assertEqual(v['expected']['issues'][0]['code'], 'DICTIONARY_VALUE_CONSTRAINT')
+                self.assertEqual(v['expected']['issues'][0]['constraint'], 'typeRange')
         self.assertEqual(next(v for v in values if v['id']=='numeric-limit')
                          ['expected']['issues'][0]['code'], 'DICTIONARY_LIMIT_EXCEEDED')
 

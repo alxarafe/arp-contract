@@ -6,6 +6,7 @@ from pathlib import Path
 
 import check_cds_draft as demo
 import check_cds_read_draft as cds
+import integer_semantics as integers
 import check_cds_listget_draft as reads
 import check_services_draft as updates
 import check_service_invocation_draft as services
@@ -59,14 +60,14 @@ def value(field, candidate, *, historical=False):
             raise ValueError('null')
         return None
     kind = field.get('type')
-    if kind in cds.INTEGER_RANGES:
-        number = reads.integer(candidate, kind)
+    if kind == 'INTEGER':
+        number = reads.integer(candidate, field.get('constraints', {}))
         extent = physical.get('integerRange', {})
         if not int(extent.get('minimum', number)) <= number <= int(extent.get('maximum', number)):
             raise ValueError('physical range')
         if not historical:
             limits = field.get('constraints', {})
-            if not int(limits.get('minimum', number)) <= number <= int(limits.get('maximum', number)):
+            if integers.issues(candidate, limits):
                 raise ValueError('logical range')
         return str(number)
     if kind not in {'STRING', 'TEXT'} or not isinstance(candidate, str):
@@ -95,7 +96,7 @@ def key_value(key, fields, primary):
                 or component['field'] != name or component['type'] != fields[name]['type']):
             raise ValueError('key component')
         canonical.append({'field': name, 'type': fields[name]['type'],
-                          'value': str(reads.integer(component['value'], fields[name]['type']))})
+                          'value': str(reads.integer(component['value'], fields[name]['constraints']))})
     return {'components': canonical}
 
 
@@ -173,7 +174,7 @@ def invoke(case, defaults=None):
         return reject('GENERATION_EXPIRED')
     inputs = request['inputs']
     primary = physical.get('primaryKey', [])
-    if not primary or any(fields[name].get('type') not in cds.INTEGER_RANGES
+    if not primary or any(fields[name].get('type') != 'INTEGER'
                           or fields[name]['physical'].get('nullable') is not False for name in primary):
         return reject('CAPABILITY_UNAVAILABLE')
     if operation != 'CREATE':
@@ -218,7 +219,7 @@ def invoke(case, defaults=None):
             or (host.get('ruleRequired', False) and not host.get('ruleAvailable', False))):
         return reject('CAPABILITY_UNAVAILABLE')
     if any('nullable' not in field['physical'] or field.get('type') not in
-           set(cds.INTEGER_RANGES) | {'STRING', 'TEXT'} for field in fields.values()):
+           {'INTEGER', 'STRING', 'TEXT'} for field in fields.values()):
         return reject('CAPABILITY_UNAVAILABLE')
     if any(field.get('type') == 'STRING' and field['physical'].get('characterLength', {}).get('unit')
            != 'CHARACTERS' for field in fields.values()):
@@ -386,8 +387,8 @@ def codec(case):
         kind = case['type']
         if candidate is None and case.get('nullable', False):
             canonical = None
-        elif kind in cds.INTEGER_RANGES:
-            canonical = str(reads.integer(candidate, kind))
+        elif kind == 'INTEGER':
+            canonical = str(reads.integer(candidate, case.get('constraints', {})))
         elif kind in {'STRING', 'TEXT'} and isinstance(candidate, str):
             unicode_scalars(candidate)
             canonical = candidate

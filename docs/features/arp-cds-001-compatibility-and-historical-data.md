@@ -5,3 +5,6 @@ El texto completo y su estado original se conservan en el [archivo documental](.
 La reorganización no aprueba el borrador 1.0, no retira las garantías de los contratos
 existentes ni cambia sus esquemas, ejemplos o fixtures. Véase la
 [revisión de compatibilidad](../review-contract-v1.md).
+
+Actualización del candidato activo: [ARP-INTEGER-001](arp-integer-001.md) sustituye exclusivamente los tipos enteros.
+El texto archivado y sus resultados conservan su alcance histórico.

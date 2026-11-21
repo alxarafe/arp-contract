@@ -17,7 +17,9 @@ The planned first contractual release, `v0.1.0`, is subject to release review of
 ## Revisión del borrador 1.0
 
 El [borrador funcional](docs/contract-v1-draft.md) y la [propuesta de diccionario](docs/dictionary.md)
-están pendientes de aprobación. `INTEGER` es un cambio incompatible aislado del esquema vigente.
+siguen pendientes de aprobación como conjunto. [ARP-INTEGER-001](docs/features/arp-integer-001.md)
+incorpora exclusivamente la unificación incompatible de enteros al candidato activo, con
+[semántica definitiva](docs/dictionary.md), esquemas y fixtures revisados; no publica una versión.
 La [revisión de cambios](docs/review-contract-v1.md) separa documentación y contrato.
 El [archivo documental](docs/history/README.md) conserva estados, decisiones y evidencias anteriores;
 los enlaces históricos siguen disponibles. No se publica ninguna versión por esta revisión.

@@ -1,0 +1,1426 @@
+{
+  "definitions": [
+    {
+      "id": "default-unbounded",
+      "constraints": {},
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 32,
+        "minimum": "-2147483648",
+        "maximum": "2147483647"
+      }
+    },
+    {
+      "id": "minimum-zero-infers-unsigned",
+      "constraints": {
+        "minimum": "0"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 32,
+        "minimum": "0",
+        "maximum": "4294967295"
+      }
+    },
+    {
+      "id": "minimum-positive-infers-unsigned",
+      "constraints": {
+        "minimum": "1"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 32,
+        "minimum": "1",
+        "maximum": "4294967295"
+      }
+    },
+    {
+      "id": "minimum-negative-infers-signed",
+      "constraints": {
+        "minimum": "-5"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 32,
+        "minimum": "-5",
+        "maximum": "2147483647"
+      }
+    },
+    {
+      "id": "smallest-signed-capacity",
+      "constraints": {
+        "minimum": "-128",
+        "maximum": "127"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 8,
+        "minimum": "-128",
+        "maximum": "127"
+      }
+    },
+    {
+      "id": "smallest-unsigned-capacity",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "255"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 8,
+        "minimum": "0",
+        "maximum": "255"
+      }
+    },
+    {
+      "id": "explicit-wider-capacity",
+      "constraints": {
+        "bits": 64,
+        "signed": true,
+        "minimum": "0",
+        "maximum": "10"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 64,
+        "minimum": "0",
+        "maximum": "10"
+      }
+    },
+    {
+      "id": "unsigned-64-max",
+      "constraints": {
+        "signed": false,
+        "maximum": "18446744073709551615"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 64,
+        "minimum": "0",
+        "maximum": "18446744073709551615"
+      }
+    },
+    {
+      "id": "exclusive-bounds",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "-128",
+        "maximum": "127",
+        "exclusiveMinimum": true,
+        "exclusiveMaximum": true
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 8,
+        "minimum": "-127",
+        "maximum": "126"
+      }
+    },
+    {
+      "id": "multiple-of",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "multipleOf": "2"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 16,
+        "minimum": "-32768",
+        "maximum": "32767"
+      }
+    },
+    {
+      "id": "int64-minimum",
+      "constraints": {
+        "signed": true,
+        "minimum": "-9223372036854775808"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 64,
+        "minimum": "-9223372036854775808",
+        "maximum": "9223372036854775807"
+      }
+    },
+    {
+      "id": "invalid-bits-not-capacity",
+      "constraints": {
+        "bits": 8,
+        "minimum": "-200"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-unsigned-negative-minimum",
+      "constraints": {
+        "signed": false,
+        "minimum": "-1"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-exclusive-minimum-without-bound",
+      "constraints": {
+        "exclusiveMinimum": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-exclusive-maximum-without-bound",
+      "constraints": {
+        "exclusiveMaximum": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-zero-multiple",
+      "constraints": {
+        "multipleOf": "0"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-negative-multiple",
+      "constraints": {
+        "multipleOf": "-2"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-empty-effective-interval",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "5",
+        "maximum": "5",
+        "exclusiveMinimum": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-both-bounds-too-wide",
+      "constraints": {
+        "signed": true,
+        "minimum": "-9223372036854775809",
+        "maximum": "0"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-bound-not-lexeme",
+      "constraints": {
+        "minimum": "01"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-bits-value",
+      "constraints": {
+        "bits": 12
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "invalid-signed-kind",
+      "constraints": {
+        "signed": "false"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "partial-large-positive-min",
+      "constraints": {
+        "minimum": "4294967296"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 64,
+        "minimum": "4294967296",
+        "maximum": "18446744073709551615"
+      }
+    },
+    {
+      "id": "partial-large-negative-max",
+      "constraints": {
+        "maximum": "-2147483649"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 64,
+        "minimum": "-9223372036854775808",
+        "maximum": "-2147483649"
+      }
+    },
+    {
+      "id": "max-alone-remains-signed",
+      "constraints": {
+        "maximum": "4294967295"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 64,
+        "minimum": "-9223372036854775808",
+        "maximum": "4294967295"
+      }
+    },
+    {
+      "id": "exclusive-does-not-shrink-capacity",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "256",
+        "exclusiveMaximum": true
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 16,
+        "minimum": "0",
+        "maximum": "255"
+      }
+    },
+    {
+      "id": "zero-normalizes-for-sign",
+      "constraints": {
+        "minimum": "-0",
+        "maximum": "255"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 8,
+        "minimum": "0",
+        "maximum": "255"
+      }
+    },
+    {
+      "id": "negative-multiple-witness",
+      "constraints": {
+        "minimum": "-7",
+        "maximum": "-5",
+        "multipleOf": "3"
+      },
+      "expected": {
+        "valid": true,
+        "signed": true,
+        "bits": 8,
+        "minimum": "-7",
+        "maximum": "-5"
+      }
+    },
+    {
+      "id": "zero-is-multiple-of-large",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "0",
+        "multipleOf": "18446744073709551616"
+      },
+      "expected": {
+        "valid": true,
+        "signed": false,
+        "bits": 8,
+        "minimum": "0",
+        "maximum": "0"
+      }
+    },
+    {
+      "id": "bits-null",
+      "constraints": {
+        "bits": null
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "signed-null",
+      "constraints": {
+        "signed": null
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "bits-bool",
+      "constraints": {
+        "bits": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "signed-number",
+      "constraints": {
+        "signed": 0
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "reversed-interval",
+      "constraints": {
+        "minimum": "10",
+        "maximum": "1"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "unsigned-negative-maximum",
+      "constraints": {
+        "signed": false,
+        "maximum": "-1"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "exclusive-outside-does-not-fit",
+      "constraints": {
+        "bits": 8,
+        "signed": false,
+        "maximum": "256",
+        "exclusiveMaximum": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "no-positive-multiple",
+      "constraints": {
+        "minimum": "1",
+        "maximum": "2",
+        "multipleOf": "3"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "no-negative-multiple",
+      "constraints": {
+        "minimum": "-2",
+        "maximum": "-1",
+        "multipleOf": "3"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "exclusive-removes-only-multiple",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "2",
+        "exclusiveMinimum": true,
+        "multipleOf": "3"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "upper-only-uint64-needs-sign",
+      "constraints": {
+        "maximum": "18446744073709551615"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "uint64-overflow",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "18446744073709551616"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "lower-bound-above-explicit-domain",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "128"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "upper-bound-below-explicit-domain",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "maximum": "-129"
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "unknown-property",
+      "constraints": {
+        "unsigned": true
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "numeric-multiple",
+      "constraints": {
+        "multipleOf": 2
+      },
+      "expected": {
+        "valid": false
+      }
+    },
+    {
+      "id": "decimal-bits",
+      "constraints": {
+        "bits": 8.5
+      },
+      "expected": {
+        "valid": false
+      }
+    }
+  ],
+  "values": [
+    {
+      "id": "default-maximum",
+      "constraints": {},
+      "value": "2147483647",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "2147483647"
+      }
+    },
+    {
+      "id": "default-above",
+      "constraints": {},
+      "value": "2147483648",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unsigned-64-maximum",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "18446744073709551615",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "18446744073709551615"
+      }
+    },
+    {
+      "id": "unsigned-64-above",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "18446744073709551616",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "signed-64-minimum",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "-9223372036854775808",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "-9223372036854775808"
+      }
+    },
+    {
+      "id": "signed-64-below",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "-9223372036854775809",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "above-2^53-exact",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "9007199254740993",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "9007199254740993"
+      }
+    },
+    {
+      "id": "minimum-inclusive",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "minimum": "0"
+      },
+      "value": "0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "minimum-below",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "minimum": "0"
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "minimum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "exclusive-minimum-equal",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "0",
+        "exclusiveMinimum": true
+      },
+      "value": "0",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "minimum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "exclusive-minimum-next",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "0",
+        "exclusiveMinimum": true
+      },
+      "value": "1",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "1"
+      }
+    },
+    {
+      "id": "maximum-above",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "maximum": "10"
+      },
+      "value": "11",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "maximum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "exclusive-maximum-equal",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "maximum": "10",
+        "exclusiveMaximum": true
+      },
+      "value": "10",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "maximum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "multiple-of-fail",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "multipleOf": "2"
+      },
+      "value": "3",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "multipleOf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "multiple-of-pass",
+      "constraints": {
+        "bits": 16,
+        "signed": true,
+        "multipleOf": "2"
+      },
+      "value": "4",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "4"
+      }
+    },
+    {
+      "id": "lexical-leading-zero",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "01",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_TYPE",
+            "elementId": "test.integer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lexical-plus",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "+1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_TYPE",
+            "elementId": "test.integer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lexical-exponent",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "1e0",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_TYPE",
+            "elementId": "test.integer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "lexical-empty",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_TYPE",
+            "elementId": "test.integer"
+          }
+        ]
+      }
+    },
+    {
+      "id": "integer-negative-zero",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "-0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "ordered-issues",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "maximum": "100",
+        "multipleOf": "3"
+      },
+      "value": "128",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          },
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "maximum"
+          },
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "multipleOf"
+          }
+        ]
+      }
+    },
+    {
+      "id": "domain-before-maximum",
+      "constraints": {
+        "bits": 8,
+        "signed": true,
+        "minimum": "-100",
+        "maximum": "100"
+      },
+      "value": "200",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          },
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "maximum"
+          }
+        ]
+      }
+    },
+    {
+      "id": "unsigned-negative",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-8-False-min",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      },
+      "value": "0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "capacity-8-False-max",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      },
+      "value": "255",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "255"
+      }
+    },
+    {
+      "id": "capacity-8-False-below",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-8-False-above",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      },
+      "value": "256",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-8-True-min",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "-128",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "-128"
+      }
+    },
+    {
+      "id": "capacity-8-True-max",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "127",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "127"
+      }
+    },
+    {
+      "id": "capacity-8-True-below",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "-129",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-8-True-above",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      },
+      "value": "128",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-16-False-min",
+      "constraints": {
+        "bits": 16,
+        "signed": false
+      },
+      "value": "0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "capacity-16-False-max",
+      "constraints": {
+        "bits": 16,
+        "signed": false
+      },
+      "value": "65535",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "65535"
+      }
+    },
+    {
+      "id": "capacity-16-False-below",
+      "constraints": {
+        "bits": 16,
+        "signed": false
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-16-False-above",
+      "constraints": {
+        "bits": 16,
+        "signed": false
+      },
+      "value": "65536",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-16-True-min",
+      "constraints": {
+        "bits": 16,
+        "signed": true
+      },
+      "value": "-32768",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "-32768"
+      }
+    },
+    {
+      "id": "capacity-16-True-max",
+      "constraints": {
+        "bits": 16,
+        "signed": true
+      },
+      "value": "32767",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "32767"
+      }
+    },
+    {
+      "id": "capacity-16-True-below",
+      "constraints": {
+        "bits": 16,
+        "signed": true
+      },
+      "value": "-32769",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-16-True-above",
+      "constraints": {
+        "bits": 16,
+        "signed": true
+      },
+      "value": "32768",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-32-False-min",
+      "constraints": {
+        "bits": 32,
+        "signed": false
+      },
+      "value": "0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "capacity-32-False-max",
+      "constraints": {
+        "bits": 32,
+        "signed": false
+      },
+      "value": "4294967295",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "4294967295"
+      }
+    },
+    {
+      "id": "capacity-32-False-below",
+      "constraints": {
+        "bits": 32,
+        "signed": false
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-32-False-above",
+      "constraints": {
+        "bits": 32,
+        "signed": false
+      },
+      "value": "4294967296",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-32-True-min",
+      "constraints": {
+        "bits": 32,
+        "signed": true
+      },
+      "value": "-2147483648",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "-2147483648"
+      }
+    },
+    {
+      "id": "capacity-32-True-max",
+      "constraints": {
+        "bits": 32,
+        "signed": true
+      },
+      "value": "2147483647",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "2147483647"
+      }
+    },
+    {
+      "id": "capacity-32-True-below",
+      "constraints": {
+        "bits": 32,
+        "signed": true
+      },
+      "value": "-2147483649",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-32-True-above",
+      "constraints": {
+        "bits": 32,
+        "signed": true
+      },
+      "value": "2147483648",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-64-False-min",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "0",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "0"
+      }
+    },
+    {
+      "id": "capacity-64-False-max",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "18446744073709551615",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "18446744073709551615"
+      }
+    },
+    {
+      "id": "capacity-64-False-below",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "-1",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-64-False-above",
+      "constraints": {
+        "bits": 64,
+        "signed": false
+      },
+      "value": "18446744073709551616",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-64-True-min",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "-9223372036854775808",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "-9223372036854775808"
+      }
+    },
+    {
+      "id": "capacity-64-True-max",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "9223372036854775807",
+      "expected": {
+        "valid": true,
+        "issues": [],
+        "normalizedValue": "9223372036854775807"
+      }
+    },
+    {
+      "id": "capacity-64-True-below",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "-9223372036854775809",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    },
+    {
+      "id": "capacity-64-True-above",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      },
+      "value": "9223372036854775808",
+      "expected": {
+        "valid": false,
+        "issues": [
+          {
+            "code": "DICTIONARY_VALUE_CONSTRAINT",
+            "elementId": "test.integer",
+            "constraint": "typeRange"
+          }
+        ]
+      }
+    }
+  ]
+}

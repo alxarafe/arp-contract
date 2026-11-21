@@ -25,9 +25,9 @@
           "rating"
         ],
         "scalarTypes": {
-          "id": "INT32",
+          "id": "INTEGER",
           "code": "STRING",
-          "rating": "INT16"
+          "rating": "INTEGER"
         },
         "nullable": {
           "id": false,
@@ -44,6 +44,10 @@
         "code.characterLength": {
           "value": 12,
           "unit": "CHARACTERS"
+        },
+        "id.integerRange": {
+          "minimum": "-2147483648",
+          "maximum": "2147483647"
         }
       },
       "cases": [
@@ -168,9 +172,9 @@
           "rating"
         ],
         "scalarTypes": {
-          "id": "INT32",
+          "id": "INTEGER",
           "code": "STRING",
-          "rating": "INT8"
+          "rating": "INTEGER"
         },
         "nullable": {
           "id": false,
@@ -187,6 +191,10 @@
         "code.characterLength": {
           "value": 12,
           "unit": "CHARACTERS"
+        },
+        "id.integerRange": {
+          "minimum": "-2147483648",
+          "maximum": "2147483647"
         }
       },
       "cases": [

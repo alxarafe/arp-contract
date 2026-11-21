@@ -6,8 +6,7 @@ import { negotiate, type DictionaryCapability } from './protocol';
 
 interface ElementSummary { id: string; type: string; }
 const TYPES = new Set([
-    'BOOLEAN', 'STRING', 'TEXT', 'INT8', 'UINT8', 'INT16', 'UINT16', 'INT32', 'UINT32',
-    'INT64', 'DECIMAL', 'UUID', 'DATE', 'TIME', 'DATETIME', 'ENUM', 'BINARY',
+    'BOOLEAN', 'STRING', 'TEXT', 'INTEGER', 'DECIMAL', 'UUID', 'DATE', 'TIME', 'DATETIME', 'ENUM', 'BINARY',
 ]);
 
 /** Shared consumer of recognized demo APIs; not a normative ARP transport contract. */

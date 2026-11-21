@@ -1,4 +1,4 @@
-"""Structural review of an unapproved INTEGER sketch; no runtime conformance claim."""
+"""Preserved proposal vectors against the adopted INTEGER contract; no runtime conformance claim."""
 import json
 from pathlib import Path
 import unittest
@@ -31,18 +31,18 @@ class IntegerProposalTests(unittest.TestCase):
             (ROOT / 'schemas/dictionary/v1/dictionary.schema.json').read_text(encoding='utf-8')))
         cls.vectors = json.loads((PROPOSAL / 'cases.json').read_text(encoding='utf-8'))
 
-    def test_proposal_is_incompatible_in_both_directions(self):
+    def test_legacy_types_are_rejected_without_aliases(self):
         for name in LEGACY_TYPES:
             with self.subTest(type=name):
-                self.assertTrue(self.current.is_valid(document(name)))
+                self.assertFalse(self.current.is_valid(document(name)))
                 self.assertFalse(self.proposed.is_valid(document(name)))
         self.assertTrue(self.proposed.is_valid(document('INTEGER')))
-        self.assertFalse(self.current.is_valid(document('INTEGER')))
+        self.assertTrue(self.current.is_valid(document('INTEGER')))
 
-    def test_existing_catalog_remains_valid_only_under_current_schema(self):
+    def test_migrated_catalog_is_structurally_valid(self):
         catalog = json.loads((ROOT / 'fixtures/dictionary/v1/catalog.json').read_text(encoding='utf-8'))
         self.current.validate(catalog)
-        self.assertFalse(self.proposed.is_valid(catalog))
+        self.assertTrue(self.proposed.is_valid(catalog))
 
     def test_structurally_valid_proposal_vectors(self):
         for case in self.vectors['validDefinitions']:

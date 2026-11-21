@@ -10,47 +10,51 @@ from decimal import Decimal
 from pathlib import Path
 from jsonschema import Draft202012Validator
 import yaml
+import integer_semantics as integer
 
 ROOT = Path(__file__).resolve().parents[1]
 
-# Known integer ranges are used only for the static draft fixture's capacity
-# classification. A production adapter must verify its native-type mapping.
-INTEGER_RANGES = {
-    'INT8': (-128, 127), 'UINT8': (0, 255),
-    'INT16': (-32768, 32767), 'UINT16': (0, 65535),
-    'INT32': (-2147483648, 2147483647),
-    'UINT32': (0, 4294967295),
-    'INT64': (-9223372036854775808, 9223372036854775807),
-}
+
+def physical_integer_domain(physical):
+    """Return the observed interval, with None for an unknown side."""
+    if physical.get('scalarType') != 'INTEGER':
+        return None
+    extent = physical.get('integerRange', {})
+    try:
+        lower = integer.parse_lexeme(extent['minimum']) if 'minimum' in extent else None
+        upper = integer.parse_lexeme(extent['maximum']) if 'maximum' in extent else None
+    except integer.IntegerInvalid as error:
+        raise DraftInvalid(f'physical integerRange: {error}')
+    if lower is not None and upper is not None and lower > upper:
+        raise DraftInvalid('physical integerRange is inverted')
+    return lower, upper
+
 
 def integer_capacity_status(physical, logical_constraints):
     """Fixture-only: compatible / incompatible / not-verified for integer ranges.
 
-    If a verified integer scalar type exists, its limits remain knowable even
-    without duplicated explicit minimum/maximum properties. If the adapter
-    cannot identify the native scalar type, an opaque name does not prove
-    numerical compatibility. This is not a production type-mapping resolver.
+    A verified physical INTEGER with an observed integerRange is comparable.
+    Without that observation, an opaque native name proves nothing. This is not
+    a production type-mapping resolver.
     """
-    integer_type = physical.get('scalarType')
-    if integer_type not in INTEGER_RANGES:
+    extent = physical_integer_domain(physical)
+    if extent is None:
         return 'not-verified'
-    lower, upper = map(Decimal, INTEGER_RANGES[integer_type])
-    extent = physical.get('integerRange', {})
-    lower_bound = extent.get('minimum')
-    upper_bound = extent.get('maximum')
-    if lower_bound is not None:
-        lower = max(lower, Decimal(lower_bound))
-    if upper_bound is not None:
-        upper = min(upper, Decimal(upper_bound))
-    if lower > upper:
+    lower, upper = extent
+    if 'minimum' not in logical_constraints or 'maximum' not in logical_constraints:
+        return 'not-verified'
+    try:
+        logical_lower = integer.parse_lexeme(logical_constraints['minimum'])
+        logical_upper = integer.parse_lexeme(logical_constraints['maximum'])
+    except integer.IntegerInvalid as error:
+        raise DraftInvalid(f'logical integer bound: {error}')
+    if logical_lower > logical_upper:
+        raise DraftInvalid('logical integer interval is inverted')
+    if lower is not None and logical_lower < lower:
         return 'incompatible'
-    if ('minimum' in logical_constraints and
-            Decimal(logical_constraints['minimum']) < lower):
+    if upper is not None and logical_upper > upper:
         return 'incompatible'
-    if ('maximum' in logical_constraints and
-            Decimal(logical_constraints['maximum']) > upper):
-        return 'incompatible'
-    return 'compatible'
+    return 'compatible' if lower is not None and upper is not None else 'not-verified'
 
 class DraftInvalid(AssertionError):
     pass
@@ -112,11 +116,10 @@ def resolve(model, logical, dictionary, public, summary):
             element = elements[overlay['dictionary']]
             # A logical integer may be safely narrower than a differently sized
             # verified physical integer. Exact name equality is not necessary.
-            if element['type'] in INTEGER_RANGES:
+            if element['type'] == 'INTEGER':
                 from check_cds_compatibility_draft import structural_status
                 status = structural_status({
-                    'dictionaryType':element['type'],
-                    'intrinsicConstraints':element.get('constraints', {}),
+                    'dictionaryConstraints':element.get('constraints', {}),
                     'contextualConstraints':overlay.get('constraints', {}),
                     'physical':physical,
                 })
@@ -228,8 +231,9 @@ def check(root=ROOT):
                    'unknown numeric capacity must be reported not-verified')
         else:
             for prop,val in case['expected'].items():
-                if prop=='ratingType':
-                    expect(next(x for x in physical['columns'] if x['name']=='rating')['scalarType']==val,'rating type mismatch')
+                if prop=='ratingRange':
+                    rating = next(x for x in physical['columns'] if x['name'] == 'rating')
+                    expect(rating['integerRange'] == val, 'rating range mismatch')
                 else:expect(outcome[prop]==val, f'{cid}: {prop} mismatch')
     expect(len(ids)==len(set(ids)), 'duplicate scenario ID')
     return len(ids)

@@ -1,20 +1,28 @@
 [
   {
     "id": "exact-over-53-bits",
-    "type": "INT64",
+    "type": "INTEGER",
     "raw": "{\"value\":\"9007199254740993\"}",
     "expected": {
       "valid": true,
       "value": "9007199254740993"
+    },
+    "constraints": {
+      "bits": 64,
+      "signed": true
     }
   },
   {
     "id": "negative-zero",
-    "type": "INT32",
+    "type": "INTEGER",
     "raw": "{\"value\":\"-0\"}",
     "expected": {
       "valid": true,
       "value": "0"
+    },
+    "constraints": {
+      "bits": 32,
+      "signed": true
     }
   },
   {
@@ -54,26 +62,38 @@
   },
   {
     "id": "duplicate-member",
-    "type": "INT32",
+    "type": "INTEGER",
     "raw": "{\"value\":\"7\",\"value\":\"8\"}",
     "expected": {
       "valid": false
+    },
+    "constraints": {
+      "bits": 32,
+      "signed": true
     }
   },
   {
     "id": "numeric-json-node",
-    "type": "INT64",
+    "type": "INTEGER",
     "raw": "{\"value\":9007199254740993}",
     "expected": {
       "valid": false
+    },
+    "constraints": {
+      "bits": 64,
+      "signed": true
     }
   },
   {
     "id": "integer-overflow",
-    "type": "INT64",
+    "type": "INTEGER",
     "raw": "{\"value\":\"9223372036854775808\"}",
     "expected": {
       "valid": false
+    },
+    "constraints": {
+      "bits": 64,
+      "signed": true
     }
   },
   {
@@ -85,9 +105,47 @@
     }
   },
   {
-    "id": "pending-type-not-enabled",
-    "type": "INTEGER",
+    "id": "legacy-type-rejected",
+    "type": "INT32",
     "raw": "{\"value\":\"7\"}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "uint64-max",
+    "type": "INTEGER",
+    "constraints": {
+      "bits": 64,
+      "signed": false
+    },
+    "raw": "{\"value\": \"18446744073709551615\"}",
+    "expected": {
+      "valid": true,
+      "value": "18446744073709551615"
+    }
+  },
+  {
+    "id": "uint64-adjacent",
+    "type": "INTEGER",
+    "constraints": {
+      "bits": 64,
+      "signed": false
+    },
+    "raw": "{\"value\": \"18446744073709551614\"}",
+    "expected": {
+      "valid": true,
+      "value": "18446744073709551614"
+    }
+  },
+  {
+    "id": "uint64-overflow",
+    "type": "INTEGER",
+    "constraints": {
+      "bits": 64,
+      "signed": false
+    },
+    "raw": "{\"value\": \"18446744073709551616\"}",
     "expected": {
       "valid": false
     }

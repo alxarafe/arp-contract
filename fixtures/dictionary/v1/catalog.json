@@ -15,31 +15,59 @@
     },
     {
       "id": "test.int8",
-      "type": "INT8"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 8,
+        "signed": true
+      }
     },
     {
       "id": "test.uint8",
-      "type": "UINT8"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 8,
+        "signed": false
+      }
     },
     {
       "id": "test.int16",
-      "type": "INT16"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 16,
+        "signed": true
+      }
     },
     {
       "id": "test.uint16",
-      "type": "UINT16"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 16,
+        "signed": false
+      }
     },
     {
       "id": "test.int32",
-      "type": "INT32"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 32,
+        "signed": true
+      }
     },
     {
       "id": "test.uint32",
-      "type": "UINT32"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 32,
+        "signed": false
+      }
     },
     {
       "id": "test.int64",
-      "type": "INT64"
+      "type": "INTEGER",
+      "constraints": {
+        "bits": 64,
+        "signed": true
+      }
     },
     {
       "id": "test.decimal",

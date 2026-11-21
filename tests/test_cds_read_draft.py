@@ -88,8 +88,10 @@ class CdsReadCandidateTests(unittest.TestCase):
     def test_dictionary_types_are_not_redefined_by_physical_type(self):
         result = read.resolve(self.base, self.dictionary)
         rating = next(field for field in result['models'][0]['fields'] if field['name'] == 'rating')
-        self.assertEqual(rating['type'], 'INT16')
-        self.assertEqual(rating['physical']['scalarType'], 'INT8')
+        self.assertEqual(rating['type'], 'INTEGER')
+        self.assertEqual(rating['physical']['scalarType'], 'INTEGER')
+        self.assertEqual(rating['constraints']['bits'], 16)
+        self.assertEqual(rating['physical']['integerRange']['maximum'], '127')
         self.assertEqual(rating['compatibility'], 'compatible')
 
     def test_unbound_base_is_physical_but_dictionary_domain_is_never_clipped(self):
@@ -98,8 +100,8 @@ class CdsReadCandidateTests(unittest.TestCase):
         bundle['logical']['model']['fields'].pop('rating')
         result = read.resolve(bundle, self.dictionary)
         rating = result['models'][0]['fields'][2]
-        self.assertEqual(rating['constraints'], {'minimum': '0', 'maximum': '10'})
-        self.assertEqual(rating['type'], 'INT8')
+        self.assertEqual(rating['constraints'], {'minimum': '0', 'maximum': '10', 'bits': 8, 'signed': False})
+        self.assertEqual(rating['type'], 'INTEGER')
         bundle['logical']['model']['fields']['rating'] = {'dictionary': 'test.int16'}
         self.assertEqual(read.resolve(bundle, self.dictionary)['issues'][0]['family'], 'physical-incompatible')
 

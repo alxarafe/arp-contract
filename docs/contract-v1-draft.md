@@ -1,10 +1,9 @@
 # ARP — Contrato funcional 1.0
 
-**Propuesta incompatible pendiente de aprobación.** Este documento no sustituye `arp.dictionary/v1`.
-El esquema vigente conserva los siete identificadores enteros históricos y sus fixtures.
-La [revisión de compatibilidad](review-contract-v1.md) y el
-[esquema aislado de INTEGER](proposals/integer/dictionary.schema.json) describen el cambio propuesto.
-No se declara soporte de los runtimes ni se cambia ningún identificador de formato.
+**Borrador no activado como conjunto.** Solo INTEGER se incorpora al candidato activo mediante
+[ARP-INTEGER-001](features/arp-integer-001.md) y la [especificación definitiva](dictionary.md), que prevalece
+sobre la sección 2. El [boceto original](proposals/integer/dictionary.schema.json) se conserva como antecedente.
+Las demás propuestas de este documento permanecen pendientes. No se publica versión ni se modifica un runtime.
 
 **Borrador para revisión.** No es una versión publicada ni declara conformidad de PHP, Java o .NET.
 
@@ -19,23 +18,9 @@ diccionario podrá utilizarse sin base de datos ni cliente gráfico.
 Tipos previstos: `BOOLEAN`, `STRING`, `TEXT`, `INTEGER`, `DECIMAL`, `UUID`, `DATE`, `TIME`, `DATETIME`, `ENUM` y
 `BINARY`.
 
-La propuesta `INTEGER` sustituiría a `INT8`, `UINT8`, `INT16`, `UINT16`, `INT32`, `UINT32` e `INT64`. La ausencia de
-alias es una propuesta incompatible y requiere aprobación explícita.
-
-- `minimum` y `maximum`: límites enteros exactos, inclusivos por defecto.
-- `bits`: opcional, uno de `8`, `16`, `32`, `64`.
-- `signed`: opcional; si se omite, es `false` cuando `minimum >= 0` y `true` cuando el mínimo es negativo o no está
-  declarado.
-- Con ambos límites definidos y sin `bits`, se elige el menor tamaño admitido que cubra todo el intervalo.
-- Con `bits` explícito, se respeta si cubre el intervalo; si no, la definición es inválida.
-- `signed: false` con mínimo negativo es inválido.
-- Comparaciones y transporte numérico deben preservar enteros exactos, sin redondeos ni truncamientos.
-
-Ejemplos de capacidad lógica: `0..100 → UINT8`; `-100..100 → INT8`; `0..100, bits:16 → UINT16`; `0..100, bits:16,
-signed:true → INT16`.
-
-Si un motor no dispone del tipo SQL exacto, el adaptador selecciona uno que represente todo el dominio solicitado sin
-pérdida. El tipo lógico no depende de las primitivas de Java, PHP o C#.
+`INTEGER` sustituye los siete tipos enteros anteriores en el candidato activo, sin alias. La sintaxis,
+inferencia, capacidades, límites exclusivos, `multipleOf`, errores y representaciones exactas se definen en
+[Diccionario e INTEGER](dictionary.md). Esta incorporación independiente no aprueba las secciones siguientes.
 
 ## 3. CDS y persistencia
 
@@ -119,7 +104,7 @@ se estudiarán después del primer CRUD funcional.
 
 ## 9. Decisiones aún necesarias antes de aprobar 1.0
 
-- Regla de capacidad para intervalos abiertos o sin límites y tratamiento de valores fuera de 64 bits.
+- INTEGER queda cerrado por ARP-INTEGER-001; las demás decisiones de esta lista continúan pendientes.
 - Sintaxis precisa para tipos directos, referencias al diccionario, claves, valores por defecto y restricciones CDS.
 - Contrato concreto de metadatos, transporte, serialización y representación de errores.
 - Precondiciones y resultado de DELETE, generación de identificadores y prueba de operaciones atómicas.

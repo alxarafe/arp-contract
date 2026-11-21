@@ -10,7 +10,7 @@ source:
 columns:
 - name: id
   nativeType: int
-  scalarType: INT32
+  scalarType: INTEGER
   nullable: false
   integerRange:
     minimum: '-2147483648'
@@ -24,7 +24,7 @@ columns:
     unit: CHARACTERS
 - name: rating
   nativeType: tinyint signed
-  scalarType: INT8
+  scalarType: INTEGER
   nullable: false
   integerRange:
     minimum: '-128'

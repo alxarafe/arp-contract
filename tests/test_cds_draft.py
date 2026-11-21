@@ -42,10 +42,10 @@ class CdsDraftTests(unittest.TestCase):
         rating=next(x for x in physical['columns'] if x['name']=='rating')
         rating.pop('integerRange')
         self.assertEqual(c.integer_capacity_status(rating,{'minimum':'0','maximum':'10'}),
-                         'compatible')
+                         'not-verified')
         effective=c.resolve(physical,self.docs['logical'],self.docs['dictionary'],
                             self.docs['public'],self.docs['summary'])
-        self.assertEqual(effective['capacityStatuses']['rating'],'compatible')
+        self.assertEqual(effective['capacityStatuses']['rating'],'not-verified')
 
     def test_opaque_numeric_capacity_remains_unverified(self):
         case=next(s for s in self.manifest['scenarios']
@@ -67,7 +67,7 @@ class CdsDraftTests(unittest.TestCase):
     def test_dictionary_int16_narrowed_to_int8_storage_is_compatible(self):
         logical=deepcopy(self.docs['logical'])
         dictionary=deepcopy(self.docs['dictionary'])
-        dictionary['elements'].append({'id':'demo.rating','type':'INT16'})
+        dictionary['elements'].append({'id':'demo.rating','type':'INTEGER','constraints':{'bits':16,'signed':True}})
         logical['fields']['rating']['dictionary']='demo.rating'
         resolved=c.resolve(self.mdb,logical,dictionary,self.docs['public'],self.docs['summary'])
         self.assertEqual(resolved['capacityStatuses']['rating'],'compatible')
@@ -75,7 +75,7 @@ class CdsDraftTests(unittest.TestCase):
     def test_dictionary_int16_unrestricted_cannot_fit_int8_storage(self):
         logical=deepcopy(self.docs['logical'])
         dictionary=deepcopy(self.docs['dictionary'])
-        dictionary['elements'].append({'id':'demo.rating','type':'INT16'})
+        dictionary['elements'].append({'id':'demo.rating','type':'INTEGER','constraints':{'bits':16,'signed':True}})
         logical['fields']['rating']={'dictionary':'demo.rating'}
         with self.assertRaisesRegex(c.DraftInvalid,'physical-incompatible'):
             c.resolve(self.mdb,logical,dictionary,self.docs['public'],self.docs['summary'])
