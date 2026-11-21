@@ -1,9 +1,12 @@
 # Historial documental de ARP
 
-Este directorio conserva decisiones y borradores anteriores para poder estudiar la evolución del proyecto. **Nada aquí es normativo para el contrato 1.0.**
+Este directorio conserva las decisiones, especificaciones y evidencias anteriores al borrador 1.0.
+Archivar un documento conserva su estado original; no revoca sus garantías ni aprueba una propuesta posterior.
+Los esquemas, ejemplos y fixtures existentes mantienen su significado hasta una decisión explícita de revisión.
 
-La instantánea inicial corresponde al commit `eb38cb96e6ccd218734df2a181908de46067e0c7` de `alxarafe/arp-contract` (20/11/2026). El archivo `2026-11-20-pre-v1.md` contiene su índice. Los documentos originales pueden recuperarse exactamente mediante Git, incluso después de retirarlos de la documentación activa.
+El [índice](2026-11-20-pre-v1.md) identifica la revisión Git que conserva los originales exactos.
+Las copias navegables mantienen el contenido técnico, con referencias genéricas a aplicaciones consumidoras
+y enlaces locales reparados. Los nombres originales de esas aplicaciones y su procedencia permanecen
+consultables en Git; no son dependencias ni forman parte del contrato ARP.
 
-El script incluido en el paquete de entrega copia íntegramente, sin transformaciones, los documentos del commit a `docs/history/2026-11-20-pre-v1/docs/`.
-
-Cuando el contrato 1.0 esté aprobado, la documentación activa debe contener únicamente las especificaciones vigentes y las referencias necesarias a esquemas y pruebas, no los debates históricos.
+La [revisión](../review-contract-v1.md) distingue reorganización, propuestas y cambios contractuales pendientes.

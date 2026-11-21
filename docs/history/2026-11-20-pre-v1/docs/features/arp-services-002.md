@@ -188,9 +188,9 @@ El host debe filtrar también los resultados delegados; registrar un manejador n
 
 ## 7. Evidencia, aceptación y límites
 
-[Fixtures](../../fixtures/services/v1/invocation-cases.json),
-[verificador](../../tools/check_service_invocation_draft.py) y
-[tests](../../tests/test_service_invocation_draft.py) separan `request`, `host` y `expected.response` de
+[Fixtures](../../../../../fixtures/services/v1/invocation-cases.json),
+[verificador](../../../../../tools/check_service_invocation_draft.py) y
+[tests](../../../../../tests/test_service_invocation_draft.py) separan `request`, `host` y `expected.response` de
 `expected.observed`. **`host` y `observed` son instrumentación privada de prueba**, jamás partes de la respuesta.
 Esta separación permite verificar persistencia y efectos sin devolver el registro completo al consumidor.
 

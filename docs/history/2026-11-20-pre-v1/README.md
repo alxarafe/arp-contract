@@ -23,8 +23,8 @@ The planned first contractual release, `v0.1.0`, is subject to release review of
 | Version-number rules, immutability, compatibility | [`docs/versioning.md`](docs/versioning.md) |
 | Implementation adoption and evidence | [`docs/compatibility.md`](docs/compatibility.md) |
 | Steps to publish a release | [`docs/release-process.md`](docs/release-process.md) |
-| Human-readable changes | [`CHANGELOG.md`](CHANGELOG.md) |
-| Per-release inventory | [`releases/`](releases/) |
+| Human-readable changes | [`CHANGELOG.md`](../../../CHANGELOG.md) |
+| Per-release inventory | [`releases/`](../../../releases) |
 
 The first feature candidate is **ARP-DICT-001: reusable scalar dictionary elements**, with specification, schema and shared fixtures reviewed together. Every feature must distinguish the **target design** from the **MVP committed in the current release**; unreleased targets are not normative.
 
@@ -63,12 +63,12 @@ table, with 88 shared product vectors, active catalog/reports projections, a SER
 an adapter responsibility boundary. It remains subject to review; it does not implement SQL, HTTP, permissions
 or native runtime conformance. The original 74 vectors are preserved; the verifier also covers modular activation.
 
-## Previously published Erbas contracts
+## Previously published consumer contracts
 
-Existing `erbas-contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.
+Existing `previous consumer contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.
 
 ## Contributing
 
 Make changes on a feature branch, review specification and fixture changes together, and follow [`docs/release-process.md`](docs/release-process.md). Do not assign a release tag solely for architecture documentation.
 
-License: see [`LICENSE`](LICENSE).
+License: see [`LICENSE`](../../../LICENSE).

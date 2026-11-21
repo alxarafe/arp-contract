@@ -11,7 +11,7 @@ Hemos empezado a confundir la construcción de ARP con la construcción de aplic
 >
 > Proporciona herramientas, contratos, metadatos, servicios y mecanismos de ejecución reutilizables, sin imponer un ERP, un lenguaje, un framework o una tecnología de persistencia concreta.
 
-ARP no debe saber qué es un artículo, un almacén, una factura o un pedido. Debe proporcionar los mecanismos para que Erbas, Solúcar o cualquier otra aplicación puedan definir esos conceptos y desarrollar su comportamiento con el mínimo código posible.
+ARP no debe saber qué es un artículo, un almacén, una factura o un pedido. Debe proporcionar los mecanismos para que cualquier aplicación consumidora puedan definir esos conceptos y desarrollar su comportamiento con el mínimo código posible.
 
 **ARP no tiene que incorporar las reglas de negocio de las aplicaciones, pero sí debe proporcionar mecanismos para definirlas, validarlas y ejecutarlas.**
 
@@ -54,7 +54,7 @@ La tercera columna representa **capacidades genéricas, no módulos empresariale
 ```text
 ┌────────────────────────────────────────────────────┐
 │             APLICACIONES CONSUMIDORAS              │
-│             Erbas · Solúcar · terceros             │
+│             Aplicaciones consumidoras             │
 │  Definen entidades, reglas, procesos e interfaces  │
 └─────────────────────────┬──────────────────────────┘
                           │ Contratos públicos

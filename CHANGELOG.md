@@ -41,7 +41,7 @@ established by the annotated Git tag and GitHub Release, not this heading.
 - Added independent offline structural/integrity checks and checker regression tests.
 - Prepared prospective initial MINOR inventory; documented unresolved contractual
   boundaries and semantic checks deferred to independently tested runtimes.
-- No published ARP behavior is changed; no automatic Erbas migration or stack
+- No published ARP behavior is changed; no automatic consumer migration or stack
   conformance is claimed.
 
 

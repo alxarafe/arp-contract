@@ -14,7 +14,7 @@ confiable distingue propietario aplicación/módulo y conserva procedencia; no s
 La aplicación puede aportar definiciones propias con el mismo mecanismo que los módulos.
 
 Un módulo puede aportar diccionario, modelos lógicos, proyecciones, traducciones, menús y futuros tipos registrados.
-El perfil candidato [module.schema.json](../../schemas/modules/v1/module.schema.json) representa ese registro
+El perfil candidato [module.schema.json](../../../../../schemas/modules/v1/module.schema.json) representa ese registro
 en memoria o YAML/JSON: `apiVersion: arp.module/v1`, `id`, `dependencies`, `sources`. No exige un archivo module.yaml.
 
 ```json
@@ -132,9 +132,9 @@ DICT/CDS. Los adaptadores deben validar antes de trabajo no acotado. Una depende
 
 ## 6. Evidencia para revisión
 
-[Escenario](../../fixtures/modules/v1/scenario.json), [casos de módulos](../../fixtures/modules/v1/cases.json),
-[transiciones](../../fixtures/modules/v1/transitions.json), [verificador](../../tools/check_modules_draft.py) y
-[regresiones](../../tests/test_modules_draft.py). catalog aporta diccionario, modelo/proyección de artículos,
+[Escenario](../../../../../fixtures/modules/v1/scenario.json), [casos de módulos](../../../../../fixtures/modules/v1/cases.json),
+[transiciones](../../../../../fixtures/modules/v1/transitions.json), [verificador](../../../../../tools/check_modules_draft.py) y
+[regresiones](../../../../../tests/test_modules_draft.py). catalog aporta diccionario, modelo/proyección de artículos,
 traducciones y menú; reports aporta proyección derivada, traducciones y otra entrada al mismo menú.
 La aplicación aporta físico ilustrativo, diccionario, menús manuales y una extensión de ejemplo.
 

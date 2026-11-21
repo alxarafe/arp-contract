@@ -10,7 +10,7 @@ This process implements [`versioning.md`](versioning.md). It covers contract set
 4. Run available schema/fixture validations; archive exact commands/results. If test tooling does not exist yet, do not claim a suite passed.
 5. Classify every change as PATCH/MINOR/MAJOR following the policy, including semantic or strict-schema incompatibilities.
 6. For breaking changes, provide concrete migration guidance, explicitly naming versions and format generations affected.
-7. Update `CHANGELOG.md`, [`compatibility.md`](compatibility.md) as warranted by **real** evidence, and prepare a new `releases/vX.Y.Z.md` entry using [`releases/README.md`](../releases/README.md).
+7. Update `CHANGELOG.md`, [`compatibility.md`](compatibility.md) as warranted by **real** evidence, and prepare a new `releases/vX.Y.Z.md` entry using [`releases/README.md`](../../../../releases/README.md).
 8. Confirm no secrets, environment files, generated artifacts, or `.openidea/` files are staged.
 
 For ARP-CONTRACT-001, stop after documenting the policy: **do not create a prerelease or release tag**. The first release awaits approved ARP-DICT-001 content.

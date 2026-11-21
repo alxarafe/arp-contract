@@ -109,7 +109,7 @@ For each incompatible change, record what old documents or clients do, what the 
 
 Preserve historical migrations and other persisted artifacts according to the owning application's rules: do not alter previously applied database migrations just because a dictionary definition changed. Runtime contracts do not prescribe how an ERP migrates storage.
 
-Existing `erbas-contract` tags remain unchanged. This repository MAY supersede or reinterpret pre-production conventions in a new ARP release, with explicit release notes identifying what was retained or superseded. No silent transfer of normative ownership is implied.
+Existing `previous consumer contract` tags remain unchanged. This repository MAY supersede or reinterpret pre-production conventions in a new ARP release, with explicit release notes identifying what was retained or superseded. No silent transfer of normative ownership is implied.
 
 ## 9. First publication
 

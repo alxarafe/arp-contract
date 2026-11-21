@@ -7,7 +7,7 @@
 ## Único contrato físico propuesto
 
 El documento físico `arp.physical/v1` se define exclusivamente en
-[`schemas/cds/v1/physical.schema.json`](../../schemas/cds/v1/physical.schema.json).
+[`schemas/cds/v1/physical.schema.json`](../../../../../schemas/cds/v1/physical.schema.json).
 El antiguo esquema alternativo `schemas/physical/v1/physical.schema.json` se elimina;
 no deben coexistir dos gramáticas diferentes con el mismo `apiVersion`.
 

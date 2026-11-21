@@ -237,18 +237,18 @@ sin declarar inválidos sus modelos ni abrir ahora reglas nuevas de colación u 
 
 ## 9. Evidencia y revisión
 
-- [Datos y definiciones](../../fixtures/cds/listget/v1/products.json): productos comerciales concretos, autorados
+- [Datos y definiciones](../../../../../fixtures/cds/listget/v1/products.json): productos comerciales concretos, autorados
   para prueba, sin datos privados ni extracción de BD. PK simple/compuesta y gramáticas CDS/DICT existentes.
-- [88 vectores](../../fixtures/cds/listget/v1/cases.json): expectativas explícitas; no generadas por el oráculo.
+- [88 vectores](../../../../../fixtures/cds/listget/v1/cases.json): expectativas explícitas; no generadas por el oráculo.
   `defaults` + sustitución de miembros superiores de `host` son solo composición del arnés; no una gramática ARP.
   Se preservan los 74 originales y se añaden 14 modulares sobre los mismos datos. `moduleState`,
   `moduleStateAtPublish` y `authorizedOperations` son evidencia privada del host, no entradas de consumidores.
-- [Esquema de resultados](../../schemas/cds/v1/listget-result.schema.json): perfil candidato de salida SERVICES-002,
+- [Esquema de resultados](../../../../../schemas/cds/v1/listget-result.schema.json): perfil candidato de salida SERVICES-002,
   sin añadir estados ni alterar esquemas anteriores; la selección exacta de campos depende de la proyección.
-- [Obligaciones nativas](../../fixtures/cds/listget/v1/provider-obligations.json): PostgreSQL para .NET/Java y
+- [Obligaciones nativas](../../../../../fixtures/cds/listget/v1/provider-obligations.json): PostgreSQL para .NET/Java y
   MariaDB para PHP, aún **sin ejecutar**. Deben partir de tabla real, observarla y verificar los mismos valores,
   políticas, precisión, fallos, invalidación e invariancia de las definiciones lógicas.
-- [Oráculo](../../tools/check_cds_listget_draft.py) y [regresiones](../../tests/test_cds_listget_draft.py):
+- [Oráculo](../../../../../tools/check_cds_listget_draft.py) y [regresiones](../../../../../tests/test_cds_listget_draft.py):
   reutilizan resolver CDS y límites enteros DICT. Las demás celdas representan salida ya decodificada por el
   adaptador; `decodeFailures` simula su fallo. No duplican los 17 validadores ni prueban su decodificación real.
 

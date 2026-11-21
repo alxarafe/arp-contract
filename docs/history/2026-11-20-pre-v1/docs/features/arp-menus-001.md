@@ -16,7 +16,7 @@ workspace. `scope` clasifica finalidad; **no** representa un slot visual, númer
 Puede haber cero o varios menús del mismo ámbito. Cada tema Angular decide libremente cuáles representa y dónde:
 no reescribe las definiciones funcionales ni exige variantes, plantillas o sidebars en este contrato.
 
-El candidato [menu-source.schema.json](../../schemas/menus/v1/menu-source.schema.json) representa una fuente
+El candidato [menu-source.schema.json](../../../../../schemas/menus/v1/menu-source.schema.json) representa una fuente
 `arp.menu/v1` con `menus` y/o `contributions`. Se entrega por el mismo registro de proveedores de MODULES-001;
 no existe ruta de paquete obligatoria ni descubrimiento por el nombre del archivo.
 
@@ -106,7 +106,7 @@ Se necesitaría otro contrato para aportar contexto de registro o acciones calcu
 ## 3. Personalización explícita de la aplicación
 
 La aplicación aporta más entradas mediante una fuente normal o una composición explícita
-[arp.menu-composition/v1](../../schemas/menus/v1/composition.schema.json). Cada edición identifica menú/entrada,
+[arp.menu-composition/v1](../../../../../schemas/menus/v1/composition.schema.json). Cada edición identifica menú/entrada,
 puede cambiar `order`, `parent`, `label`/`labelKey` y destino, o excluir la entrada. No renombra IDs, cambia un modelo
 ni amplía una proyección. Cambiar destino requiere la misma validación y autorización del destino final.
 Poner destino nulo convierte la entrada en grupo; cambiar label a literal sustituye labelKey, y viceversa.
@@ -157,9 +157,9 @@ a definition-invalid. Errores de un consumidor previo conservan su familia. Los 
 
 ## 5. Fixtures, límites y revisión
 
-[Escenario compartido](../../fixtures/modules/v1/scenario.json), [vectores de menú](../../fixtures/menus/v1/cases.json),
-[transiciones/caché](../../fixtures/modules/v1/transitions.json), [verificador](../../tools/check_menus_draft.py)
-y [regresiones](../../tests/test_menus_draft.py). catalog y reports aportan al mismo menú manual; reports usa una
+[Escenario compartido](../../../../../fixtures/modules/v1/scenario.json), [vectores de menú](../../../../../fixtures/menus/v1/cases.json),
+[transiciones/caché](../../../../../fixtures/modules/v1/transitions.json), [verificador](../../../../../tools/check_menus_draft.py)
+y [regresiones](../../../../../tests/test_menus_draft.py). catalog y reports aportan al mismo menú manual; reports usa una
 proyección derivada de catalog. Se comprueban personalización, jerarquía, conflictos, desactivación, visibilidad,
 ámbitos abiertos, ausencia de generación automática y selección para invalidación de caché. La revisión incorpora
 fuentes vacías, una jerarquía de dos opciones principales, decisiones LIST/GET independientes y límites contextuales.

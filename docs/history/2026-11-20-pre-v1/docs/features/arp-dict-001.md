@@ -4,7 +4,7 @@
 **Target:** `arp-contract` first functional contract release, prospectively `v0.1.0`.
 **Approved format:** `arp.dictionary/v1`.
 **Ownership:** ARP defines the reusable logical language and its observable mechanics; the consuming application owns all element names, business meanings and usages.
-**Sources reviewed:** [`arp-contract/docs/architecture.md`](../architecture.md), [`docs/versioning.md`](../versioning.md), and the published [`erbas-contract v0.13.0` resources specification](https://github.com/alxarafe/erbas-contract/blob/v0.13.0/docs/core/resources-001.md) and [OpenAPI resource schema](https://github.com/alxarafe/erbas-contract/blob/v0.13.0/openapi/core/resources/contract.yaml).
+**Sources reviewed:** [`arp-contract/docs/architecture.md`](../architecture.md), [`docs/versioning.md`](../versioning.md), and earlier resource specifications. Their original source references are retained in the [original Git revision](https://github.com/alxarafe/arp-contract/blob/eb38cb96e6ccd218734df2a181908de46067e0c7/docs/features/arp-dict-001.md).
 
 > **Review convention.** MUST, SHOULD and MAY describe the behavior intended for the first *approved* release; this approved implementation design does not itself publish a contract. Codex must not silently modify these decisions. Any discrepancy exposed by implementation goes back to contract review before publication.
 
@@ -24,9 +24,9 @@ The dictionary MUST be usable by itself without HTTP, authentication, a relation
 
 **Not included:** persisted storage; SQL generation/migrations; data access; FK checks; form generation; resource-specific `required`, `nullable`, `default`, `readOnly`, `immutable`; field-to-column mappings; business-rule evaluation; expression evaluation; HTTP routes; handler invocation; inheritance, aliases, overlays or automatic cross-source overriding.
 
-## 2. Evidence and compatibility with Erbas
+## 2. Evidence and compatibility with consumer
 
-The published `erbas-contract v0.13.0` defines **17**, not 16, scalar type identifiers:
+The published `previous consumer contract v0.13.0` defines **17**, not 16, scalar type identifiers:
 
 `BOOLEAN`, `STRING`, `TEXT`, `INT8`, `UINT8`, `INT16`, `UINT16`, `INT32`, `UINT32`, `INT64`, `DECIMAL`, `UUID`, `DATE`, `TIME`, `DATETIME`, `ENUM`, `BINARY`.
 
@@ -34,7 +34,7 @@ Its generic resource metadata also uses `minimum`, `maximum`, `multipleOf`, `exc
 
 **Preserved direction:** recognizable type and constraint vocabulary, exact numeric handling, canonical UUID/temporal forms, and separation of presence from nullability.
 
-**Intentional new ARP design (not automatic compatibility):** dictionary elements have no `required`/`nullable`/`default`/access or presentation properties; exact numeric constraints and canonical conformance values use **decimal strings**; the dictionary has its own document format, validation outcome and restricted portable pattern syntax. `arp-contract` does not modify historical `erbas-contract` tags or claim that existing resource clients can consume this new format unchanged. Resource adapters will perform an explicitly tested mapping later.
+**Intentional new ARP design (not automatic compatibility):** dictionary elements have no `required`/`nullable`/`default`/access or presentation properties; exact numeric constraints and canonical conformance values use **decimal strings**; the dictionary has its own document format, validation outcome and restricted portable pattern syntax. `arp-contract` does not modify historical `previous consumer contract` tags or claim that existing resource clients can consume this new format unchanged. Resource adapters will perform an explicitly tested mapping later.
 
 ## 3. Portable document format
 
@@ -594,7 +594,7 @@ Codex must create portable fixtures with explicit **input, expected validity, no
 - **Deliberate trade-off:** the restricted portable pattern subset is intentionally smaller than the regex features offered by host languages. A later format may widen it, but current conformance must be identical.
 - **Deliberate trade-off:** neutral fixture numbers use strings; this does not establish the wire serialization of a future HTTP resource/field. That mapping is a separate versioned feature.
 - **Deferred and reversible:** class names, library package structure, registration API ergonomics, cache algorithm, host-native overloads, directory packaging, consumer-specific defaults and presentation.
-- **No migration guarantee:** existing `erbas-contract` schemas are historical and unchanged; applications under development may switch with explicit adapters or deliberate contract upgrades.
+- **No migration guarantee:** existing `previous consumer contract` schemas are historical and unchanged; applications under development may switch with explicit adapters or deliberate contract upgrades.
 
 ## 12. Relationship to governance
 

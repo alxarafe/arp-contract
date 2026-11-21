@@ -70,6 +70,6 @@ El cliente recibe las restricciones **vigentes**, el registro original y, si pue
 
 ## 6. Fixtures e implementación posterior
 
-Los vectores de [`fixtures/cds/v1/compatibility.json`](../../fixtures/cds/v1/compatibility.json) y [`fixtures/cds/v1/historical-updates.json`](../../fixtures/cds/v1/historical-updates.json) expresan ejemplos de interoperabilidad **pendientes de ejecución en cada runtime**. El checker Python es una herramienta de integridad de fixtures y un pequeño oráculo limitado a enteros, no es motor ARP de producción.
+Los vectores de [`fixtures/cds/v1/compatibility.json`](../../../../../fixtures/cds/v1/compatibility.json) y [`fixtures/cds/v1/historical-updates.json`](../../../../../fixtures/cds/v1/historical-updates.json) expresan ejemplos de interoperabilidad **pendientes de ejecución en cada runtime**. El checker Python es una herramienta de integridad de fixtures y un pequeño oráculo limitado a enteros, no es motor ARP de producción.
 
 Pendiente antes de publicar contrato de comportamiento: esquema neutral de metadatos de formularios y diagnóstico histórico; tipo/longitud/precisión completos; temporalidad y Unicode; semántica definitiva de PATCH; concurrencia; reglas con dependencias, autorización y contratos de transporte. No se publicará versión ni se afirmará conformidad nativa con estos vectores por el mero hecho de introducirlos.

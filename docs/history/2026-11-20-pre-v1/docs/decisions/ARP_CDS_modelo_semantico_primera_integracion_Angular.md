@@ -223,7 +223,7 @@ arp-php/
 cliente Angular común/    # Una sola demo UI; conectable a cualquiera de los tres
 ```
 
-La disposición es **orientativa**, no impone todavía nombres de paquetes o carpetas. Las tres demos serán independientes de Erbas y Solúcar, aunque más adelante se validen integraciones con aplicaciones reales. Los archivos lógicos y de proyecciones son compartidos en `arp-contract`; **los archivos físicos difieren** según el motor del ejemplo y se generan desde cada base de datos, no se copian como fuente de verdad común.
+La disposición es **orientativa**, no impone todavía nombres de paquetes o carpetas. Las tres demos serán independientes de aplicaciones consumidoras, aunque más adelante se validen integraciones con aplicaciones reales. Los archivos lógicos y de proyecciones son compartidos en `arp-contract`; **los archivos físicos difieren** según el motor del ejemplo y se generan desde cada base de datos, no se copian como fuente de verdad común.
 
 ### 9.2. Prueba integral mínima
 

@@ -60,9 +60,9 @@ An implementation may publish its own version (for example, `arp-php v0.4.0`) wh
 
 For implementation-specific releases, verify the implementation actually contains the claimed support. A later ARP contract publication by itself never upgrades an existing implementation.
 
-## Existing Erbas contracts
+## Existing consumer contracts
 
-Earlier `erbas-contract` releases and adoption claims remain separate historical evidence. Nothing in this blank ARP matrix asserts that those releases have been migrated or that Java, .NET, and PHP currently conform to ARP-DICT-001.
+Earlier `previous consumer contract` releases and adoption claims remain separate historical evidence. Nothing in this blank ARP matrix asserts that those releases have been migrated or that Java, .NET, and PHP currently conform to ARP-DICT-001.
 
 ## Pre-release evidence and portability consolidation
 
@@ -93,5 +93,5 @@ are rerun and the exact evidence is recorded. Updating these documentation-only
 files changes the contract repository commit SHA even though the normative schema
 and fixtures remain the same; previous exact-SHA results cannot be relabeled.
 
-The published release does not automatically imply Erbas contract compatibility
+The published release does not automatically imply consumer contract compatibility
 or consumer application adoption. [Release process](release-process.md).

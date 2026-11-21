@@ -6,7 +6,7 @@
 
 ## 1. Product mission
 
-**Alxarafe Resource Platform (ARP)** provides optional, reusable, language-neutral declarative capabilities and integration mechanisms for applications. It is intended to simplify building and evolving modular business software of a size and scope comparable to applications such as Dolibarr or Odoo. It may draw architectural lessons from larger model-driven environments such as SAP and CAP, without reproducing their technology stacks, product scope, or business knowledge.
+**Alxarafe Resource Platform (ARP)** provides optional, reusable, language-neutral declarative capabilities and integration mechanisms for applications. It is intended to simplify building and evolving modular business software of a size and scope comparable to other modular business applications. It may draw architectural lessons from larger model-driven environments such as SAP and CAP, without reproducing their technology stacks, product scope, or business knowledge.
 
 **ARP is not an ERP and does not contain business-domain definitions.** The consuming application owns every business entity, field meaning, calculation, policy, operation, process, decision, and domain implementation. ARP provides the language, generic mechanisms, and adapters that make those definitions usable and reusable.
 
