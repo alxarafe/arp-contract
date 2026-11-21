@@ -33,6 +33,7 @@ jobs:
       - name: Contract verifiers
         run: |
           python3 tools/check_documentation.py
+          python3 tools/check_crud_write_draft.py
           python3 tools/check_contract.py
           python3 tools/check_cds_draft.py
           python3 tools/check_cds_compatibility_draft.py

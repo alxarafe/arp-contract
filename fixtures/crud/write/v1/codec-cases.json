@@ -1,0 +1,95 @@
+[
+  {
+    "id": "exact-over-53-bits",
+    "type": "INT64",
+    "raw": "{\"value\":\"9007199254740993\"}",
+    "expected": {
+      "valid": true,
+      "value": "9007199254740993"
+    }
+  },
+  {
+    "id": "negative-zero",
+    "type": "INT32",
+    "raw": "{\"value\":\"-0\"}",
+    "expected": {
+      "valid": true,
+      "value": "0"
+    }
+  },
+  {
+    "id": "unicode-preserved",
+    "type": "STRING",
+    "raw": "{\"value\":\" Á😀 \"}",
+    "expected": {
+      "valid": true,
+      "value": " Á😀 "
+    }
+  },
+  {
+    "id": "nullable-null",
+    "type": "STRING",
+    "nullable": true,
+    "raw": "{\"value\":null}",
+    "expected": {
+      "valid": true,
+      "value": null
+    }
+  },
+  {
+    "id": "nonnullable-null",
+    "type": "STRING",
+    "raw": "{\"value\":null}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "missing-value",
+    "type": "STRING",
+    "raw": "{}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "duplicate-member",
+    "type": "INT32",
+    "raw": "{\"value\":\"7\",\"value\":\"8\"}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "numeric-json-node",
+    "type": "INT64",
+    "raw": "{\"value\":9007199254740993}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "integer-overflow",
+    "type": "INT64",
+    "raw": "{\"value\":\"9223372036854775808\"}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "unpaired-surrogate",
+    "type": "STRING",
+    "raw": "{\"value\":\"\\ud800\"}",
+    "expected": {
+      "valid": false
+    }
+  },
+  {
+    "id": "pending-type-not-enabled",
+    "type": "INTEGER",
+    "raw": "{\"value\":\"7\"}",
+    "expected": {
+      "valid": false
+    }
+  }
+]

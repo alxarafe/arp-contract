@@ -1,0 +1,128 @@
+{
+  "feature": "ARP-CRUD-001A",
+  "executed": false,
+  "firstRuntime": "php",
+  "firstEngine": "mariadb",
+  "subsequentRuntimes": {
+    "java": "postgresql",
+    "dotnet": "postgresql"
+  },
+  "sharedUpdateEvidence": "manifest.json#/reuse",
+  "codecEvidence": "codec-cases.json",
+  "requirements": [
+    {
+      "id": "registered-projection-and-authority",
+      "oracleCases": [
+        "create-summary-readonly",
+        "create-unknown-target",
+        "create-permissions-revoked",
+        "create-field-permission-revoked",
+        "delete-permissions-revoked"
+      ],
+      "nativeEvidenceRequired": "Resolve the active registration and recheck operation, row, fields and policy at the atomic boundary."
+    },
+    {
+      "id": "presence-null-default",
+      "oracleCases": [
+        "create-required-rating",
+        "create-null-rating",
+        "create-verified-default",
+        "create-unverified-default",
+        "create-nullable-explicit",
+        "create-nullable-absent"
+      ],
+      "nativeEvidenceRequired": "Introspect actual NOT NULL and defaults; distinguish absent from explicit null without driver coercion."
+    },
+    {
+      "id": "logical-physical-and-identity",
+      "oracleCases": [
+        "create-rating-range",
+        "create-id-overflow",
+        "create-duplicate-key",
+        "create-constraint-rejected",
+        "create-postgresql",
+        "delete-pending-integer"
+      ],
+      "nativeEvidenceRequired": "Use parameterized values, real PK uniqueness and actual physical constraints; keep existing scalar identifiers."
+    },
+    {
+      "id": "complete-read-bound-delete-precondition",
+      "oracleCases": [
+        "delete-valid",
+        "delete-no-precondition",
+        "delete-get-purpose-not-delete",
+        "delete-opaque-key-valid",
+        "delete-uncovered-new-column"
+      ],
+      "nativeEvidenceRequired": "Issue protected evidence from the authorized read snapshot and bind full identity, state, purpose and context."
+    },
+    {
+      "id": "concurrent-delete",
+      "oracleCases": [
+        "delete-stale-precondition",
+        "delete-concurrent-change",
+        "delete-hidden-concurrent-change",
+        "delete-historical-value"
+      ],
+      "nativeEvidenceRequired": "Use two independent connections to interleave a change after read; compare full relevant state atomically with delete."
+    },
+    {
+      "id": "restrict-integrity-and-side-effects",
+      "oracleCases": [
+        "delete-relation-restricts",
+        "delete-cascades-unavailable",
+        "delete-uncharacterized-effects",
+        "delete-view"
+      ],
+      "nativeEvidenceRequired": "Observe foreign keys, triggers and cascades; reject or explicitly delegate effects beyond the one-row profile."
+    },
+    {
+      "id": "partial-update-preservation",
+      "oracleCases": [
+        "update-demo-partial",
+        "update-demo-independent-change",
+        "update-demo-noop",
+        "update-demo-historical-omitted",
+        "update-demo-historical-resent"
+      ],
+      "nativeEvidenceRequired": "Preserve omitted columns in actual SQL; prove zero writes for no-op and independent concurrent modifications."
+    },
+    {
+      "id": "transaction-outcome",
+      "oracleCases": [
+        "create-precommit-rollback",
+        "delete-commit-rollback",
+        "update-commit-rollback",
+        "create-uncertain-0",
+        "create-uncertain-1",
+        "delete-uncertain-0",
+        "delete-uncertain-1",
+        "update-uncertain-0",
+        "update-uncertain-1",
+        "create-rollback-unproven"
+      ],
+      "nativeEvidenceRequired": "Inject persistence/commit/connection loss; record rollback evidence or unknown outcome without automatic retries."
+    },
+    {
+      "id": "publication-security",
+      "oracleCases": [
+        "create-new-hidden-column-not-published",
+        "delete-hidden-concurrent-change",
+        "create-postcommit-output-revoked",
+        "delete-postcommit-output-revoked"
+      ],
+      "nativeEvidenceRequired": "Filter results after commit; lost response authorization never implies effects were undone."
+    },
+    {
+      "id": "explicit-application-delegation",
+      "oracleCases": [
+        "delegated-specialized-delete",
+        "delegated-missing-handler",
+        "delegated-failure-effects-0",
+        "delegated-failure-effects-1",
+        "create-required-rule-unavailable"
+      ],
+      "nativeEvidenceRequired": "Exercise registered handlers and optional evaluators without imposing folders, libraries or inherited guarantees."
+    }
+  ]
+}
