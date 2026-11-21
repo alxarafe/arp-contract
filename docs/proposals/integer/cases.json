@@ -1,0 +1,253 @@
+{
+  "purpose": "Unapproved INTEGER proposal — structural vectors and pending semantic expectations",
+  "validDefinitions": [
+    {
+      "id": "auto_uint8",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "100"
+      },
+      "signed": false,
+      "bits": 8
+    },
+    {
+      "id": "auto_int8",
+      "constraints": {
+        "minimum": "-100",
+        "maximum": "100"
+      },
+      "signed": true,
+      "bits": 8
+    },
+    {
+      "id": "forced_uint16",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "100",
+        "bits": 16
+      },
+      "signed": false,
+      "bits": 16
+    },
+    {
+      "id": "forced_int16",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "100",
+        "bits": 16,
+        "signed": true
+      },
+      "signed": true,
+      "bits": 16
+    },
+    {
+      "id": "auto_int16",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "200",
+        "signed": true
+      },
+      "signed": true,
+      "bits": 16
+    },
+    {
+      "id": "auto_uint16",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "1000"
+      },
+      "signed": false,
+      "bits": 16
+    },
+    {
+      "id": "default_int32",
+      "constraints": {},
+      "signed": true,
+      "bits": 32
+    },
+    {
+      "id": "partial_uint32",
+      "constraints": {
+        "minimum": "0"
+      },
+      "signed": false,
+      "bits": 32
+    },
+    {
+      "id": "partial_int32",
+      "constraints": {
+        "maximum": "100"
+      },
+      "signed": true,
+      "bits": 32
+    },
+    {
+      "id": "uint64",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "18446744073709551615"
+      },
+      "signed": false,
+      "bits": 64
+    },
+    {
+      "id": "uint8_upper_edge",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "255"
+      },
+      "signed": false,
+      "bits": 8
+    },
+    {
+      "id": "uint16_after_edge",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "256"
+      },
+      "signed": false,
+      "bits": 16
+    },
+    {
+      "id": "int8_lower_edge",
+      "constraints": {
+        "minimum": "-128",
+        "maximum": "127"
+      },
+      "signed": true,
+      "bits": 8
+    },
+    {
+      "id": "int16_after_edge",
+      "constraints": {
+        "minimum": "-129",
+        "maximum": "127"
+      },
+      "signed": true,
+      "bits": 16
+    }
+  ],
+  "invalidDefinitions": [
+    {
+      "id": "unsigned_negative",
+      "constraints": {
+        "minimum": "-1",
+        "maximum": "100",
+        "signed": false
+      }
+    },
+    {
+      "id": "forced_too_narrow",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "1000",
+        "bits": 8
+      }
+    },
+    {
+      "id": "signed_too_narrow",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "200",
+        "bits": 8,
+        "signed": true
+      }
+    },
+    {
+      "id": "reversed",
+      "constraints": {
+        "minimum": "100",
+        "maximum": "0"
+      }
+    },
+    {
+      "id": "empty_exclusive",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "0",
+        "exclusiveMinimum": true
+      }
+    },
+    {
+      "id": "unsupported_bits",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "100",
+        "bits": 12
+      }
+    },
+    {
+      "id": "bits_as_text",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "100",
+        "bits": "16"
+      }
+    },
+    {
+      "id": "not_exact_decimal",
+      "constraints": {
+        "minimum": "0.0",
+        "maximum": "100"
+      }
+    },
+    {
+      "id": "numeric_minimum_node",
+      "constraints": {
+        "minimum": 0,
+        "maximum": "100"
+      }
+    },
+    {
+      "id": "overflow_unsigned64",
+      "constraints": {
+        "minimum": "0",
+        "maximum": "18446744073709551616"
+      }
+    },
+    {
+      "id": "overflow_signed64",
+      "constraints": {
+        "minimum": "-9223372036854775809",
+        "maximum": "0"
+      }
+    }
+  ],
+  "values": [
+    {
+      "definition": "auto_uint8",
+      "input": "0",
+      "valid": true
+    },
+    {
+      "definition": "auto_uint8",
+      "input": "100",
+      "valid": true
+    },
+    {
+      "definition": "auto_uint8",
+      "input": "101",
+      "valid": false
+    },
+    {
+      "definition": "forced_uint16",
+      "input": "101",
+      "valid": false
+    },
+    {
+      "definition": "auto_uint16",
+      "input": "101",
+      "valid": true
+    },
+    {
+      "definition": "uint64",
+      "input": "18446744073709551615",
+      "valid": true
+    },
+    {
+      "definition": "uint64",
+      "input": "18446744073709551616",
+      "valid": false
+    }
+  ]
+}

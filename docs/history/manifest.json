@@ -1,0 +1,156 @@
+{
+  "sourceRevision": "eb38cb96e6ccd218734df2a181908de46067e0c7",
+  "preservation": "Exact originals in Git; navigable copies genericize consumers and repair local links.",
+  "files": [
+    {
+      "originalPath": "README.md",
+      "originalSha256": "923e405d94284d7ef9bd28a94eb73ee025fc7f73b76e7fa13fe3ae8f6045f40c",
+      "archivePath": "docs/history/2026-11-20-pre-v1/README.md",
+      "archiveSha256": "3798ac768800a6fcfd9cb245f616500996671bd8cad099333a670c54ab278603"
+    },
+    {
+      "originalPath": "docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md",
+      "originalSha256": "58e0a6246c26921cb9d214cd92454038ff04f253e70e27b3c1a88092e90285bf",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md",
+      "archiveSha256": "61ae27da745414cc92ace7ddbadfaf3316ba263f9a71acd47148966d928df19f"
+    },
+    {
+      "originalPath": "docs/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
+      "originalSha256": "0b814fd44509144b83a2215af4176e05d1cbae4b472d5cb7482538eebaee0f89",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
+      "archiveSha256": "1895a185cc8ebe53fceed711f60a70fc00d526c146845d2e9a68e76cfdcc93d1"
+    },
+    {
+      "originalPath": "docs/ARP_reorientacion_arquitectura_funcional.md",
+      "originalSha256": "d1ee416f44251892282c4ae1b2ba3a63ae6e55f8d2e8d869555aed1104053dd3",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_reorientacion_arquitectura_funcional.md",
+      "archiveSha256": "8dbfd30340bfed97e1a7022e14c1426ab6d33a027e590fd9018f45f9919ac821"
+    },
+    {
+      "originalPath": "docs/architecture.md",
+      "originalSha256": "ff0514d487db347def83640afc6202bdb88223bb03ab069ffadf3b26eca90dc5",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/architecture.md",
+      "archiveSha256": "fb1dafddbb04285c820eb5a14888839b61b8eb86dd3cbaf8475678430bb641ba"
+    },
+    {
+      "originalPath": "docs/compatibility.md",
+      "originalSha256": "c03d92efba3b53b6842dcacd3a7855b0ff578b14cd3c444b5eb62a21ddfb399b",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/compatibility.md",
+      "archiveSha256": "26ffe3174b79de65a026c9e594efa807b9a8f5e6f21267561b90e8683233c68b"
+    },
+    {
+      "originalPath": "docs/decisions/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
+      "originalSha256": "86378d87972a0bffdae905595277bac934652c9e975fded36d3e9b5831bc197b",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/decisions/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
+      "archiveSha256": "3602fcf8ace9c2b054461c2269125b4a64fe690ead4b66a8a60c552ceb603a98"
+    },
+    {
+      "originalPath": "docs/decisions/ARP_reorientacion_arquitectura_funcional.md",
+      "originalSha256": "18a1c3e493e6e229fde4e082b8123f7d432434217f74f340596cd53dd895910e",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/decisions/ARP_reorientacion_arquitectura_funcional.md",
+      "archiveSha256": "8dbfd30340bfed97e1a7022e14c1426ab6d33a027e590fd9018f45f9919ac821"
+    },
+    {
+      "originalPath": "docs/dictionary-check-results.md",
+      "originalSha256": "be16d782e029725d66dc9cd78e7af0277452fb8f6f92bc6220d755b4de0380c5",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-check-results.md",
+      "archiveSha256": "e8762315cc4e07433b321dac3d3bd5cef5088b246f683355b55f78a9da21df36"
+    },
+    {
+      "originalPath": "docs/dictionary-checks.md",
+      "originalSha256": "cfcb84702b5f1f751e1f98d18c90e4a2826ae53e05c88c5f41fcf10816357008",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-checks.md",
+      "archiveSha256": "14c7a5ff39ca44c16ca327dddec309b16ed11e32c68e89a12fac709c7f289d41"
+    },
+    {
+      "originalPath": "docs/dictionary-portability-002.md",
+      "originalSha256": "991ab62abc0d47ac1874925a607122d01c5dde8612658e781d844868c19c2b77",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-portability-002.md",
+      "archiveSha256": "26e09b40fd2447aac3bd70541f1b5cfc6f526fb9885f0e0b9acfcb04c0d510c2"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-001-checks.md",
+      "originalSha256": "06363ee784ce598749d3ded1a39265cd30e7eaa947d495d6bf7e082f96485e0c",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-001-checks.md",
+      "archiveSha256": "c6169e441d7bb611b782336e3ed9403fd6ffaa3b87f6b9c3f04e2b240c566bd9"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-001-compatibility-and-historical-data.md",
+      "originalSha256": "5c04fafbe675aa1b9d0015d0dec605d3cfe0acb2eb02a78075b54e3c80c25d10",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-001-compatibility-and-historical-data.md",
+      "archiveSha256": "0b08db9b2ca79bcd94020c3a7712c5d9069d8418c97d72e1cdd10f497a703e9a"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-001.md",
+      "originalSha256": "eb87b2b41315a5cfd4f5b3c94b5275f13bf2f5f4c18c1e4c4eebbe16af6c5cd6",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-001.md",
+      "archiveSha256": "eb87b2b41315a5cfd4f5b3c94b5275f13bf2f5f4c18c1e4c4eebbe16af6c5cd6"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-listget-001.md",
+      "originalSha256": "953c60660e9a61a9fb696ef68ba1298a2d36a421c879e5295ec76af706963ea1",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-listget-001.md",
+      "archiveSha256": "332d53062f0fd24d4b2968c2bc81c433e61e7b73042df8e433a9a156148ed95f"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-phy-001-borrador.md",
+      "originalSha256": "1365809c74c804cbab3ff309650bb5cb02c3854ffd0c969c393e85e4f8fd7b71",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-phy-001-borrador.md",
+      "archiveSha256": "39fa6eefb9da1bcc231fe351e1a3a79b7594361a18de48c4dc7ea8f8f1edcff3"
+    },
+    {
+      "originalPath": "docs/features/arp-cds-read-001.md",
+      "originalSha256": "e55d3339c6747deb78867953a73e08b85342f9c3d68a57c61928ccb5235da2e6",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-read-001.md",
+      "archiveSha256": "e55d3339c6747deb78867953a73e08b85342f9c3d68a57c61928ccb5235da2e6"
+    },
+    {
+      "originalPath": "docs/features/arp-dict-001.md",
+      "originalSha256": "5b3100aacee7876c896d53122ed93e93e9b1b0e445c87a80a9ae88925699aef5",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-dict-001.md",
+      "archiveSha256": "0337e08cdfade6cc5f07ef5f85a5017c5c3c62fc6df144df21a8875d5c348a7d"
+    },
+    {
+      "originalPath": "docs/features/arp-menus-001.md",
+      "originalSha256": "140ac6a1399d0b1a14b95417c4422ca98cf527f51ec90b33922d96365dd60f24",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-menus-001.md",
+      "archiveSha256": "629e904e93e7bff82c8fee47e7d596d6613ecb4872666214b71745946eb8a046"
+    },
+    {
+      "originalPath": "docs/features/arp-modules-001.md",
+      "originalSha256": "7af5e24836bf076dd9e442e7db604a71be8bfb454572a621e2220773b36a8dc5",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-modules-001.md",
+      "archiveSha256": "db69948a45f1aaf6cc6f9adb639c08d1c4af3189a914e4238d316e682845a9ef"
+    },
+    {
+      "originalPath": "docs/features/arp-res-001-borrador-especificacion.md",
+      "originalSha256": "219510261b4fed0a5fc41ffa44823eb4e58115e9e673c3127fbde3c8e3fa7b74",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-res-001-borrador-especificacion.md",
+      "archiveSha256": "510873a1d81c2b5d9c6c5f7197fd8c37567179e16cc1cc4ebf683d09b6416270"
+    },
+    {
+      "originalPath": "docs/features/arp-services-001.md",
+      "originalSha256": "cc21f848397ad10c8d3d65b55ffa99b3d8a69db6e7c132ff4bedc726022dbe6e",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-services-001.md",
+      "archiveSha256": "f4ea270c3ffdc01e9f002661fe3b253064157ef68422aa1915ad51bff49e157d"
+    },
+    {
+      "originalPath": "docs/features/arp-services-002.md",
+      "originalSha256": "16d93bac26fbfabfbb3eb2416740e7c0e53808d4a67ff76f0d7762e52280d89a",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-services-002.md",
+      "archiveSha256": "603e852f9127d6933c16b64e986ffab8e51341b60030ee06220ac17b2a45e7e1"
+    },
+    {
+      "originalPath": "docs/release-process.md",
+      "originalSha256": "e9963ef18143164f73fe87a7c9e92cf49a93c489f0ac0f2a8b1fb613c3c7ba84",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/release-process.md",
+      "archiveSha256": "9e9342c53f1e3177a03d89bfcdcd8aee9487d07a020ab5d98c109f2d4a919d3b"
+    },
+    {
+      "originalPath": "docs/versioning.md",
+      "originalSha256": "d4ef4779ef5c5ac52ace2f7b41ca2b3fe2d75671bbc875d6b96a2d92bc6d813a",
+      "archivePath": "docs/history/2026-11-20-pre-v1/docs/versioning.md",
+      "archiveSha256": "3e1f7cc937a0df72e31c41a4467dadd5ee3654c4d3e4d54058d59840a7276ab0"
+    }
+  ]
+}
