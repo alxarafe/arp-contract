@@ -14,6 +14,14 @@ The target is to let applications combine a portable dictionary, logical structu
 
 The planned first contractual release, `v0.1.0`, is subject to release review of the ARP-DICT-001 design approved for implementation, its schemas and conformance fixtures. Until that release exists, examples of `v0.1.0` or `dictionary/v1` are illustrative, not supported-version claims.
 
+## Revisión del borrador 1.0
+
+El [borrador funcional](docs/contract-v1-draft.md) y la [propuesta de diccionario](docs/dictionary.md)
+están pendientes de aprobación. `INTEGER` es un cambio incompatible aislado del esquema vigente.
+La [revisión de cambios](docs/review-contract-v1.md) separa documentación y contrato.
+El [archivo documental](docs/history/README.md) conserva estados, decisiones y evidencias anteriores;
+los enlaces históricos siguen disponibles. No se publica ninguna versión por esta revisión.
+
 ## Sources of truth
 
 | Concern | Authoritative location |
@@ -63,9 +71,9 @@ table, with 88 shared product vectors, active catalog/reports projections, a SER
 an adapter responsibility boundary. It remains subject to review; it does not implement SQL, HTTP, permissions
 or native runtime conformance. The original 74 vectors are preserved; the verifier also covers modular activation.
 
-## Previously published Erbas contracts
+## Previously published consumer contracts
 
-Existing `erbas-contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.
+Existing `previous consumer contract` releases are historical inputs, not implicitly republished by ARP. No existing tag is changed. Where a prior definition is reused, the new ARP specification must state exactly what is reused, modified, or replaced. During pre-production development, incompatible changes may be accepted using the policy in [`docs/versioning.md`](docs/versioning.md); there is no assumed obligation to maintain obsolete adapters.
 
 ## Contributing
 
