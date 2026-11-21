@@ -12,19 +12,19 @@
       "originalPath": "docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md",
       "originalSha256": "58e0a6246c26921cb9d214cd92454038ff04f253e70e27b3c1a88092e90285bf",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md",
-      "archiveSha256": "4554f84812ef8c5e10ba2fc3866dbb44dad384dcfccc5696eb01e6b64dff1911"
+      "archiveSha256": "61ae27da745414cc92ace7ddbadfaf3316ba263f9a71acd47148966d928df19f"
     },
     {
       "originalPath": "docs/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
       "originalSha256": "0b814fd44509144b83a2215af4176e05d1cbae4b472d5cb7482538eebaee0f89",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_CDS_modelo_semantico_primera_integracion_Angular.md",
-      "archiveSha256": "0b814fd44509144b83a2215af4176e05d1cbae4b472d5cb7482538eebaee0f89"
+      "archiveSha256": "1895a185cc8ebe53fceed711f60a70fc00d526c146845d2e9a68e76cfdcc93d1"
     },
     {
       "originalPath": "docs/ARP_reorientacion_arquitectura_funcional.md",
       "originalSha256": "d1ee416f44251892282c4ae1b2ba3a63ae6e55f8d2e8d869555aed1104053dd3",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/ARP_reorientacion_arquitectura_funcional.md",
-      "archiveSha256": "b56ebf900398189f610227bdfadd16756744fa38fb778cde7532d8deeae9c94f"
+      "archiveSha256": "8dbfd30340bfed97e1a7022e14c1426ab6d33a027e590fd9018f45f9919ac821"
     },
     {
       "originalPath": "docs/architecture.md",
@@ -54,25 +54,25 @@
       "originalPath": "docs/dictionary-check-results.md",
       "originalSha256": "be16d782e029725d66dc9cd78e7af0277452fb8f6f92bc6220d755b4de0380c5",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-check-results.md",
-      "archiveSha256": "be16d782e029725d66dc9cd78e7af0277452fb8f6f92bc6220d755b4de0380c5"
+      "archiveSha256": "e8762315cc4e07433b321dac3d3bd5cef5088b246f683355b55f78a9da21df36"
     },
     {
       "originalPath": "docs/dictionary-checks.md",
       "originalSha256": "cfcb84702b5f1f751e1f98d18c90e4a2826ae53e05c88c5f41fcf10816357008",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-checks.md",
-      "archiveSha256": "cfcb84702b5f1f751e1f98d18c90e4a2826ae53e05c88c5f41fcf10816357008"
+      "archiveSha256": "14c7a5ff39ca44c16ca327dddec309b16ed11e32c68e89a12fac709c7f289d41"
     },
     {
       "originalPath": "docs/dictionary-portability-002.md",
       "originalSha256": "991ab62abc0d47ac1874925a607122d01c5dde8612658e781d844868c19c2b77",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/dictionary-portability-002.md",
-      "archiveSha256": "991ab62abc0d47ac1874925a607122d01c5dde8612658e781d844868c19c2b77"
+      "archiveSha256": "26e09b40fd2447aac3bd70541f1b5cfc6f526fb9885f0e0b9acfcb04c0d510c2"
     },
     {
       "originalPath": "docs/features/arp-cds-001-checks.md",
       "originalSha256": "06363ee784ce598749d3ded1a39265cd30e7eaa947d495d6bf7e082f96485e0c",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-cds-001-checks.md",
-      "archiveSha256": "06363ee784ce598749d3ded1a39265cd30e7eaa947d495d6bf7e082f96485e0c"
+      "archiveSha256": "c6169e441d7bb611b782336e3ed9403fd6ffaa3b87f6b9c3f04e2b240c566bd9"
     },
     {
       "originalPath": "docs/features/arp-cds-001-compatibility-and-historical-data.md",
@@ -126,13 +126,13 @@
       "originalPath": "docs/features/arp-res-001-borrador-especificacion.md",
       "originalSha256": "219510261b4fed0a5fc41ffa44823eb4e58115e9e673c3127fbde3c8e3fa7b74",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-res-001-borrador-especificacion.md",
-      "archiveSha256": "219510261b4fed0a5fc41ffa44823eb4e58115e9e673c3127fbde3c8e3fa7b74"
+      "archiveSha256": "510873a1d81c2b5d9c6c5f7197fd8c37567179e16cc1cc4ebf683d09b6416270"
     },
     {
       "originalPath": "docs/features/arp-services-001.md",
       "originalSha256": "cc21f848397ad10c8d3d65b55ffa99b3d8a69db6e7c132ff4bedc726022dbe6e",
       "archivePath": "docs/history/2026-11-20-pre-v1/docs/features/arp-services-001.md",
-      "archiveSha256": "cc21f848397ad10c8d3d65b55ffa99b3d8a69db6e7c132ff4bedc726022dbe6e"
+      "archiveSha256": "f4ea270c3ffdc01e9f002661fe3b253064157ef68422aa1915ad51bff49e157d"
     },
     {
       "originalPath": "docs/features/arp-services-002.md",

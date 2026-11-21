@@ -1,8 +1,8 @@
 # ARP — Modelo semántico y primera integración con Angular
 
-**Fecha:** 15 de noviembre de 2026  
-**Estado:** Documento de trabajo para revisión y cierre punto por punto.  
-**Relación:** Desarrollo parcial del objetivo descrito en `ARP_reorientacion_arquitectura_funcional.md`.  
+**Fecha:** 15 de noviembre de 2026
+**Estado:** Documento de trabajo para revisión y cierre punto por punto.
+**Relación:** Desarrollo parcial del objetivo descrito en `ARP_reorientacion_arquitectura_funcional.md`.
 **Versionado:** No se asigna versión 0.1, ni se declara completo el MVP de ARP.
 
 ## 1. Propósito y alcance

@@ -1,6 +1,6 @@
 # ARP — Recuperación del objetivo y arquitectura funcional
 
-**Fecha:** 15 de noviembre de 2026  
+**Fecha:** 15 de noviembre de 2026
 **Estado:** Documento de análisis y propuesta; pendiente de contraste con la especificación original y el código existente.
 
 ## Diagnóstico

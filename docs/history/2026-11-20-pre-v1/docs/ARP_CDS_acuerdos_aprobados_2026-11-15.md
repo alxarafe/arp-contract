@@ -1,9 +1,9 @@
 # ARP — Modelo semántico (CDS) y primera integración con Angular
 
-**Fecha de consolidación:** 15 de noviembre de 2026  
-**Estado:** Acuerdos funcionales cerrados para iniciar su especificación contractual e implementación; los detalles técnicos identificados como pendientes no se presuponen aprobados.  
-**Documento rector de visión:** [`ARP_reorientacion_arquitectura_funcional.md`](./ARP_reorientacion_arquitectura_funcional.md).  
-**Relación con los contratos:** `arp-contract` será la fuente normativa de los nuevos formatos, semánticas y pruebas una vez especificados y aprobados; este documento recoge **decisiones de producto**, no publica por sí solo un contrato de ejecución.  
+**Fecha de consolidación:** 15 de noviembre de 2026
+**Estado:** Acuerdos funcionales cerrados para iniciar su especificación contractual e implementación; los detalles técnicos identificados como pendientes no se presuponen aprobados.
+**Documento rector de visión:** [`ARP_reorientacion_arquitectura_funcional.md`](./ARP_reorientacion_arquitectura_funcional.md).
+**Relación con los contratos:** `arp-contract` será la fuente normativa de los nuevos formatos, semánticas y pruebas una vez especificados y aprobados; este documento recoge **decisiones de producto**, no publica por sí solo un contrato de ejecución.
 **Versionado:** No se declara `v0.1`, no se publica versión y no se considera terminado el MVP global.
 
 ## 1. Propósito y alcance del tramo
