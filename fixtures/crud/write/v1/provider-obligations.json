@@ -41,9 +41,9 @@
         "create-duplicate-key",
         "create-constraint-rejected",
         "create-postgresql",
-        "delete-pending-integer"
+        "delete-legacy-type-rejected"
       ],
-      "nativeEvidenceRequired": "Use parameterized values, real PK uniqueness and actual physical constraints; keep existing scalar identifiers."
+      "nativeEvidenceRequired": "Use parameterized values, real PK uniqueness and actual physical constraints; use INTEGER with resolved capacity and exact decimal strings."
     },
     {
       "id": "complete-read-bound-delete-precondition",

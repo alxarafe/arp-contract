@@ -28,7 +28,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -72,7 +72,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -130,7 +130,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1084,7 +1084,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1140,7 +1140,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "2147483647"
                 }
               ]
@@ -1352,7 +1352,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1507,7 +1507,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1568,7 +1568,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1675,7 +1675,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "8"
                 }
               ]
@@ -1719,7 +1719,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1758,7 +1758,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1799,7 +1799,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1840,7 +1840,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1887,7 +1887,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1931,7 +1931,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1979,7 +1979,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2026,7 +2026,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2047,7 +2047,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2102,7 +2102,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2123,7 +2123,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2178,7 +2178,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2199,7 +2199,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2254,7 +2254,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2275,7 +2275,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2329,7 +2329,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2350,7 +2350,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2401,7 +2401,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2452,7 +2452,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2489,7 +2489,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2537,7 +2537,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2582,7 +2582,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2635,7 +2635,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2700,7 +2700,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2728,7 +2728,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2775,7 +2775,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2808,7 +2808,7 @@
                 "components": [
                   {
                     "field": "id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   }
                 ]
@@ -2855,7 +2855,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2904,7 +2904,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -2953,7 +2953,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3002,7 +3002,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3051,7 +3051,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3100,7 +3100,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3149,7 +3149,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3198,7 +3198,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3247,7 +3247,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3296,7 +3296,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3345,7 +3345,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3409,7 +3409,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "7"
                 }
               ]
@@ -3455,7 +3455,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3522,7 +3522,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "7"
                 }
               ]
@@ -3576,7 +3576,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": 7
               }
             ]
@@ -3614,7 +3614,7 @@
       }
     },
     {
-      "id": "delete-pending-integer",
+      "id": "delete-legacy-type-rejected",
       "request": {
         "target": "demo.items",
         "operation": "DELETE",
@@ -3623,7 +3623,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INTEGER",
+                "type": "INT32",
                 "value": "7"
               }
             ]
@@ -3849,7 +3849,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3898,7 +3898,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3947,7 +3947,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -3997,7 +3997,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4041,7 +4041,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4093,7 +4093,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4145,7 +4145,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4198,7 +4198,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4295,7 +4295,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4345,7 +4345,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4403,7 +4403,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4451,7 +4451,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4509,7 +4509,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4567,7 +4567,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4617,7 +4617,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4663,7 +4663,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4709,7 +4709,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4758,7 +4758,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4903,7 +4903,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -4946,7 +4946,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5001,7 +5001,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5077,7 +5077,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "0"
                 }
               ]
@@ -5119,7 +5119,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5351,7 +5351,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5399,7 +5399,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5445,7 +5445,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5476,7 +5476,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "7"
                 }
               ]
@@ -5533,7 +5533,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5564,7 +5564,7 @@
               "components": [
                 {
                   "field": "id",
-                  "type": "INT32",
+                  "type": "INTEGER",
                   "value": "7"
                 }
               ]
@@ -5625,7 +5625,7 @@
             "components": [
               {
                 "field": "id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -5685,6 +5685,547 @@
               "id": "7",
               "code": "A-007",
               "rating": "7"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-valid-uint64",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "18446744073709551614",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "5"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "created": true,
+            "key": {
+              "components": [
+                {
+                  "field": "id",
+                  "type": "INTEGER",
+                  "value": "18446744073709551614"
+                }
+              ]
+            }
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "18446744073709551615",
+              "code": "A-007",
+              "rating": "5"
+            },
+            {
+              "id": "18446744073709551614",
+              "code": "A-008",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [
+            "code",
+            "id",
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "update-demo-partial-uint64",
+      "request": {
+        "target": "demo.items",
+        "operation": "UPDATE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          },
+          "changes": {
+            "rating": "6"
+          },
+          "baseline": {
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "5"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "changed": true
+          }
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "18446744073709551615",
+              "code": "A-007",
+              "rating": "6"
+            }
+          ],
+          "writtenFields": [
+            "rating"
+          ],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-valid-uint64",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "5"
+          }
+        ],
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INTEGER",
+                    "value": "18446744073709551615"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "deleted": true
+          }
+        },
+        "observed": {
+          "persisted": [],
+          "writtenFields": [],
+          "writes": 1,
+          "effects": 1,
+          "dispatches": 0,
+          "certainty": "committed"
+        }
+      }
+    },
+    {
+      "id": "delete-stale-precondition-uint64",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INTEGER",
+                    "value": "18446744073709551615"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "4"
+            },
+            "active": true
+          }
+        },
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "5"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE"
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "18446744073709551615",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "create-uint64-overflow",
+      "request": {
+        "target": "demo.items",
+        "operation": "CREATE",
+        "inputs": {
+          "values": {
+            "id": "18446744073709551616",
+            "code": "A-008",
+            "rating": "5"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "INVALID_VALUE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "7",
+              "code": "A-007",
+              "rating": "5"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-uint64-adjacent-state-conflict",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INTEGER",
+                    "value": "18446744073709551615"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "18446744073709551614"
+            },
+            "active": true
+          }
+        },
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          },
+          "rating": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "18446744073709551615"
+          }
+        ]
+      },
+      "expected": {
+        "response": {
+          "status": "conflict",
+          "diagnostics": [],
+          "conflictCode": "CONCURRENT_CHANGE"
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "18446744073709551615",
+              "code": "A-007",
+              "rating": "18446744073709551615"
+            }
+          ],
+          "writtenFields": [],
+          "writes": 0,
+          "effects": 0,
+          "dispatches": 0,
+          "certainty": "not-started"
+        }
+      }
+    },
+    {
+      "id": "delete-uint64-adjacent-key-binding-rejected",
+      "request": {
+        "target": "demo.items",
+        "operation": "DELETE",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          },
+          "precondition": {
+            "reference": "delete-read-7"
+          }
+        }
+      },
+      "host": {
+        "columnOverrides": {
+          "id": {
+            "integerRange": {
+              "minimum": "0",
+              "maximum": "18446744073709551615"
+            }
+          }
+        },
+        "rows": [
+          {
+            "id": "18446744073709551615",
+            "code": "A-007",
+            "rating": "5"
+          }
+        ],
+        "preconditions": {
+          "delete-read-7": {
+            "binding": {
+              "purpose": "DELETE",
+              "target": "demo.items",
+              "projection": "demo.items.public",
+              "key": {
+                "components": [
+                  {
+                    "field": "id",
+                    "type": "INTEGER",
+                    "value": "18446744073709551614"
+                  }
+                ]
+              },
+              "context": {
+                "scope": "demo"
+              },
+              "generation": "g1",
+              "accessRevision": "p1"
+            },
+            "state": {
+              "code": "A-007",
+              "rating": "5"
+            },
+            "active": true
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "operation-not-allowed",
+              "code": "UNAVAILABLE"
+            }
+          ]
+        },
+        "observed": {
+          "persisted": [
+            {
+              "id": "18446744073709551615",
+              "code": "A-007",
+              "rating": "5"
             }
           ],
           "writtenFields": [],

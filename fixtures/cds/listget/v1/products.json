@@ -7,11 +7,19 @@
     "elements": [
       {
         "id": "products.tenant_id",
-        "type": "INT32"
+        "type": "INTEGER",
+        "constraints": {
+          "bits": 32,
+          "signed": true
+        }
       },
       {
         "id": "products.product_id",
-        "type": "INT64"
+        "type": "INTEGER",
+        "constraints": {
+          "bits": 64,
+          "signed": true
+        }
       },
       {
         "id": "products.sku",
@@ -27,7 +35,11 @@
       },
       {
         "id": "products.rating",
-        "type": "INT16"
+        "type": "INTEGER",
+        "constraints": {
+          "bits": 16,
+          "signed": true
+        }
       },
       {
         "id": "products.description",
@@ -48,6 +60,14 @@
       {
         "id": "products.internal_note",
         "type": "TEXT"
+      },
+      {
+        "id": "products.unsigned_id",
+        "type": "INTEGER",
+        "constraints": {
+          "bits": 64,
+          "signed": false
+        }
       }
     ]
   },
@@ -70,16 +90,24 @@
               {
                 "name": "tenant_id",
                 "nativeType": "int32",
-                "scalarType": "INT32",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-2147483648",
+                  "maximum": "2147483647"
+                }
               },
               {
                 "name": "product_id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 2
+                "ordinal": 2,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "sku",
@@ -105,9 +133,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 6
+                "ordinal": 6,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               },
               {
                 "name": "description",
@@ -368,16 +400,24 @@
               {
                 "name": "tenant_id",
                 "nativeType": "int32",
-                "scalarType": "INT32",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-2147483648",
+                  "maximum": "2147483647"
+                }
               },
               {
                 "name": "product_id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 2
+                "ordinal": 2,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "sku",
@@ -403,9 +443,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 6
+                "ordinal": 6,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               },
               {
                 "name": "description",
@@ -643,6 +687,251 @@
             "released": "2026-01-01",
             "cost": "700",
             "internal_note": "No divulgar"
+          }
+        }
+      ]
+    },
+    "unsigned64": {
+      "definitions": {
+        "physical": {
+          "observed": {
+            "apiVersion": "arp.physical/v1",
+            "id": "storage.products",
+            "kind": "table",
+            "source": {
+              "provider": "commercial-db",
+              "dialect": "postgresql",
+              "schema": "commerce",
+              "name": "products",
+              "engineVersion": "fixture-observation-not-real-db"
+            },
+            "columns": [
+              {
+                "name": "tenant_id",
+                "nativeType": "int32",
+                "scalarType": "INTEGER",
+                "nullable": false,
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-2147483648",
+                  "maximum": "2147483647"
+                }
+              },
+              {
+                "name": "product_id",
+                "nativeType": "verified synthetic unsigned 64",
+                "scalarType": "INTEGER",
+                "nullable": false,
+                "ordinal": 2,
+                "integerRange": {
+                  "minimum": "0",
+                  "maximum": "18446744073709551615"
+                }
+              },
+              {
+                "name": "sku",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 3
+              },
+              {
+                "name": "name",
+                "nativeType": "string",
+                "scalarType": "STRING",
+                "nullable": false,
+                "ordinal": 4
+              },
+              {
+                "name": "price",
+                "nativeType": "decimal",
+                "scalarType": "DECIMAL",
+                "nullable": false,
+                "ordinal": 5
+              },
+              {
+                "name": "rating",
+                "nativeType": "int16",
+                "scalarType": "INTEGER",
+                "nullable": false,
+                "ordinal": 6,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
+              },
+              {
+                "name": "description",
+                "nativeType": "text",
+                "scalarType": "TEXT",
+                "nullable": true,
+                "ordinal": 7
+              },
+              {
+                "name": "available",
+                "nativeType": "boolean",
+                "scalarType": "BOOLEAN",
+                "nullable": false,
+                "ordinal": 8
+              },
+              {
+                "name": "released",
+                "nativeType": "date",
+                "scalarType": "DATE",
+                "nullable": false,
+                "ordinal": 9
+              },
+              {
+                "name": "cost",
+                "nativeType": "decimal",
+                "scalarType": "DECIMAL",
+                "nullable": false,
+                "ordinal": 10
+              },
+              {
+                "name": "internal_note",
+                "nativeType": "text",
+                "scalarType": "TEXT",
+                "nullable": true,
+                "ordinal": 11
+              }
+            ],
+            "primaryKey": [
+              "product_id"
+            ]
+          }
+        },
+        "logical": {
+          "authored": {
+            "apiVersion": "arp.logical/v1",
+            "id": "commerce.products",
+            "physical": "storage.products",
+            "fields": {
+              "tenant_id": {
+                "dictionary": "products.tenant_id"
+              },
+              "product_id": {
+                "dictionary": "products.unsigned_id"
+              },
+              "sku": {
+                "dictionary": "products.sku"
+              },
+              "name": {
+                "dictionary": "products.name"
+              },
+              "price": {
+                "dictionary": "products.price"
+              },
+              "rating": {
+                "dictionary": "products.rating",
+                "constraints": {
+                  "minimum": "0",
+                  "maximum": "10"
+                }
+              },
+              "description": {
+                "dictionary": "products.description"
+              },
+              "available": {
+                "dictionary": "products.available"
+              },
+              "released": {
+                "dictionary": "products.released"
+              },
+              "cost": {
+                "dictionary": "products.cost"
+              },
+              "internal_note": {
+                "dictionary": "products.internal_note"
+              }
+            }
+          }
+        },
+        "projections": {
+          "catalog": {
+            "apiVersion": "arp.projection/v1",
+            "id": "products.catalog",
+            "source": {
+              "entity": "commerce.products"
+            },
+            "fields": [
+              "sku",
+              "name",
+              "price",
+              "rating",
+              "description",
+              "available",
+              "released"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "identified": {
+            "apiVersion": "arp.projection/v1",
+            "id": "products.identified",
+            "source": {
+              "entity": "commerce.products"
+            },
+            "fields": [
+              "tenant_id",
+              "product_id",
+              "sku",
+              "name"
+            ],
+            "operations": [
+              "LIST",
+              "GET"
+            ]
+          },
+          "summary": {
+            "apiVersion": "arp.projection/v1",
+            "id": "products.summary",
+            "source": {
+              "projection": "products.catalog"
+            },
+            "fields": [
+              "sku",
+              "name"
+            ],
+            "operations": [
+              "LIST"
+            ]
+          }
+        }
+      },
+      "rows": [
+        {
+          "id": "p1",
+          "values": {
+            "tenant_id": "7",
+            "product_id": "18446744073709551615",
+            "sku": "CAF-250",
+            "name": "Café de Colombia 250 g",
+            "price": "7.95",
+            "rating": "8",
+            "description": null,
+            "available": true,
+            "released": "2025-02-01",
+            "cost": "4.123456789",
+            "internal_note": "Acuerdo proveedor A"
+          }
+        },
+        {
+          "id": "p2",
+          "values": {
+            "tenant_id": "7",
+            "product_id": "18446744073709551614",
+            "sku": "ACE-1L",
+            "name": "Aceite de oliva virgen extra 1 L",
+            "price": "12.5",
+            "rating": "9",
+            "description": "Primera extracción",
+            "available": true,
+            "released": "2025-03-15",
+            "cost": "8.02",
+            "internal_note": "Margen reservado"
           }
         }
       ]

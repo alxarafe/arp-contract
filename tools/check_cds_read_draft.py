@@ -12,7 +12,8 @@ import re
 
 from referencing import Registry, Resource
 
-from check_cds_draft import INTEGER_RANGES
+import integer_semantics as integers
+from check_cds_draft import physical_integer_domain
 from check_contract import contract_validator, descriptor_projection, load as load_json
 from source_profile import IntakeInvalid, IntakeLimit, parse_bytes
 
@@ -57,9 +58,7 @@ def bound(value, at):
 
 
 def interval_only(constraints):
-    return (set(constraints) <= {'minimum', 'maximum'}
-            and all(isinstance(value, str) and len(value) <= 4096 and INTEGER.fullmatch(value)
-                    for value in constraints.values()))
+    return integers.interval_only(constraints)
 
 
 def physical_check(doc, at):
@@ -77,9 +76,9 @@ def physical_check(doc, at):
                   for key in ('minimum', 'maximum') if key in extent}
         if 'minimum' in values and 'maximum' in values:
             require(values['minimum'] <= values['maximum'], 'CDS_READ_PHYSICAL_INVALID', point)
-        if col.get('scalarType') in INTEGER_RANGES:
-            lo, hi = INTEGER_RANGES[col['scalarType']]
-            require(all(lo <= value <= hi for value in values.values()), 'CDS_READ_PHYSICAL_INVALID', point)
+        if col.get('scalarType') == 'INTEGER':
+            require(all(-(1 << 63) <= value <= (1 << 64) - 1 for value in values.values()),
+                    'CDS_READ_PHYSICAL_INVALID', point)
         geometry = col.get('decimalGeometry')
         if geometry:
             require(geometry['scale'] <= geometry['precision'], 'CDS_READ_PHYSICAL_INVALID', point)
@@ -107,28 +106,31 @@ def field(column, overlay, dictionary, at):
         result['dictionary'] = identity
         if 'enumValues' in element:
             result['enumValues'] = deepcopy(element['enumValues'])
-    elif dtype in INTEGER_RANGES:
-        # Without a logical binding, the base model is the observed physical domain itself.
-        # This is not clipping an independently authored dictionary domain to make it fit.
-        lo, hi = INTEGER_RANGES[dtype]
-        for key, value in column.get('integerRange', {}).items():
-            number = int(value)
-            if number != (lo if key == 'minimum' else hi):
-                intrinsic[key] = str(number)
+    elif dtype == 'INTEGER':
+        extent = physical_integer_domain(column)
+        if extent is not None and all(value is not None for value in extent):
+            intrinsic = dict(zip(('minimum', 'maximum'), map(str, extent)))
+        else:
+            # Scalar name alone carries no observed capacity. Do not invent one.
+            dtype = None
     if dtype is not None:
         result.update(type=dtype, intrinsicConstraints=intrinsic, constraints=deepcopy(intrinsic))
     contextual = overlay.get('constraints', {})
     if 'constraints' in overlay:
         result['contextualConstraints'] = deepcopy(contextual)
     if contextual:
-        require(dtype in INTEGER_RANGES and interval_only(intrinsic),
+        require(dtype == 'INTEGER' and interval_only(intrinsic),
                 'CDS_READ_PROFILE_UNSUPPORTED', at + '/constraints')
         require(set(contextual) <= {'minimum', 'maximum'},
                 'CDS_READ_PROFILE_UNSUPPORTED', at + '/constraints')
-    if dtype in INTEGER_RANGES and interval_only(intrinsic):
-        lo, hi = INTEGER_RANGES[dtype]
-        lo = max(lo, int(intrinsic.get('minimum', lo)))
-        hi = min(hi, int(intrinsic.get('maximum', hi)))
+    if dtype == 'INTEGER':
+        try:
+            definition = integers.derive(intrinsic)
+        except integers.IntegerInvalid:
+            raise Rejected('CDS_READ_CONSTRAINT_CONTRADICTION', at + '/constraints') from None
+        # Freeze capacity before applying contextual restrictions: narrowing never reinfers it.
+        result['constraints'].update(bits=definition.bits, signed=definition.signed)
+        lo, hi = definition.effective_min, definition.effective_max
         for key in ('minimum', 'maximum'):
             if key not in contextual:
                 continue
@@ -141,15 +143,17 @@ def field(column, overlay, dictionary, at):
                 hi = value
             result['constraints'][key] = str(value)
         require(lo <= hi, 'CDS_READ_CONSTRAINT_CONTRADICTION', at + '/constraints')
-        ptype = column.get('scalarType')
-        if ptype in INTEGER_RANGES:
-            plo, phi = INTEGER_RANGES[ptype]
-            extent = column.get('integerRange', {})
-            plo = max(plo, int(extent.get('minimum', plo)))
-            phi = min(phi, int(extent.get('maximum', phi)))
-            require(plo <= lo and hi <= phi, 'CDS_READ_DOMAIN_NOT_REPRESENTABLE', at,
+        # Materialize effective inclusive interval; intrinsic constraints remain available separately.
+        result['constraints'].update(minimum=str(lo), maximum=str(hi))
+        result['constraints'].pop('exclusiveMinimum', None)
+        result['constraints'].pop('exclusiveMaximum', None)
+        extent = physical_integer_domain(column)
+        if extent is not None and interval_only(intrinsic):
+            plo, phi = extent
+            require((plo is None or plo <= lo) and (phi is None or hi <= phi), 'CDS_READ_DOMAIN_NOT_REPRESENTABLE', at,
                     'physical-incompatible')
-            result['compatibility'] = 'compatible'
+            if plo is not None and phi is not None:
+                result['compatibility'] = 'compatible'
     for key in ('label', 'description', 'hint'):
         if key in overlay:
             result[key] = overlay[key]
@@ -229,7 +233,7 @@ def _resolve(bundle, dictionary):
 
 def load_dictionary(path):
     doc = parse_bytes((ROOT / path).read_bytes(), 'yaml' if path.endswith('.yaml') else 'json')
-    # Fixture inputs must already satisfy DICT-001, whose semantic authority is unchanged.
+    # Validate INTEGER semantics as well as structure before exposing descriptors.
     contract_validator(json.loads((ROOT / 'schemas/dictionary/v1/dictionary.schema.json').read_text())).validate(doc)
     return {element['id']: descriptor_projection(element) for element in doc['elements']}
 

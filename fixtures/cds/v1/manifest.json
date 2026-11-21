@@ -41,7 +41,10 @@
           "id",
           "code"
         ],
-        "ratingType": "INT16"
+        "ratingRange": {
+          "minimum": "-32768",
+          "maximum": "32767"
+        }
       }
     },
     {
@@ -62,7 +65,10 @@
           "id",
           "code"
         ],
-        "ratingType": "INT8"
+        "ratingRange": {
+          "minimum": "-128",
+          "maximum": "127"
+        }
       }
     },
     {

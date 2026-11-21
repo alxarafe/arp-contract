@@ -44,19 +44,21 @@ class ListGetDraftTests(unittest.TestCase):
         simple = self.run_case('get-simple-typed-key')['response']['output']['record']
         composite = self.run_case('get-composite-typed-key')['response']['output']['record']
         self.assertEqual(simple['key']['components'], [
-            {'field': 'product_id', 'type': 'INT64', 'value': '9007199254740993'}])
+            {'field': 'product_id', 'type': 'INTEGER', 'value': '9007199254740993'}])
         self.assertEqual([x['field'] for x in composite['key']['components']], ['tenant_id', 'product_id'])
         self.assertEqual([x['value'] for x in composite['key']['components']], ['7', '10'])
 
     def test_identity_integer_codec_does_not_coerce_round_or_wrap(self):
-        self.assertEqual(c.integer('-0', 'INT64'), 0)
-        self.assertEqual(c.integer('9223372036854775807', 'INT64'), 9223372036854775807)
-        self.assertNotEqual(c.integer('9007199254740993', 'INT64'), c.integer('9007199254740994', 'INT64'))
+        self.assertEqual(c.integer('-0', {'bits': 64, 'signed': True}), 0)
+        self.assertEqual(c.integer('9223372036854775807', {'bits': 64, 'signed': True}), 9223372036854775807)
+        self.assertNotEqual(c.integer('9007199254740993', {'bits': 64, 'signed': True}),
+                            c.integer('9007199254740994', {'bits': 64, 'signed': True}))
         for value in (True, 2, '02', '+2', '2.0', '2e0', ' 2', '9223372036854775808'):
             with self.subTest(value=value), self.assertRaises(c.InvalidKey):
-                c.integer(value, 'INT64')
+                c.integer(value, {'bits': 64, 'signed': True})
+        self.assertEqual(c.integer('-0', {'bits': 32, 'signed': False}), 0)
         with self.assertRaises(c.InvalidKey):
-            c.integer('-0', 'UINT32')
+            c.integer('-1', {'bits': 32, 'signed': False})
 
     def test_hidden_key_is_not_a_public_field_or_partial_key(self):
         result = self.run_case('get-authorized-hidden-key')['response']['output']['record']

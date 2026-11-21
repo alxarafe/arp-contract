@@ -620,16 +620,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "sku",
@@ -655,9 +663,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -815,7 +827,7 @@
             "components": [
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "9007199254740993"
               }
             ]
@@ -833,7 +845,7 @@
                 "components": [
                   {
                     "field": "product_id",
-                    "type": "INT64",
+                    "type": "INTEGER",
                     "value": "9007199254740993"
                   }
                 ]
@@ -870,12 +882,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "10"
               }
             ]
@@ -893,12 +905,12 @@
                 "components": [
                   {
                     "field": "tenant_id",
-                    "type": "INT32",
+                    "type": "INTEGER",
                     "value": "7"
                   },
                   {
                     "field": "product_id",
-                    "type": "INT64",
+                    "type": "INTEGER",
                     "value": "10"
                   }
                 ]
@@ -935,12 +947,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "123"
               }
             ]
@@ -976,12 +988,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "2"
               }
             ]
@@ -1046,7 +1058,7 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1084,12 +1096,12 @@
             "components": [
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "2"
               },
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               }
             ]
@@ -1127,12 +1139,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "2"
               }
             ],
@@ -1171,12 +1183,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": 2
               }
             ]
@@ -1214,12 +1226,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "STRING",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "2"
               }
             ]
@@ -1257,12 +1269,12 @@
             "components": [
               {
                 "field": "tenant_id",
-                "type": "INT32",
+                "type": "INTEGER",
                 "value": "7"
               },
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "9223372036854775808"
               }
             ]
@@ -1649,7 +1661,7 @@
                   "components": [
                     {
                       "field": "product_id",
-                      "type": "INT64",
+                      "type": "INTEGER",
                       "value": "2"
                     }
                   ]
@@ -1666,7 +1678,7 @@
                   "components": [
                     {
                       "field": "product_id",
-                      "type": "INT64",
+                      "type": "INTEGER",
                       "value": "10"
                     }
                   ]
@@ -2578,16 +2590,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "sku",
@@ -2613,9 +2633,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -2800,16 +2824,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "sku",
@@ -2835,9 +2867,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -3026,16 +3062,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "sku",
@@ -3061,9 +3105,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -3253,16 +3301,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "sku",
@@ -3288,9 +3344,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -3984,16 +4044,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "sku",
@@ -4019,9 +4087,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -4237,16 +4309,24 @@
                 {
                   "name": "tenant_id",
                   "nativeType": "int32",
-                  "scalarType": "INT32",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 1
+                  "ordinal": 1,
+                  "integerRange": {
+                    "minimum": "-2147483648",
+                    "maximum": "2147483647"
+                  }
                 },
                 {
                   "name": "product_id",
                   "nativeType": "int64",
-                  "scalarType": "INT64",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 2
+                  "ordinal": 2,
+                  "integerRange": {
+                    "minimum": "-9223372036854775808",
+                    "maximum": "9223372036854775807"
+                  }
                 },
                 {
                   "name": "name",
@@ -4265,9 +4345,13 @@
                 {
                   "name": "rating",
                   "nativeType": "int16",
-                  "scalarType": "INT16",
+                  "scalarType": "INTEGER",
                   "nullable": false,
-                  "ordinal": 6
+                  "ordinal": 6,
+                  "integerRange": {
+                    "minimum": "-32768",
+                    "maximum": "32767"
+                  }
                 },
                 {
                   "name": "description",
@@ -4424,7 +4508,7 @@
             "components": [
               {
                 "field": "product_id",
-                "type": "INT64",
+                "type": "INTEGER",
                 "value": "2"
               }
             ]
@@ -4442,7 +4526,7 @@
                 "components": [
                   {
                     "field": "product_id",
-                    "type": "INT64",
+                    "type": "INTEGER",
                     "value": "2"
                   }
                 ]
@@ -5354,6 +5438,460 @@
             }
           }
         }
+      }
+    },
+    {
+      "id": "get-uint64-max",
+      "layout": "unsigned64",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INTEGER",
+                "value": "18446744073709551615"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "components": [
+                  {
+                    "field": "product_id",
+                    "type": "INTEGER",
+                    "value": "18446744073709551615"
+                  }
+                ]
+              },
+              "values": {
+                "tenant_id": "7",
+                "product_id": "18446744073709551615",
+                "sku": "CAF-250",
+                "name": "Café de Colombia 250 g"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "list-uint64-adjacent-order",
+      "layout": "unsigned64",
+      "request": {
+        "target": "demo.products",
+        "operation": "LIST",
+        "inputs": {
+          "limit": 100
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "records": [
+              {
+                "key": {
+                  "components": [
+                    {
+                      "field": "product_id",
+                      "type": "INTEGER",
+                      "value": "18446744073709551614"
+                    }
+                  ]
+                },
+                "values": {
+                  "tenant_id": "7",
+                  "product_id": "18446744073709551614",
+                  "sku": "ACE-1L",
+                  "name": "Aceite de oliva virgen extra 1 L"
+                }
+              },
+              {
+                "key": {
+                  "components": [
+                    {
+                      "field": "product_id",
+                      "type": "INTEGER",
+                      "value": "18446744073709551615"
+                    }
+                  ]
+                },
+                "values": {
+                  "tenant_id": "7",
+                  "product_id": "18446744073709551615",
+                  "sku": "CAF-250",
+                  "name": "Café de Colombia 250 g"
+                }
+              }
+            ],
+            "page": {
+              "limit": 100,
+              "hasMore": false,
+              "next": null
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p2",
+            "p1"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified",
+        "maxLimit": 100
+      }
+    },
+    {
+      "id": "get-uint64-overflow",
+      "layout": "unsigned64",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INTEGER",
+                "value": "18446744073709551616"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "rejected",
+          "diagnostics": [
+            {
+              "family": "invalid-data",
+              "code": "CDS_LISTGET_INVALID_KEY"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 0,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified"
+      }
+    },
+    {
+      "id": "row-integer-numeric-node-rejected",
+      "layout": "simple",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INTEGER",
+                "value": "9007199254740993"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "failed",
+          "diagnostics": [
+            {
+              "family": "execution-failure",
+              "code": "CDS_LISTGET_ROW_DECODE_FAILED"
+            }
+          ]
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified",
+        "rows": [
+          {
+            "id": "p1",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "2",
+              "sku": "CAF-250",
+              "name": "Café de Colombia 250 g",
+              "price": "7.95",
+              "rating": "8",
+              "description": null,
+              "available": true,
+              "released": "2025-02-01",
+              "cost": "4.123456789",
+              "internal_note": "Acuerdo proveedor A"
+            }
+          },
+          {
+            "id": "p2",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "10",
+              "sku": "ACE-1L",
+              "name": "Aceite de oliva virgen extra 1 L",
+              "price": "12.5",
+              "rating": "9",
+              "description": "Primera extracción",
+              "available": true,
+              "released": "2025-03-15",
+              "cost": "8.02",
+              "internal_note": "Margen reservado"
+            }
+          },
+          {
+            "id": "p3",
+            "values": {
+              "tenant_id": 7,
+              "product_id": "9007199254740993",
+              "sku": "CAL-01",
+              "name": "Calibración de balanza comercial",
+              "price": "125.000000000000000001",
+              "rating": "11",
+              "description": "Tarifa histórica",
+              "available": false,
+              "released": "2024-12-31",
+              "cost": "80",
+              "internal_note": "Dato histórico fuera de 0..10"
+            }
+          },
+          {
+            "id": "p4",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740994",
+              "sku": "TOR-M6",
+              "name": "Tornillo M6, caja de 100",
+              "price": "999999999999999999999999.123456789",
+              "rating": "0",
+              "description": "",
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "1.2",
+              "internal_note": null
+            }
+          },
+          {
+            "id": "p5",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9223372036854775807",
+              "sku": "TE-ES",
+              "name": "Té verde 🍵",
+              "price": "0",
+              "rating": "10",
+              "description": "Lote de muestra",
+              "available": true,
+              "released": "2026-06-01",
+              "cost": "0",
+              "internal_note": "No normalizar Unicode"
+            }
+          },
+          {
+            "id": "other-scope",
+            "values": {
+              "tenant_id": "8",
+              "product_id": "99",
+              "sku": "PRIV-01",
+              "name": "Producto de otra empresa",
+              "price": "999.99",
+              "rating": "6",
+              "description": null,
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "700",
+              "internal_note": "No divulgar"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "id": "row-integer-negative-zero-normalized",
+      "layout": "simple",
+      "request": {
+        "target": "demo.products",
+        "operation": "GET",
+        "inputs": {
+          "key": {
+            "components": [
+              {
+                "field": "product_id",
+                "type": "INTEGER",
+                "value": "9007199254740993"
+              }
+            ]
+          }
+        }
+      },
+      "expected": {
+        "response": {
+          "status": "success",
+          "diagnostics": [],
+          "output": {
+            "found": true,
+            "record": {
+              "key": {
+                "components": [
+                  {
+                    "field": "product_id",
+                    "type": "INTEGER",
+                    "value": "9007199254740993"
+                  }
+                ]
+              },
+              "values": {
+                "tenant_id": "0",
+                "product_id": "9007199254740993",
+                "sku": "CAL-01",
+                "name": "Calibración de balanza comercial"
+              }
+            }
+          }
+        },
+        "observed": {
+          "reads": 1,
+          "selectedRows": [
+            "p3"
+          ],
+          "writes": 0
+        }
+      },
+      "host": {
+        "projection": "products.identified",
+        "rows": [
+          {
+            "id": "p1",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "2",
+              "sku": "CAF-250",
+              "name": "Café de Colombia 250 g",
+              "price": "7.95",
+              "rating": "8",
+              "description": null,
+              "available": true,
+              "released": "2025-02-01",
+              "cost": "4.123456789",
+              "internal_note": "Acuerdo proveedor A"
+            }
+          },
+          {
+            "id": "p2",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "10",
+              "sku": "ACE-1L",
+              "name": "Aceite de oliva virgen extra 1 L",
+              "price": "12.5",
+              "rating": "9",
+              "description": "Primera extracción",
+              "available": true,
+              "released": "2025-03-15",
+              "cost": "8.02",
+              "internal_note": "Margen reservado"
+            }
+          },
+          {
+            "id": "p3",
+            "values": {
+              "tenant_id": "-0",
+              "product_id": "9007199254740993",
+              "sku": "CAL-01",
+              "name": "Calibración de balanza comercial",
+              "price": "125.000000000000000001",
+              "rating": "11",
+              "description": "Tarifa histórica",
+              "available": false,
+              "released": "2024-12-31",
+              "cost": "80",
+              "internal_note": "Dato histórico fuera de 0..10"
+            }
+          },
+          {
+            "id": "p4",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9007199254740994",
+              "sku": "TOR-M6",
+              "name": "Tornillo M6, caja de 100",
+              "price": "999999999999999999999999.123456789",
+              "rating": "0",
+              "description": "",
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "1.2",
+              "internal_note": null
+            }
+          },
+          {
+            "id": "p5",
+            "values": {
+              "tenant_id": "7",
+              "product_id": "9223372036854775807",
+              "sku": "TE-ES",
+              "name": "Té verde 🍵",
+              "price": "0",
+              "rating": "10",
+              "description": "Lote de muestra",
+              "available": true,
+              "released": "2026-06-01",
+              "cost": "0",
+              "internal_note": "No normalizar Unicode"
+            }
+          },
+          {
+            "id": "other-scope",
+            "values": {
+              "tenant_id": "8",
+              "product_id": "99",
+              "sku": "PRIV-01",
+              "name": "Producto de otra empresa",
+              "price": "999.99",
+              "rating": "6",
+              "description": null,
+              "available": true,
+              "released": "2026-01-01",
+              "cost": "700",
+              "internal_note": "No divulgar"
+            }
+          }
+        ]
       }
     }
   ]

@@ -27,7 +27,11 @@
               "elements": [
                 {
                   "id": "test.b",
-                  "type": "INT64"
+                  "type": "INTEGER",
+                  "constraints": {
+                    "bits": 64,
+                    "signed": true
+                  }
                 },
                 {
                   "id": "test.A",
@@ -52,8 +56,11 @@
         },
         "descriptorProjection": {
           "id": "test.b",
-          "type": "INT64",
-          "constraints": {}
+          "type": "INTEGER",
+          "constraints": {
+            "bits": 64,
+            "signed": true
+          }
         }
       },
       {
@@ -115,7 +122,11 @@
               "elements": [
                 {
                   "id": "test.b",
-                  "type": "INT64"
+                  "type": "INTEGER",
+                  "constraints": {
+                    "bits": 64,
+                    "signed": true
+                  }
                 },
                 {
                   "id": "test.A",
@@ -153,8 +164,11 @@
         },
         "descriptorProjection": {
           "id": "test.b",
-          "type": "INT64",
-          "constraints": {}
+          "type": "INTEGER",
+          "constraints": {
+            "bits": 64,
+            "signed": true
+          }
         }
       },
       {
@@ -364,7 +378,11 @@
               "elements": [
                 {
                   "id": "test.b",
-                  "type": "INT64"
+                  "type": "INTEGER",
+                  "constraints": {
+                    "bits": 64,
+                    "signed": true
+                  }
                 },
                 {
                   "id": "test.A",
@@ -381,7 +399,11 @@
               "elements": [
                 {
                   "id": "test.b",
-                  "type": "INT64"
+                  "type": "INTEGER",
+                  "constraints": {
+                    "bits": 64,
+                    "signed": true
+                  }
                 },
                 {
                   "id": "test.A",
@@ -447,7 +469,11 @@
               "elements": [
                 {
                   "id": "test.b",
-                  "type": "INT64"
+                  "type": "INTEGER",
+                  "constraints": {
+                    "bits": 64,
+                    "signed": true
+                  }
                 },
                 {
                   "id": "test.A",

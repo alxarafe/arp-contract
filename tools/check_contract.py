@@ -9,6 +9,7 @@ import yaml
 from source_profile import (parse_source, unique, unicode_scalars, IntakeInvalid, IntakeLimit,
                             MAX_BYTES, MAX_ELEMENTS, MAX_DEPTH, MAX_NUMBER_CHARS, MAX_EXPONENT, MAX_LENGTH)
 from portable_pattern import parse as parse_pattern, matches, PatternInvalid, PatternLimit
+import integer_semantics as integer
 
 ROOT = Path(__file__).resolve().parents[1]
 CODES = {'DICTIONARY_' + x for x in ['DOCUMENT_INVALID', 'FORMAT_UNSUPPORTED', 'ELEMENT_INVALID', 'DUPLICATE_ELEMENT', 'ELEMENT_NOT_FOUND', 'VALUE_TYPE', 'VALUE_CONSTRAINT', 'LIMIT_EXCEEDED']}
@@ -79,6 +80,14 @@ def isolated_source_verdict(model, validator):
                         return 'DICTIONARY_LIMIT_EXCEEDED'
     if not validator.is_valid(model):
         return 'DICTIONARY_ELEMENT_INVALID'
+    for element in model['elements']:
+        if element['type'] == 'INTEGER':
+            try:
+                integer.derive(element.get('constraints', {}))
+            except integer.IntegerLimit:
+                return 'DICTIONARY_LIMIT_EXCEEDED'
+            except integer.IntegerInvalid:
+                return 'DICTIONARY_ELEMENT_INVALID'
     return None
 
 
@@ -86,7 +95,10 @@ def descriptor_projection(declaration):
     # Fixture coherence only: compare authored data, do not resolve a runtime.
     projection = {k:v for k,v in declaration.items()
                   if k in {'id','type','constraints','enumValues','label','description'}}
-    projection.setdefault('constraints', {})
+    projection['constraints'] = dict(projection.get('constraints', {}))
+    if projection.get('type') == 'INTEGER':
+        definition = integer.derive(projection['constraints'])
+        projection['constraints'].update(bits=definition.bits, signed=definition.signed)
     return projection
 
 
@@ -106,11 +118,14 @@ def check(root=ROOT):
     manifest = load(folder / 'manifest.json')
     assert manifest['apiVersion'] == 'arp.dictionary/v1'
     assert manifest['feature'] == 'ARP-DICT-001'
-    assert set(manifest['sets']) == {'catalog','sources','definitions','values','catalogs','patterns'}
+    assert set(manifest['sets']) == {'catalog','sources','definitions','values','catalogs','patterns','integer'}
     for name, path in manifest['sets'].items():
         assert path == name + '.json' and (folder / path).is_file()
     catalog = load(folder / 'catalog.json')
     validator.validate(catalog)
+    for element in catalog['elements']:
+        if element['type'] == 'INTEGER':
+            integer.derive(element.get('constraints', {}))
     declared = {e['type'] for e in catalog['elements']}
     ids = set()
     counts = {}
@@ -151,7 +166,13 @@ def check(root=ROOT):
             assert 'normalizedValue' in case['expected']
             unicode_scalars(case['expected']['normalizedValue'])
             successful_types.add(case['element']['type'])
-    assert successful_types == declared and len(declared) == 17
+        if case['element']['type'] == 'INTEGER':
+            constraints = case['element'].get('constraints', {})
+            actual = integer.issues(case['value'], constraints, case['element']['id'])
+            assert actual == case['expected']['issues'], case['id']
+            if case['expected']['valid']:
+                assert integer.normalized(case['value']) == case['expected']['normalizedValue'], case['id']
+    assert successful_types == declared and len(declared) == 11
     counts['value vectors'] = len(values)
     definitions = load(folder / 'definitions.json')
     for case in definitions:
@@ -230,10 +251,34 @@ def check(root=ROOT):
         for sample in case['samples']:
             assert matches(case['pattern'], sample['value']) == sample['matches'], case['id']
     counts['pattern grammar vectors'] = len(patterns)
+    integers = load(folder / 'integer.json')
+    for case in integers['definitions']:
+        identity(case)
+        try:
+            definition = integer.derive(case['constraints'])
+        except integer.IntegerInvalid:
+            assert not case['expected']['valid'], case['id']
+        else:
+            assert case['expected']['valid'], case['id']
+            expected = case['expected']
+            assert definition.signed is expected['signed'], case['id']
+            assert definition.bits == expected['bits'], case['id']
+            assert str(definition.effective_min) == expected['minimum'], case['id']
+            assert str(definition.effective_max) == expected['maximum'], case['id']
+    for case in integers['values']:
+        identity(case)
+        issues = integer.issues(case['value'], case['constraints'], 'test.integer')
+        assert issues == case['expected']['issues'], case['id']
+        if case['expected']['valid']:
+            assert integer.normalized(case['value']) == case['expected']['normalizedValue'], case['id']
+        outcome(case['expected'], 'test.integer')
+    counts['integer definitions'] = len(integers['definitions'])
+    counts['integer values'] = len(integers['values'])
     counts['shared runtime assertions inventoried'] = (1 + len(values) + len(definitions) + len(sources)
         + source_projections + len(patterns) + sum(len(p['samples']) for p in patterns)
         + sum(len(c['steps']) for c in catalogs)
-        + sum('descriptorProjection' in step for c in catalogs for step in c['steps']))
+        + sum('descriptorProjection' in step for c in catalogs for step in c['steps'])
+        + len(integers['definitions']) + len(integers['values']))
     return counts
 
 

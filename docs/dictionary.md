@@ -1,23 +1,18 @@
-# ARP 1.0 — Diccionario
+# ARP-INTEGER-001 — Diccionario y enteros exactos
 
-**Propuesta incompatible pendiente de aprobación.** Este documento no sustituye `arp.dictionary/v1`.
-El esquema vigente conserva los siete identificadores enteros históricos y sus fixtures.
-La [revisión de compatibilidad](review-contract-v1.md) y el
-[esquema aislado de INTEGER](proposals/integer/dictionary.schema.json) describen el cambio propuesto.
-No se declara soporte de los runtimes ni se cambia ningún identificador de formato.
+**Especificación del candidato activo, pendiente de revisión de la PR; sin publicación ni conformidad de runtimes.**
+Este cambio incompatible sustituye los siete tipos enteros anteriores en `arp.dictionary/v1`.
+La [nota de alcance, pruebas y ajustes de arp-php](features/arp-integer-001.md) forma parte de esta especificación.
+El resto de ARP-DICT-001 y de su perfil de portabilidad conserva las reglas archivadas en
+[ARP-DICT-001](history/2026-11-20-pre-v1/docs/features/arp-dict-001.md) y
+[portabilidad 002](history/2026-11-20-pre-v1/docs/dictionary-portability-002.md).
+En caso de discrepancia sobre enteros, prevalece este documento.
 
-## Tipos
+## Sintaxis y dominio representable
 
-`BOOLEAN`, `STRING`, `TEXT`, `INTEGER`, `DECIMAL`, `UUID`, `DATE`, `TIME`, `DATETIME`, `ENUM`, `BINARY`.
-
-El formato 1.0 propuesto usaría exclusivamente `INTEGER` para enteros. Los identificadores anteriores `INT8`, `UINT8`,
-`INT16`, `UINT16`, `INT32`, `UINT32`, `INT64` no serían alias en la propuesta; siguen siendo válidos en el formato
-vigente. Los elementos del diccionario son reutilizables, pero los campos CDS también podrán declarar un tipo
-directamente.
-
-## INTEGER
-
-Las propiedades `minimum`, `maximum`, `bits` y `signed` se declaran dentro de `constraints`:
+Los tipos activos son `BOOLEAN`, `STRING`, `TEXT`, `INTEGER`, `DECIMAL`, `UUID`, `DATE`, `TIME`, `DATETIME`,
+`ENUM` y `BINARY`. `INT8`, `UINT8`, `INT16`, `UINT16`, `INT32`, `UINT32` e `INT64` se rechazan, sin alias.
+Tampoco existe un identificador `UINT64`; la capacidad sin signo de 64 bits se expresa mediante `INTEGER`.
 
 ```yaml
 apiVersion: arp.dictionary/v1
@@ -25,60 +20,133 @@ elements:
   - id: demo.score
     type: INTEGER
     constraints:
+      bits: 16
+      signed: true
       minimum: '0'
       maximum: '100'
+      multipleOf: '2'
 ```
 
-- `minimum` y `maximum`: enteros decimales exactos expresados como cadenas, inclusivos salvo `exclusiveMinimum` o
-  `exclusiveMaximum`. Son límites de validación lógica.
-- `signed`: booleano opcional. Si se declara, manda y debe ser compatible con los límites. Si se omite, vale `false`
-  cuando `minimum` está declarado y es mayor o igual que cero; en otro caso vale `true`.
-- `bits`: entero opcional entre `8`, `16`, `32` y `64`. Si se declara, fija la **capacidad lógica requerida** y debe
-  cubrir los límites. No obliga a que exista un tipo nativo SQL de igual tamaño.
-- Si se omite `bits` y se conocen ambos límites, se elige la menor capacidad de la lista que cubra el intervalo. Si
-  falta cualquiera de los dos límites, se parte de 32 bits y solo se amplía a 64 cuando un límite declarado lo exige; no
-  se reduce automáticamente por tener un único extremo.
-- Si ningún tamaño de hasta 64 bits puede cubrir los límites, la definición es inválida. `UINT64` está permitido como
-  capacidad abstracta y requiere aritmética exacta, aunque un runtime no disponga de un entero primitivo de 64 bits sin
-  signo.
-- Los valores válidos deben satisfacer simultáneamente el rango del tipo derivado, `minimum`/`maximum` y las demás
-  restricciones aplicables. El rango del tipo no sustituye a las restricciones explícitas.
-- `multipleOf` y los extremos exclusivos conservan su semántica actual. Para determinar si un intervalo entero cabe, los
-  extremos exclusivos se ajustan al primer/último entero permitido. Un intervalo vacío es inválido.
+Todas estas propiedades pertenecen a `constraints`, que es opcional y equivale a `{}` cuando se omite.
+`bits` admite únicamente los enteros matemáticos `8`, `16`, `32`, `64`; `signed` es booleano.
+No se convierten cadenas a números ni números a booleanos; `null` no equivale a omisión.
+Las reglas de intake exacto para metadatos numéricos siguen vigentes: un nodo JSON `8.0` representa el entero
+matemático 8; `"8"`, `true` y `8.5` no son un `bits` válido.
+`exclusiveMinimum` y `exclusiveMaximum` son booleanos opcionales, por defecto `false`.
+`minimum`, `maximum` y `multipleOf` son cadenas decimales enteras exactas.
+Las propiedades ajenas al tipo se rechazan.
 
-Capacidad de un entero con `N` bits:
+Para la capacidad resuelta `(N, signed)`, el dominio representable `D = [dmin, dmax]` es:
 
-| `signed` | Rango representable |
-| --- | --- |
-| `true` | `-2^(N-1)` a `2^(N-1)-1` |
-| `false` | `0` a `2^N-1` |
+| Signo | dmin | dmax |
+| --- | --- | --- |
+| `true` | `-2^(N-1)` | `2^(N-1)-1` |
+| `false` | `0` | `2^N-1` |
 
-### Ejemplos
+La capacidad indica representación; no implica que todos sus valores sean lógicamente válidos ni exige un
+primitivo de igual tamaño en el lenguaje o en SQL. Los valores extremos de 64 bits son
+`-9223372036854775808`, `9223372036854775807` y, sin signo, `18446744073709551615`.
 
-| Límites y atributos declarados | Capacidad derivada |
-| --- | --- |
-| `minimum: '0'`, `maximum: '100'` | UINT8 |
-| `minimum: '-100'`, `maximum: '100'` | INT8 |
-| `minimum: '0'`, `maximum: '100'`, `bits: 16` | UINT16 |
-| `minimum: '0'`, `maximum: '100'`, `bits: 16`, `signed: true` | INT16 |
-| `minimum: '0'`, `maximum: '200'`, `signed: true` | INT16 |
-| `minimum: '0'`, `maximum: '1000'` | UINT16 |
-| Sin límites ni atributos | INT32 |
-| Solo `minimum: '0'` | UINT32 |
-| Solo `maximum: '100'` | INT32 |
+## Inferencia determinista
 
-`bits: 8` con `minimum: '0'` y `maximum: '1000'` es inválido. También lo es `signed: false` con un mínimo negativo. Un
-límite fuera del dominio representable es un error de definición, no un motivo para truncar, redondear ni saturar
-valores.
+Se resuelve una sola vez sobre la declaración intrínseca, antes de restricciones contextuales o datos:
 
-## Reglas generales
+1. Validar tipos y léxico; interpretar límites exactamente, normalizando `-0` numéricamente a cero.
+2. Si se declara `signed`, respetarlo. Si se omite, usar `false` cuando existe un `minimum >= 0`;
+   usar `true` en cualquier otro caso. Un `maximum` positivo por sí solo no permite inferir sin signo.
+3. Si existe `bits`, respetarlo sin ampliarlo ni reducirlo. Si se omite y existen ambos límites,
+   elegir el primer tamaño de `[8, 16, 32, 64]` que represente **los dos límites declarados** con ese signo.
+   Si falta uno o ambos límites, probar únicamente `[32, 64]`. No reducir a 8 o 16 por un único límite.
+4. Si ningún candidato sirve, rechazar la definición. Ambos límites declarados deben pertenecer a `D`,
+   aun siendo exclusivos. No cambiar el signo para hacerlos caber; no inferir desde valores de datos,
+   observaciones SQL, defaults ni `multipleOf`.
+5. Rechazar `minimum > maximum`. Calcular el intervalo lógico como se indica debajo y comprobar que
+   contiene al menos un valor válido.
 
-1. El diccionario valida valores escalares y restricciones intrínsecas. Presencia, nulabilidad, identidad, claves,
-   acceso y persistencia pertenecen a CDS y al anfitrión.
-2. Las definiciones aceptan únicamente las propiedades de su tipo; las propiedades desconocidas son errores.
-3. Las comparaciones numéricas y la normalización son exactas. El formato neutral para enteros es una cadena decimal
-   canónica; no se obliga a cada lenguaje a usar cadenas internamente.
-4. `INTEGER` es independiente de la representación física. El adaptador SQL debe demostrar que el tipo elegido admite
-   los valores exigidos; si no puede hacerlo, no habilita escrituras inseguras.
-5. La documentación histórica está en `docs/history/`. La adopción de estas reglas y la política de transición están
-   pendientes; el esquema vigente no se modifica.
+| Restricciones declaradas | bits | signed |
+| --- | --- | --- |
+| `{}` | 32 | `true` |
+| `minimum: '0'` | 32 | `false` |
+| `maximum: '100'` | 32 | `true` |
+| `minimum: '4294967296'` | 64 | `false` |
+| `maximum: '-2147483649'` | 64 | `true` |
+| `minimum: '0', maximum: '100'` | 8 | `false` |
+| `minimum: '-100', maximum: '100'` | 8 | `true` |
+| `minimum: '0', maximum: '200', signed: true` | 16 | `true` |
+| `minimum: '0', maximum: '100', bits: 16` | 16 | `false` |
+| `minimum: '0', maximum: '100', bits: 16, signed: true` | 16 | `true` |
+| `minimum: '0', maximum: '18446744073709551615'` | 64 | `false` |
+
+`maximum: '18446744073709551615'` sin mínimo ni signo es inválido: el signo inferido es `true`.
+`bits: 8, maximum: '256', exclusiveMaximum: true, signed: false` también es inválido: el límite
+**declarado** no cabe. Sin `bits`, `minimum: '0', maximum: '256', exclusiveMaximum: true` deriva 16 bits,
+aunque sus valores admitidos sean `0..255`. Esta decisión cierra expresamente la ambigüedad del boceto inicial.
+
+## Restricciones lógicas y contradicciones
+
+Partir de `[L, U] = D`. Un mínimo declarado sustituye `L` por ese mínimo, sumando uno si es exclusivo.
+Un máximo declarado sustituye `U` por ese máximo, restando uno si es exclusivo.
+Un extremo exclusivo `true` exige su correspondiente límite; `false` sin límite no tiene efecto.
+Rechazar `L > U`, incluidos intervalos abiertos que no contienen enteros.
+
+`multipleOf` debe ser un entero estrictamente positivo `m`; cero, negativos, fracciones y nodos numéricos
+son inválidos. Un valor `v` lo satisface si existe un entero `k` tal que `v = k*m`, incluidos cero y negativos.
+El primer múltiplo en el intervalo es `ceil(L/m)*m`; rechazar la definición si supera `U`.
+Esta comprobación usa división matemática hacia menos infinito y aritmética exacta, también para límites negativos.
+El múltiplo no necesita caber en `D`: `minimum: '0', maximum: '0', multipleOf: '18446744073709551616'`
+es válido porque admite cero. `1..2, multipleOf: '3'` y `-2..-1, multipleOf: '3'` son inválidos.
+
+Una capacidad explícita más amplia no relaja límites: con 16 bits y `maximum: '100'`, `101` sigue siendo inválido.
+Ningún dato amplía capacidad ni restricciones. No se recortan límites silenciosamente al rango de almacenamiento.
+
+## Valores, normalización, límites y errores
+
+El transporte neutral de valores, límites y múltiplos usa cadenas con léxico ASCII
+`-?(0|[1-9][0-9]*)`, consumiendo la cadena completa. No se admiten signo `+`, espacios, ceros iniciales,
+fracciones, exponentes, dígitos Unicode, booleanos ni nodos JSON/YAML numéricos como valores escalares enteros.
+`-0` se acepta con cualquier signo y se normaliza a `"0"`; el signo lógico restringe el número, no el léxico.
+La normalización devuelve la cadena decimal canónica sin redondeo, saturación ni truncamiento.
+
+La implementación debe preservar exactamente valores adyacentes superiores a `2^53`, todos los límites de
+64 bits y comparaciones, ordenación, módulo, igualdad y serialización. No puede pasar por `float`, `double`
+ni JavaScript `Number`. La representación interna es libre si demuestra estas propiedades.
+El presupuesto de cadenas numéricas sigue siendo de 4096 caracteres; sobrepasarlo produce
+`DICTIONARY_LIMIT_EXCEEDED`. Se conservan los demás presupuestos de intake de portabilidad 002.
+
+Una definición inválida produce `DICTIONARY_ELEMENT_INVALID` antes de publicar su catálogo.
+Para una definición válida, léxico o tipo de nodo incorrecto produce `DICTIONARY_VALUE_TYPE`.
+Los incumplimientos numéricos se acumulan como `DICTIONARY_VALUE_CONSTRAINT`, en este orden:
+`typeRange`, `minimum`, `maximum`, `multipleOf`. `typeRange` compara con `D`; los otros comparan con las
+restricciones declaradas, incluidas exclusiones. Nunca se devuelve `normalizedValue` si hay errores.
+Los límites de recursos tienen prioridad sobre la evaluación aritmética.
+
+## Descriptores, CDS e identidad
+
+El descriptor del diccionario conserva restricciones y metadatos declarados y materializa `bits` y `signed`
+resueltos. CDS conserva además las restricciones intrínsecas y contextuales por separado; su descriptor efectivo
+materializa capacidad y límites inclusivos efectivos. Aplicar un contexto más restrictivo no vuelve a inferir
+capacidad ni signo. Un contexto no puede ampliarlos ni debilitar las restricciones intrínsecas.
+El oráculo CDS mantiene su perfil acotado: restricciones contextuales de intervalo, sin convertirlo en un
+resolutor general de `multipleOf` ni afirmar compatibilidad cuando no la ha demostrado.
+
+El escalar físico normalizado es `INTEGER`; `nativeType` sigue siendo texto opaco del adaptador.
+La evidencia física se expresa en `integerRange`, con límites exactos observados, sin inferir 32 bits por el nombre.
+Un lado conocido puede probar incompatibilidad; para probar contención hacen falta ambos lados.
+Ausencia o evidencia parcial da `not-verified` si no hay conflicto demostrado. Los límites de un `INTEGER`
+físico normalizado deben estar en la unión de las capacidades de hasta 64 bits.
+Un campo sin diccionario solo puede derivar capacidad de una observación completa; una observación parcial
+no inventa tipo lógico ni capacidad. Esto no activa creación de tablas ni nuevos estados de compatibilidad.
+
+Las claves simples y compuestas usan componentes `{field, type: "INTEGER", value: "..."}` en el orden de la PK.
+La capacidad se obtiene del descriptor confiable del campo, nunca de propiedades adicionales aportadas por la
+petición. No se añaden `bits` ni `signed` a cada componente. Se rechazan tipos antiguos y capacidades desbordadas.
+Normalizar antes de comparar identidades y detectar duplicados; ordenar numéricamente, sin ordenar cadenas.
+No reaplicar límites de negocio actuales a una identidad histórica representable.
+Referencias opacas y cursores conservan sus enlaces a destino, proyección, contexto y generación.
+
+CREATE valida capacidad, restricciones lógicas y físicas de todos los valores efectivos, incluidos defaults.
+UPDATE valida cada valor enviado aunque no cambie, conserva ausentes y compara baseline exactamente;
+se mantienen conflictos, confirmación, atomicidad y resultados inciertos. DELETE valida la identidad exacta y
+su evidencia de lectura; no revalida como datos nuevos los valores históricos fuera de restricciones de negocio.
+LIST/GET preserva identidades exactas, claves ocultas y ordenación. Ningún cambio de tipo concede permisos,
+capacidad de ejecución o validez de precondiciones; siguen vigentes todas las barreras de publicación y escritura.

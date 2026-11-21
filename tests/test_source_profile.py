@@ -131,7 +131,7 @@ class PortableIntakeChecks(unittest.TestCase):
 
     def test_inventory_keeps_scope_and_source_projections(self):
         counts = checker.check()
-        self.assertEqual(counts['shared runtime assertions inventoried'], 327)
+        self.assertEqual(counts['shared runtime assertions inventoried'], 428)
         self.assertEqual(counts['source descriptor projections'], 4)
 
 

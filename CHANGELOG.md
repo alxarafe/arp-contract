@@ -6,7 +6,13 @@ Changes follow the policy in [`docs/versioning.md`](docs/versioning.md). A relea
 
 ## Unreleased
 
-No changes after the first-release candidate have been recorded.
+- ARP-INTEGER-001: incompatible pre-production replacement of seven integer types with INTEGER,
+  optional bits/signed, exact inference and validation, unsigned 64-bit capacity and typed CRUD identities.
+  Active schemas, fixtures and oracles migrate together. No aliases, runtime changes, format version,
+  release or other 1.0 proposal is introduced. See [specification](docs/dictionary.md) and
+  [scope, verification and arp-php handoff](docs/features/arp-integer-001.md).
+- The v0.1.0 entries and inventory below record the earlier prepared candidate; their counts and evidence
+  do not describe the updated INTEGER candidate. No release is published by this change.
 
 ## v0.1.0 — first functional contract (release inventory prepared)
 

@@ -19,12 +19,14 @@ class CdsCompatibilityDraftTests(unittest.TestCase):
         return next(x for x in bucket if x['id'] == identity)
 
     def test_shared_fixture_integrity(self):
-        self.assertEqual(c.check(ROOT), {'structural':17,'server':10,'client':7,'createClient':3,'audit':4})
+        self.assertEqual(c.check(ROOT), {'structural':21,'server':10,'client':7,'createClient':3,'audit':4})
 
     def test_logical_type_can_differ_from_physical_type(self):
         case=self.by_id(self.compatibility['assertions'],'int16-narrowed-fits-mariadb')
-        self.assertEqual(case['dictionaryType'],'INT16')
-        self.assertEqual(case['physical']['scalarType'],'INT8')
+        self.assertEqual(case['dictionaryType'],'INTEGER')
+        self.assertEqual(case['physical']['scalarType'],'INTEGER')
+        self.assertEqual(case['dictionaryConstraints']['bits'],16)
+        self.assertEqual(case['physical']['integerRange'],{'minimum':'-128','maximum':'127'})
         self.assertEqual(c.structural_status(case),'compatible')
 
     def test_unconstrained_logical_int16_not_storable_in_int8(self):

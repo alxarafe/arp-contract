@@ -3,19 +3,23 @@
   "elements": [
     {
       "id": "demo.bounded",
-      "type": "INT16",
+      "type": "INTEGER",
       "constraints": {
         "minimum": "2",
-        "maximum": "8"
+        "maximum": "8",
+        "bits": 16,
+        "signed": true
       }
     },
     {
       "id": "demo.even",
-      "type": "INT16",
+      "type": "INTEGER",
       "constraints": {
         "minimum": "0",
         "maximum": "10",
-        "multipleOf": "2"
+        "multipleOf": "2",
+        "bits": 16,
+        "signed": true
       }
     }
   ]

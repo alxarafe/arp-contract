@@ -22,10 +22,11 @@ fixtures antes de runtimes. No se alteran las garantías de UPDATE ni las expect
 identidad explícita, eliminación física con evidencia del estado leído, resultados y códigos de este perfil.
 Las palabras de obligación de este documento expresan el comportamiento a revisar, no una aprobación implícita.
 
-**No aprobado por este trabajo:** `INTEGER`, tipos directos, autoridad `CDS`/`DATABASE`, creación de tablas,
+**No aprobado por este trabajo:** tipos directos, autoridad `CDS`/`DATABASE`, creación de tablas,
 los cinco estados nuevos de compatibilidad física ni los demás puntos del
 [borrador 1.0](../contract-v1-draft.md). Véase la [revisión de compatibilidad](../review-contract-v1.md).
-Se usan los identificadores escalares históricos vigentes y las definiciones actuales de la demo, sin alias nuevos.
+La revisión posterior [ARP-INTEGER-001](arp-integer-001.md) actualiza exclusivamente enteros a `INTEGER`,
+con capacidad explícita o derivada según el [diccionario](../dictionary.md), sin alias.
 
 ## 2. Registro y cinco operaciones
 
@@ -80,14 +81,15 @@ DELETE candidato:
   "target": "demo.items",
   "operation": "DELETE",
   "inputs": {
-    "key": {"components": [{"field": "id", "type": "INT32", "value": "7"}]},
+    "key": {"components": [{"field": "id", "type": "INTEGER", "value": "7"}]},
     "precondition": {"reference": "evidencia-opaca-del-estado-leido"}
   }
 }
 ```
 
 La clave pública reutiliza LIST/GET: componentes completos, orden PK, nombre y tipo efectivos, valores exactos.
-La primera demo utiliza `id: INT32` explícito, sin autoincrementos, secuencias ni generación implícita.
+La primera demo utiliza `id: INTEGER` con capacidad resuelta de 32 bits con signo,
+sin autoincrementos, secuencias ni generación implícita.
 CREATE exige que el solicitante pueda aportar `id`; no lo sustituye un default. UPDATE no cambia la PK en este corte.
 El resultado CREATE devuelve exclusivamente la identidad segura; no devuelve la fila ni columnas auxiliares.
 
@@ -310,7 +312,8 @@ Pendientes de decisión o evidencia antes de implementar/afirmar conformidad:
 - Mecanismo real de protección de políticas y reglas dependientes dentro de las transacciones de cada adaptador.
 - Pruebas de restricciones, cascadas, triggers, aislamiento y rollback/commit incierto en PHP/MariaDB.
 - Metadatos públicos definitivos de certeza, reconciliación e idempotencia; ningún fallo habilita reintento ciego.
-- Adopción independiente posterior por otros runtimes. `INTEGER` permanece pendiente y aislado.
+- Adopción independiente posterior por otros runtimes. La adopción de `INTEGER` se detalla en
+  ARP-INTEGER-001 y requiere pruebas propias de cada runtime.
 
 No se implementan formularios, workflows ni motores de reglas; no se fusiona automáticamente ni se publica versión.
 
@@ -321,5 +324,6 @@ No se implementan formularios, workflows ni motores de reglas; no se fusiona aut
 - Los nueve verificadores contractuales previos, el nuevo oráculo y la comprobación documental: **PASS**.
 - **237 referencias locales/Git** y los hashes de **25 documentos históricos** comprobados.
 - `git diff --check`: correcto; UTF-8, LF, sangría y longitud de los nuevos archivos comprobados.
-- Sin cambios en esquemas vigentes, ejemplos, fixtures históricos, propuesta INTEGER ni código de cliente.
+- El resultado original no modificaba esquemas; ARP-INTEGER-001 actualiza después los artefactos activos.
+  Los resultados de esta sección son evidencia de la revisión CRUD original.
 - Sin ejecución de bases de datos ni conformidad nativa; las obligaciones de proveedores siguen sin ejecutar.

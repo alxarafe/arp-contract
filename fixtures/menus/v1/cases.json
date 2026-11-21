@@ -903,9 +903,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -924,9 +928,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -1202,9 +1210,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -1223,9 +1235,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -1512,9 +1528,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -1533,9 +1553,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -1800,9 +1824,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -1821,9 +1849,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -2115,9 +2147,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -2136,9 +2172,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -2402,9 +2442,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -2423,9 +2467,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -2689,9 +2737,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -2710,9 +2762,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -3372,9 +3428,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -3393,9 +3453,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -3780,9 +3844,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -3801,9 +3869,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -4166,9 +4238,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -4187,9 +4263,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -4570,9 +4650,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -4591,9 +4675,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -5005,9 +5093,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -5026,9 +5118,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -5428,9 +5524,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -5449,9 +5549,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -5792,9 +5896,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -5813,9 +5921,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -6158,9 +6270,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -6179,9 +6295,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -6364,9 +6484,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -6385,9 +6509,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -6767,9 +6895,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -6788,9 +6920,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -7043,9 +7179,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -7064,9 +7204,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -7332,9 +7476,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -7353,9 +7501,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -7621,9 +7773,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -7642,9 +7798,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [
@@ -7911,9 +8071,13 @@
               {
                 "name": "id",
                 "nativeType": "int64",
-                "scalarType": "INT64",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 1
+                "ordinal": 1,
+                "integerRange": {
+                  "minimum": "-9223372036854775808",
+                  "maximum": "9223372036854775807"
+                }
               },
               {
                 "name": "code",
@@ -7932,9 +8096,13 @@
               {
                 "name": "rating",
                 "nativeType": "int16",
-                "scalarType": "INT16",
+                "scalarType": "INTEGER",
                 "nullable": false,
-                "ordinal": 4
+                "ordinal": 4,
+                "integerRange": {
+                  "minimum": "-32768",
+                  "maximum": "32767"
+                }
               }
             ],
             "primaryKey": [

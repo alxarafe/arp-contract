@@ -9,7 +9,8 @@
     "definitions": "definitions.json",
     "values": "values.json",
     "catalogs": "catalogs.json",
-    "patterns": "patterns.json"
+    "patterns": "patterns.json",
+    "integer": "integer.json"
   },
   "comparison": "JSON model equality with exact mathematical numeric equality (booleans distinct); scalar issues follow \u00a77.1 order; optional source/catalog descriptorProjection is complete; definition fixtures impose no global issue ordering; diagnostics excluded",
   "intakeProfile": {

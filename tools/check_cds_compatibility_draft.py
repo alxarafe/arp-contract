@@ -10,15 +10,9 @@ import json
 import re
 from decimal import Decimal
 from pathlib import Path
+import integer_semantics as integer
 
 ROOT = Path(__file__).resolve().parents[1]
-INTEGER_RANGES = {
-    'INT8': (-128, 127), 'UINT8': (0, 255),
-    'INT16': (-32768, 32767), 'UINT16': (0, 65535),
-    'INT32': (-2147483648, 2147483647),
-    'UINT32': (0, 4294967295),
-    'INT64': (-9223372036854775808, 9223372036854775807),
-}
 INTEGER_LEXEME = re.compile(r'-?(?:0|[1-9][0-9]*)\Z', re.ASCII)
 
 
@@ -33,10 +27,18 @@ def load(path: Path):
     return json.loads(path.read_text(encoding='utf-8'), object_pairs_hook=unique)
 
 
-def _exact_bound(value):
-    if not isinstance(value, str) or not INTEGER_LEXEME.fullmatch(value):
-        raise ValueError(f'invalid integer bound: {value!r}')
-    return Decimal(value)
+def _physical_domain(physical):
+    if physical.get('scalarType') != 'INTEGER':
+        return None
+    extent = physical.get('integerRange', {})
+    try:
+        lower = integer.parse_lexeme(extent['minimum']) if 'minimum' in extent else None
+        upper = integer.parse_lexeme(extent['maximum']) if 'maximum' in extent else None
+    except integer.IntegerInvalid as error:
+        raise ValueError(f'invalid physical integerRange: {error}')
+    if lower is not None and upper is not None and lower > upper:
+        raise ValueError('physical integerRange is inverted')
+    return lower, upper
 
 
 def structural_status(case):
@@ -44,59 +46,50 @@ def structural_status(case):
 
     Assumes normalized scalarType appears only with verified adapter evidence.
     """
-    dtype = case['dictionaryType']
-    phys = case['physical']
-    if dtype not in INTEGER_RANGES:
+    if case.get('dictionaryType', 'INTEGER') != 'INTEGER':
         return 'not-verified'
-    min_type, max_type = map(Decimal, INTEGER_RANGES[dtype])
-    lo, hi = min_type, max_type
-    intrinsic = case.get('intrinsicConstraints', {})
+    try:
+        base = integer.derive(case.get('dictionaryConstraints', {}))
+    except integer.IntegerInvalid:
+        return 'definition-invalid'
+    if not integer.interval_only(case.get('dictionaryConstraints', {})):
+        return 'not-verified'
     contextual = case.get('contextualConstraints', {})
-    if 'minimum' in intrinsic:
-        bound = _exact_bound(intrinsic['minimum'])
-        if bound < min_type or bound > max_type:
+    lo, hi = base.effective_min, base.effective_max
+    if contextual:
+        if not integer.interval_only(case.get('dictionaryConstraints', {})):
+            return 'not-verified'
+        if set(contextual) - {'minimum', 'maximum'}:
+            return 'not-verified'
+        try:
+            if 'minimum' in contextual:
+                bound = integer.parse_lexeme(contextual['minimum'])
+                if bound < lo:
+                    return 'definition-invalid'
+                lo = bound
+            if 'maximum' in contextual:
+                bound = integer.parse_lexeme(contextual['maximum'])
+                if bound > hi:
+                    return 'definition-invalid'
+                hi = bound
+        except integer.IntegerInvalid:
             return 'definition-invalid'
-        lo = max(lo, bound)
-    if 'maximum' in intrinsic:
-        bound = _exact_bound(intrinsic['maximum'])
-        if bound < min_type or bound > max_type:
+        if lo > hi:
             return 'definition-invalid'
-        hi = min(hi, bound)
-    if lo > hi:
-        return 'definition-invalid'
-    for key, value in contextual.items():
-        if key not in ('minimum', 'maximum'):
-            return 'not-verified'  # Unspecified constraints require a richer solver.
-        bound = _exact_bound(value)
-        if key == 'minimum':
-            # Contextual constraint must not loosen the element's intrinsic range.
-            if bound < lo:
-                return 'definition-invalid'
-            lo = bound
-        else:
-            if bound > hi:
-                return 'definition-invalid'
-            hi = bound
-    if lo > hi:
-        return 'definition-invalid'
-    ptype = phys.get('scalarType')
-    if ptype not in INTEGER_RANGES:
+    physical = _physical_domain(case['physical'])
+    if physical is None:
         return 'not-verified'
-    plo, phi = map(Decimal, INTEGER_RANGES[ptype])
-    extent = phys.get('integerRange', {})
-    lower_bound = extent.get('minimum')
-    upper_bound = extent.get('maximum')
-    if lower_bound is not None:
-        plo = max(plo, _exact_bound(lower_bound))
-    if upper_bound is not None:
-        phi = min(phi, _exact_bound(upper_bound))
-    if plo > phi:
+    physical_lower, physical_upper = physical
+    if physical_lower is not None and lo < physical_lower:
         return 'incompatible'
-    return 'compatible' if plo <= lo and hi <= phi else 'incompatible'
+    if physical_upper is not None and hi > physical_upper:
+        return 'incompatible'
+    return ('compatible' if physical_lower is not None and physical_upper is not None
+            else 'not-verified')
 
 
 def valid_rating(value, minimum='0', maximum='10'):
-    """Sample INT16 rating: exact lexical integer, no implicit coercions."""
+    """Sample INTEGER rating: exact lexical integer, no implicit coercions."""
     return (isinstance(value, str) and INTEGER_LEXEME.fullmatch(value) is not None
             and Decimal(minimum) <= Decimal(value) <= Decimal(maximum))
 
@@ -216,4 +209,5 @@ def check(root=ROOT):
 
 if __name__ == '__main__':
     c = check()
-    print('PASS: CDS compatibility/historical draft fixtures:', ', '.join(f'{k}={v}' for k,v in c.items()), '(STATIC ONLY)')
+    print('PASS: CDS compatibility/historical draft fixtures:',
+          ', '.join(f'{k}={v}' for k, v in c.items()), '(STATIC ONLY)')

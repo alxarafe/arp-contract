@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 import check_cds_read_draft as cds
+import integer_semantics as integers
 import module_menu_profile as modules
 from check_contract import contract_validator, descriptor_projection, load
 
@@ -19,14 +20,16 @@ class InvalidKey(ValueError):
     pass
 
 
-def integer(value, kind):
-    """Identity-only integer profile; reuse CDS/DICT ranges, never float or business constraints."""
-    if (kind not in cds.INTEGER_RANGES or not isinstance(value, str) or len(value) > 4096
-            or not cds.INTEGER.fullmatch(value) or (kind.startswith('U') and value.startswith('-'))):
+def integer(value, constraints):
+    """Exact identity codec: capacity only; business constraints do not invalidate identity."""
+    if not isinstance(value, str) or len(value) > 4096:
         raise InvalidKey()
-    number = int(value)
-    low, high = cds.INTEGER_RANGES[kind]
-    if not low <= number <= high:
+    try:
+        definition = integers.derive(constraints)
+        number = integers.parse_lexeme(value)
+    except integers.IntegerInvalid:
+        raise InvalidKey() from None
+    if not definition.domain_min <= number <= definition.domain_max:
         raise InvalidKey()
     return number
 
@@ -149,7 +152,7 @@ def invoke(case, assets, defaults):
     model = next(model for model in resolved['models'] if model['id'] == projection['entity'])
     effective = {field['name']: field for field in model['fields']}
     primary = model['physical'].get('primaryKey', [])
-    if (not primary or any(effective[name].get('type') not in cds.INTEGER_RANGES
+    if (not primary or any(effective[name].get('type') != 'INTEGER'
                            or effective[name]['physical'].get('nullable') is not False for name in primary)):
         return reject('CAPABILITY_UNAVAILABLE')
     generation = host['generation']
@@ -162,7 +165,7 @@ def invoke(case, assets, defaults):
     limit = None
 
     def row_key(row):
-        return tuple(integer(row['values'][name], effective[name]['type']) for name in primary)
+        return tuple(integer(row['values'][name], effective[name]['constraints']) for name in primary)
 
     def evidence(token, collection):
         item = host[collection].get(token)
@@ -187,7 +190,7 @@ def invoke(case, assets, defaults):
                     if (not isinstance(component, dict) or set(component) != {'field', 'type', 'value'}
                             or component['field'] != name or component['type'] != effective[name]['type']):
                         raise InvalidKey()
-                    wanted.append(integer(component['value'], component['type']))
+                    wanted.append(integer(component['value'], effective[name]['constraints']))
                 wanted = tuple(wanted)
             except InvalidKey:
                 return reject('INVALID_KEY', 'invalid-data')
@@ -255,7 +258,18 @@ def invoke(case, assets, defaults):
                     or tuple(map(int, item['key'])) != row_key(row)):
                 return failed('READ_FAILED')
             key = {'reference': token}
-        records.append({'key': key, 'values': {name: deepcopy(values[name]) for name in fields}})
+        decoded = {name: deepcopy(values[name]) for name in fields}
+        try:
+            for name in fields:
+                if effective[name].get('type') == 'INTEGER' and decoded[name] is not None:
+                    number = integer(decoded[name], effective[name]['constraints'])
+                    extent = effective[name]['physical'].get('integerRange', {})
+                    if not int(extent.get('minimum', number)) <= number <= int(extent.get('maximum', number)):
+                        raise InvalidKey()
+                    decoded[name] = str(number)
+        except InvalidKey:
+            return failed('ROW_DECODE_FAILED')
+        records.append({'key': key, 'values': decoded})
     next_token = None
     if more:
         last = selected[-1]
@@ -289,7 +303,7 @@ def check():
         assert resolved['valid']
         model = resolved['models'][0]
         primary = model['physical']['primaryKey']
-        types = {field['name']: field['type'] for field in model['fields']}
+        types = {field['name']: field['constraints'] for field in model['fields']}
         keys = [tuple(integer(row['values'][name], types[name]) for name in primary) for row in layout['rows']]
         assert len(set(keys)) == len(keys)
         assert len({row['id'] for row in layout['rows']}) == len(layout['rows'])
