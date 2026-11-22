@@ -4,7 +4,7 @@ import type { TranslationKey } from './i18n/types';
 export const RUNTIMES = [
     { id: 'dotnet', label: '.NET', commit: '442cd19', branch: 'main' },
     { id: 'java', label: 'Java', commit: 'a76f2d5', branch: 'main' },
-    { id: 'php', label: 'PHP', commit: '419cb8f', branch: 'main' },
+    { id: 'php', label: 'PHP', commit: '51c57cf', branch: 'main' },
 ] as const;
 export type RuntimeId = typeof RUNTIMES[number]['id'];
 

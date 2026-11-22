@@ -10,6 +10,7 @@
   },
   "files": [
     "../../src/i18n/translate.ts",
-    "../../src/remote/protocol.ts"
+    "../../src/remote/protocol.ts",
+    "../../src/remote/crud-protocol.ts"
   ]
 }

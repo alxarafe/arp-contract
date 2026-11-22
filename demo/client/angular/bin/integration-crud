@@ -1,0 +1,103 @@
+#!/usr/bin/env python3
+"""Build the existing consumer and test it against disposable PHP/MariaDB resources (Linux Docker)."""
+import io
+import json
+import os
+from pathlib import Path
+import runpy
+import subprocess
+import tarfile
+import tempfile
+import urllib.request
+
+HERE = Path(__file__).resolve().parent.parent
+CONTRACT = HERE.parents[2]
+PHP = Path(os.environ.get('ARP_PHP_PATH', str(CONTRACT.parent / 'arp-php'))).resolve()
+ARTIFACTS = HERE / 'artifacts'
+
+
+def run(args, **kwargs):
+    subprocess.run(list(map(str, args)), check=True, **kwargs)
+
+
+def revision(root):
+    return subprocess.check_output(['git', '-C', str(root), 'rev-parse', 'HEAD'], text=True).strip()
+
+
+def records(host, token, origin):
+    body = json.dumps({'target': 'demo.items', 'operation': 'LIST', 'inputs': {'limit': 100}}).encode()
+    request = urllib.request.Request(host + '/demo/crud/invoke', data=body, headers={
+        'Authorization': 'Bearer ' + token, 'Origin': origin, 'Content-Type': 'application/json'})
+    with urllib.request.urlopen(request, timeout=15) as response:
+        result = json.load(response)
+    if result.get('status') != 'success':
+        raise RuntimeError('Cannot verify demo records')
+    return result['output']['records']
+
+
+def main():
+    if subprocess.check_output(['git', '-C', str(PHP), 'status', '--porcelain'], text=True).strip():
+        raise RuntimeError('Use a clean PHP checkout containing merged ARP-DEMO-CRUD-001A')
+    if not (PHP / 'demo/crud-run').is_file():
+        raise RuntimeError('PHP must contain demo/crud-run')
+    os.environ['ARP_DEMO_CLIENT_PORT'] = os.environ.get('ARP_DEMO_CLIENT_PORT', '4175')
+    origin = 'http://127.0.0.1:' + os.environ['ARP_DEMO_CLIENT_PORT']
+    os.environ.update(ARP_DEMO_CLIENT_ORIGIN=origin, ARP_DEMO_ORIGIN=origin,
+                      ARP_DEMO_PORT=os.environ.get('ARP_DEMO_PORT', '5398'))
+    host = 'http://127.0.0.1:' + os.environ['ARP_DEMO_PORT']
+    ARTIFACTS.mkdir(exist_ok=True)
+    run([HERE / 'bin/run', 'build'])
+    with tempfile.TemporaryDirectory(prefix='arp-angular-crud-') as work:
+        work = Path(work)
+        php = work / 'php'
+        php.mkdir()
+        archive = subprocess.check_output(['git', '-C', str(PHP), 'archive', 'HEAD'])
+        with tarfile.open(fileobj=io.BytesIO(archive)) as files:
+            files.extractall(php, filter='data')
+        pinned = work / 'contract'
+        run(['git', 'clone', '--quiet', '--no-hardlinks', '--no-checkout', CONTRACT, pinned])
+        pin = (php / 'write-contract.ref').read_text().strip()
+        run(['git', '-C', pinned, 'checkout', '--quiet', '--detach', pin])
+        os.environ['ARP_WRITE_CONTRACT_PATH'] = str(pinned)
+        runner = runpy.run_path(str(php / 'demo/crud-run'))
+        runner['start']()
+        try:
+            state = json.loads(runner['STATE'].read_text())
+            os.environ.update(ARP_CRUD_TOKEN=state['token'], ARP_CRUD_HOST=host)
+            # Readiness and seed preservation are also asserted by the browser lifecycle tests.
+            import time
+            for attempt in range(50):
+                try:
+                    initial = records(host, state['token'], origin)
+                    break
+                except OSError:
+                    time.sleep(.2)
+            else:
+                raise RuntimeError('PHP HTTP readiness timeout')
+            if len(initial) != 30:
+                raise RuntimeError('Expected 30 CSV records in the isolated database')
+            image = ('mcr.microsoft.com/playwright:v1.58.2-noble@sha256:'
+                     '65cefd09a5e943921ecd3a6e5414c603db2eb161e9eb48f2e2ccc63486dc7dc0')
+            run(['docker', 'run', '--rm', '--init', '--network', 'host', '--shm-size=1g',
+                 '--user', f'{os.getuid()}:{os.getgid()}', '-e', 'HOME=/tmp',
+                 '-e', 'PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD=1', '-e', 'ARP_CRUD_HOST', '-e', 'ARP_CRUD_TOKEN',
+                 '-e', 'ARP_DEMO_CLIENT_ORIGIN', '-e', 'ARP_DEMO_CLIENT_PORT',
+                 '--mount', f'type=bind,src={HERE / "tests/browser"},dst=/tests,readonly',
+                 '--mount', f'type=bind,src={HERE / "scripts"},dst=/scripts,readonly',
+                 '--mount', f'type=bind,src={CONTRACT},dst=/contract,readonly',
+                 '--mount', f'type=bind,src={ARTIFACTS},dst=/artifacts', image,
+                 'sh', '-eu', '-c', 'mkdir /tmp/tests; cp -R /tests/. /tmp/tests/; cd /tmp/tests; '
+                 'npm ci --no-audit --no-fund; npx playwright test'])
+            if records(host, state['token'], origin) != initial:
+                raise RuntimeError('Original CSV records changed')
+            report = {'phpRevision': revision(PHP), 'contractPin': pin, 'seedRecordsUnchanged': 30,
+                      'browserReport': 'browser/results.json'}
+            (ARTIFACTS / 'crud-integration.json').write_text(json.dumps(report, indent=2))
+            print('PASS Angular–HTTP–MariaDB; all 30 CSV records unchanged')
+        finally:
+            os.environ.pop('ARP_CRUD_TOKEN', None)
+            runner['stop'](json.loads(runner['STATE'].read_text()))
+
+
+if __name__ == '__main__':
+    main()

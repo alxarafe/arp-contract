@@ -1,0 +1,151 @@
+<section class="demo-crud" [attr.aria-label]="t('crud.heading')" data-testid="crud-panel">
+    <h3>{{ t('crud.heading') }}</h3>
+    <p>{{ t('crud.scope') }}</p>
+    <p data-testid="crud-status" role="status">{{ t(status()) }}</p>
+    @if (!meta()) {
+        <form (submit)="$event.preventDefault(); connect()">
+            <label>{{ t('crud.token') }}
+                <input data-testid="crud-token" type="password" autocomplete="off" spellcheck="false"
+                       [value]="token()" (input)="token.set($any($event.target).value)" [disabled]="busy()">
+            </label>
+            <p>{{ t('crud.session') }}</p>
+            <button data-testid="crud-connect" type="submit" [disabled]="busy() || !baseUrl() || !token()">
+                {{ t('remote.connect') }}
+            </button>
+        </form>
+    } @else {
+        <div class="crud-toolbar">
+            <strong data-testid="crud-target">{{ meta()!.target }}</strong>
+            <span>{{ meta()!.operations.join(' · ') }}</span>
+            <button data-testid="crud-disconnect" (click)="disconnect()">{{ t('remote.disconnect') }}</button>
+            @if (can('CREATE')) {
+                <button data-testid="crud-create" [disabled]="busy()" (click)="create()">{{ t('crud.create') }}</button>
+            }
+            @if (can('LIST')) {
+                <button data-testid="crud-refresh" [disabled]="busy()" (click)="loadPage(page())">
+                    {{ t('crud.refresh') }}
+                </button>
+            }
+        </div>
+        @if (can('LIST')) {
+            <div class="crud-table-scroll">
+                <table data-testid="crud-table">
+                    <caption>{{ t('crud.records') }}</caption>
+                    <thead><tr>
+                        @for (field of meta()!.fields; track field.name) { <th scope="col">{{ field.label }}</th> }
+                        <th scope="col">{{ t('crud.actions') }}</th>
+                    </tr></thead>
+                    <tbody>
+                        @for (row of rows(); track $index) {
+                            <tr data-testid="crud-row">
+                                @for (field of meta()!.fields; track field.name) {
+                                    <td [attr.data-field]="field.name">{{ display(row.values[field.name]) }}</td>
+                                }
+                                <td><div class="crud-actions">
+                                    @if (can('GET')) {
+                                        <button data-testid="crud-get" [disabled]="busy()" (click)="open(row)">
+                                            {{ t('crud.open') }}
+                                        </button>
+                                    }
+                                    @if (can('GET') && can('DELETE')) {
+                                        <button data-testid="crud-delete" [disabled]="busy()"
+                                                (click)="open(row, 'delete')">{{ t('crud.delete') }}</button>
+                                    }
+                                </div></td>
+                            </tr>
+                        } @empty {
+                            <tr><td [attr.colspan]="meta()!.fields.length + 1">{{ t('crud.empty') }}</td></tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <nav class="crud-toolbar" [attr.aria-label]="t('crud.pagination')">
+                <button data-testid="crud-previous" [disabled]="busy() || page() === 1" (click)="loadPage(page() - 1)">
+                    {{ t('crud.previous') }}
+                </button>
+                <span data-testid="crud-page">
+                    {{ t('crud.page') }} {{ page() }} · {{ limit() }} {{ t('crud.perPage') }}
+                </span>
+                <button data-testid="crud-next" [disabled]="busy() || next() === null" (click)="loadPage(next()!)">
+                    {{ t('crud.next') }}
+                </button>
+            </nav>
+        }
+        @if (mode()) {
+            <section class="crud-editor" data-testid="crud-editor" [attr.aria-label]="t('crud.record')">
+                <h4>{{ t(mode() === 'create' ? 'crud.create' : mode() === 'delete' ? 'crud.confirmTitle'
+                    : mode() === 'edit' ? 'crud.edit' : 'crud.record') }}</h4>
+                @if (mode() === 'create' || mode() === 'edit') {
+                    <form (submit)="save($event)">
+                        <fieldset [disabled]="busy() || blocked()">
+                            <legend>{{ t('crud.exact') }}</legend>
+                            @for (field of meta()!.fields; track field.name) {
+                                <div class="crud-field" [attr.data-field-editor]="field.name">
+                                    <label>{{ field.label }} · {{ field.type }}
+                                        {{ field.key ? ' · ' + t('crud.key') : '' }}
+                                        @if (field.type === 'BOOLEAN') {
+                                            <input type="checkbox" [attr.data-input]="field.name"
+                                                   [checked]="draft()[field.name] === true"
+                                                   [disabled]="draft()[field.name] === null
+                                                       || (field.key && mode() === 'edit')"
+                                                   (change)="value(field, $event)">
+                                        } @else {
+                                            <input type="text" [attr.data-input]="field.name" autocomplete="off"
+                                                   [value]="display(draft()[field.name])"
+                                                   [readOnly]="field.key && mode() === 'edit'"
+                                                   [disabled]="draft()[field.name] === null"
+                                                   [required]="!field.nullable" (input)="value(field, $event)">
+                                        }
+                                    </label>
+                                    @if (field.nullable && !(field.key && mode() === 'edit')) {
+                                        <label><input type="checkbox" [checked]="draft()[field.name] === null"
+                                                      (change)="nullable(field, $event)">{{ t('crud.null') }}
+                                        </label>
+                                    }
+                                    <p class="crud-constraints">
+                                        {{ t('crud.constraints') }}: {{ constraints(field) }}
+                                    </p>
+                                </div>
+                            }
+                            <button type="submit" data-testid="crud-save">{{ t('crud.save') }}</button>
+                        </fieldset>
+                    </form>
+                } @else {
+                    <dl data-testid="crud-values">
+                        @for (field of meta()!.fields; track field.name) {
+                            <dt>{{ field.label }} · {{ field.type }}</dt>
+                            <dd [attr.data-detail]="field.name">{{ display(selected()!.values[field.name]) }}</dd>
+                        }
+                    </dl>
+                    @if (mode() === 'view' && can('UPDATE')) {
+                        <button data-testid="crud-edit" [disabled]="busy() || blocked()" (click)="edit()">
+                            {{ t('crud.edit') }}
+                        </button>
+                    }
+                    @if (mode() === 'delete') {
+                        <p>{{ t('crud.confirmWarning') }}</p>
+                        <label><input data-testid="crud-consent" type="checkbox" [checked]="consent()"
+                                      [disabled]="busy() || blocked()"
+                                      (change)="consent.set($any($event.target).checked)">{{ t('crud.consent') }}
+                        </label>
+                        <button data-testid="crud-confirm-delete" [disabled]="busy() || blocked() || !consent()"
+                                (click)="remove()">{{ t('crud.confirmDelete') }}</button>
+                    }
+                }
+                @if (selected() && can('GET')) {
+                    <button data-testid="crud-reload" [disabled]="busy()" (click)="open(selected()!)">
+                        {{ t('crud.reload') }}
+                    </button>
+                }
+                <button data-testid="crud-cancel" [disabled]="busy()" (click)="close()">{{ t('crud.cancel') }}</button>
+            </section>
+        }
+    }
+    @if (busy()) { <p role="status">{{ t('crud.busy') }}</p> }
+    @if (issue()) { <p data-testid="crud-issue" role="alert">{{ t(issue()!) }}</p> }
+    @if (result()) {
+        <details open>
+            <summary>{{ t('remote.result') }}</summary><pre data-testid="crud-result">{{ result() }}</pre>
+        </details>
+    }
+</section>

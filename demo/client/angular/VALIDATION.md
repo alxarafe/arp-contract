@@ -150,3 +150,25 @@ CRUD, proyecciones ejecutables, servicios o autorización de producción. La API
 pendiente de aprobación como transporte general. El estado es «última petición confirmada», no heartbeat.
 La evidencia nativa corresponde al candidato fijado por la biblioteca, no a conformidad global con cada capacidad
 del contrato actual. La compatibilidad Docker host-network de integración está comprobada en Linux.
+## ARP-DEMO-CRUD-001B — 2026-11-22
+
+Integración local Angular–HTTP–MariaDB contra PHP `51c57cfbbe3953d460896d1a2e30b196329b5f58`
+y `angular-ui-runtime` sin modificaciones, en `ee60123d03f095a14c4004632c214dbd822332c2`.
+Procedimiento reproducible: [CRUD-PHP.md](CRUD-PHP.md), `bin/integration-crud`.
+
+- Build Angular estricto y **14/14 pruebas unitarias** aprobadas, incluidas negociación, metadatos con otros
+  nombres de campos, cambios parciales y precisión fuera del rango seguro de JavaScript.
+- **32/32 pruebas Chromium** aprobadas entre escritorio y móvil. CRUD completo en español e inglés,
+  cambios entre los cinco temas con borrador y sesión retenidos, validación del servidor, conflictos UPDATE
+  y DELETE reales, consentimiento renovado, token inválido y 403 durante una sesión, desconexión y cambio de URL.
+- La batería anterior de navegador del explorador se ejecuta junto con la nueva. Las pruebas multiruntime
+  de diccionario mantienen su procedimiento separado; esta ejecución no vuelve a arrancar .NET ni Java.
+- Los **30 registros CSV finales son idénticos a los iniciales** por HTTP, después de las escrituras temporales.
+  El MariaDB y el host son contenedores propios de la prueba; su limpieza se ejecuta al terminar.
+- **214/214 pruebas del contrato** y todos los verificadores del workflow `contract-checks` aprobados.
+  Estas comprobaciones estáticas no se presentan como ejecución SQL ni como nueva conformidad normativa.
+- Capturas del panel CRUD revisadas en escritorio y móvil. Informes generados bajo `artifacts/`, ignorados por Git.
+
+Se conserva la paginación sin snapshot del host PHP. No hay sobrescritura forzada ni almacenamiento persistente
+del token. Tras conflicto se exige recargar; ante resultado de escritura incierto se bloquea el reintento hasta
+revisar el estado. Los límites de concurrencia y precisión se documentan en `CRUD-PHP.md`.

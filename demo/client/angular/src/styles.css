@@ -64,3 +64,30 @@ button, input, select { font: inherit; }
     .demo-selectors { width: 100%; flex-wrap: wrap; }
     .demo-selectors label { flex: 1; }
 }
+.demo-crud { margin: 1.5rem 0; padding: 1rem; border: 1px solid currentColor; border-radius: .5rem; }
+.demo-crud input[type="text"], .demo-crud input[type="password"] {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 36rem;
+    padding: .6rem;
+}
+.demo-crud label { display: block; margin: .5rem 0; }
+.crud-toolbar, .crud-actions { display: flex; align-items: center; flex-wrap: wrap; gap: .5rem; margin: .75rem 0; }
+.crud-table-scroll { max-width: 100%; overflow: auto; }
+.demo-crud table { width: 100%; min-width: 36rem; border-collapse: collapse; text-align: left; }
+.demo-crud td { white-space: pre; }
+.demo-crud .crud-actions { margin: 0; }
+.demo-file select { box-sizing: border-box; width: 100%; min-width: 0; }
+.demo-crud th, .demo-crud td {
+    padding: .65rem;
+    border-bottom: 1px solid currentColor;
+    overflow-wrap: anywhere;
+}
+.demo-crud caption { text-align: left; padding: .5rem 0; font-weight: 600; }
+.crud-editor { margin-top: 1rem; padding: 1rem; border: 1px solid currentColor; }
+.crud-field { margin: 1rem 0; }
+.crud-constraints { overflow-wrap: anywhere; font-size: .9rem; }
+.demo-crud dd { margin: .25rem 0 1rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+.demo-crud dt { font-weight: 600; }
+.demo-crud button { padding: .5rem .75rem; }
+.demo-crud button:disabled { cursor: not-allowed; }

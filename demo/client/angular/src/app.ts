@@ -1,5 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { ThemeRegistry, ThemeService, ThemeShellOutlet } from '@alxarafe/ui-runtime';
+import { RemoteCrud } from "./remote/crud";
 import { RemoteDictionary } from './remote/dictionary';
 import { LanguageService } from './i18n/language.service';
 import type { TranslationKey } from './i18n/types';
@@ -7,7 +8,7 @@ import { CAPABILITIES, RUNTIMES, type RuntimeId } from './catalog';
 
 @Component({
     selector: 'arp-demo',
-    imports: [ThemeShellOutlet, RemoteDictionary],
+    imports: [ThemeShellOutlet, RemoteDictionary, RemoteCrud],
     templateUrl: './app.html',
 })
 export class DemoApp {
