@@ -4,6 +4,10 @@ Cliente local y privado de demostración en `arp-contract/demo/client/angular/`.
 El [inventario](INVENTORY.md) identifica las revisiones inspeccionadas y los adaptadores pendientes por repositorio.
 No es una prueba de conformidad de runtime ni un protocolo nuevo de ARP.
 
+## CRUD PHP/MariaDB
+
+El CRUD real desde el navegador, su arranque y sus pruebas se documentan en [CRUD-PHP.md](CRUD-PHP.md).
+
 ## Qué funciona
 
 - Selector .NET / Java / PHP con una URL independiente por instancia. La selección conserva las URLs durante la
@@ -46,7 +50,7 @@ textos internos de paquetes de terceros. Se utilizan señales y servicios de Ang
 Los hosts de diccionario .NET, Java y PHP se consumen mediante **un único componente y negociación común**.
 Configurar una URL no conecta automáticamente: pulsar Conectar verifica identidad, protocolo reconocido y
 capacidades anunciadas antes de habilitar operaciones. La UI conserva las respuestas originales, separadas de
-las expectativas estáticas. Las demás capacidades continúan pendientes en los tres runtimes.
+las expectativas estáticas. El CRUD PHP/MariaDB se integra mediante su panel propio; las demás capacidades conservan sus pendientes.
 
 El listado, descriptor y validación se habilitan según `dictionary.list`, `dictionary.describe` y
 `dictionary.validate`. Un host sin alguna capacidad no la adquiere por pertenecer a un runtime reconocido.
@@ -140,7 +144,7 @@ incompleta modifican deliberadamente el sobre de información; no se usan como p
 
 1. Revisar la integración común y mantener sus pruebas contra las revisiones reconocidas de los tres hosts.
 2. Acordar el transporte general y ampliar pruebas reales por runtime, sin convertir la API demo en normativa.
-3. Implementar progresivamente recursos, CDS, CRUD e invocaciones antes de habilitar sus acciones.
+3. Implementar progresivamente recursos, otras proyecciones e invocaciones antes de habilitar sus acciones.
 
 No se decide el origen declarativo de CRUD, ni se añaden formularios de negocio, workflows, roles o endpoints
 contractuales. Las tarjetas de capacidades son un inventario; el panel de diccionario negocia las operaciones

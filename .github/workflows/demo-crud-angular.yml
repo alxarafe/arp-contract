@@ -1,0 +1,39 @@
+name: Angular PHP MariaDB demo
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'demo/client/angular/**'
+      - '.github/workflows/demo-crud-angular.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  angular-http-mariadb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: alxarafe/angular-ui-runtime
+          ref: ee60123d03f095a14c4004632c214dbd822332c2
+          path: .references/angular-ui-runtime
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1
+        with:
+          repository: alxarafe/arp-php
+          ref: 51c57cfbbe3953d460896d1a2e30b196329b5f58
+          path: .references/arp-php
+          persist-credentials: false
+      - name: Real browser and database integration
+        env:
+          ARP_UI_RUNTIME_PATH: ${{ github.workspace }}/.references/angular-ui-runtime
+          ARP_PHP_PATH: ${{ github.workspace }}/.references/arp-php
+        run: python3 demo/client/angular/bin/integration-crud

@@ -73,16 +73,21 @@
                     <span class="demo-eyebrow">{{ t('scenario.heading') }}</span>
                     <h2>{{ t(capability().label) }}</h2>
                 </div>
-                <span class="demo-badge">{{ t('scenario.readonly') }}</span>
+                @if (capability().id !== 'crud') {
+                    <span class="demo-badge">{{ t('scenario.readonly') }}</span>
+                }
             </div>
             <p data-testid="capability-detail">{{ t(capability().detail) }}</p>
             @if (capability().id === 'dictionary') {
                 <arp-remote-dictionary [runtimeId]="runtimeId()" [baseUrl]="urlError() ? '' : url()" />
             }
+            @if (capability().id === 'crud') {
+                <arp-remote-crud [runtimeId]="runtimeId()" [baseUrl]="urlError() ? '' : url()" />
+            }
             <button data-testid="execute" disabled aria-describedby="execution-limit">
                 {{ t('scenario.execute') }}
             </button>
-            <p id="execution-limit">{{ t(capability().id === 'dictionary'
+            <p id="execution-limit">{{ t((capability().id === 'dictionary' || capability().id === 'crud')
                 ? 'remote.fixtureLimit' : 'scenario.limit') }}</p>
             <label class="demo-file">{{ t('scenario.file') }}
                 <select data-testid="source" [value]="source()" (change)="selectFile($event)">

@@ -1,3 +1,15 @@
+# ARP-DEMO-CRUD-001B — Actualización PHP (2026-11-22)
+
+PHP `51c57cfbbe3953d460896d1a2e30b196329b5f58` incorpora el host CRUD HTTP de la PR #18.
+El cliente integra sus operaciones y metadatos, negociados por HTTP; no deduce capacidades del inventario Git.
+El contrato fijado por ese PHP es `e3c2c08c93add63faebbe011a7e8e1ec3eccff2c`.
+`angular-ui-runtime` se mantiene sin cambios en `ee60123d03f095a14c4004632c214dbd822332c2`.
+Arranque, pruebas reales y límites: [CRUD-PHP.md](CRUD-PHP.md).
+
+Los inventarios siguientes son históricos; sus pendientes y pins describen las revisiones allí inspeccionadas.
+
+---
+
 # ARP-DEMO-004 — Inventario de integración actualizado
 
 Referencias inspeccionadas el 2026-11-16; son código, no instancias descubiertas automáticamente.

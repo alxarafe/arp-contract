@@ -5,7 +5,10 @@ const baseURL = process.env.ARP_DEMO_CLIENT_ORIGIN ?? 'http://127.0.0.1:4173';
 export default defineConfig({
     testDir: '.',
     testMatch: '*.spec.mjs',
-    testIgnore: process.env.ARP_DEMO_HOSTS ? [] : ['multiruntime.spec.mjs'],
+    testIgnore: [
+        ...(!process.env.ARP_DEMO_HOSTS ? ['multiruntime.spec.mjs'] : []),
+        ...(!process.env.ARP_CRUD_HOST ? ['crud.spec.mjs'] : []),
+    ],
     workers: 1,
     retries: 0,
     forbidOnly: true,
