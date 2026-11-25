@@ -582,10 +582,29 @@ Do not invent negotiation, endpoint probing, permissions, version tokens or conc
 
 ## 7. Proposed minimum ARP Angular library boundary
 
-**Location proposal, pending explicit approval:** a separate `alxarafe/arp-angular` repository producing
-`@alxarafe/arp-angular`, leaving C:`demo/client/angular` as a separate private demonstration application.
-A separately buildable package in another approved repository is possible; the choice is not settled by this inventory.
-No library directory, manifest or public signature is created in this task.
+**Location decision pending explicit approval.** Compare C:`client/angular` and a separate
+`alxarafe/arp-angular` repository for the same `@alxarafe/arp-angular` package. Neither is selected here.
+The existing C:`demo/client/angular` must remain a separate private demonstration application in either case.
+No repository, library directory, manifest or public signature is created by this inventory.
+
+| Criterion | C:`client/angular` | Separate `alxarafe/arp-angular` repository |
+| --- | --- | --- |
+| Contract/API coordination | Atomic reviews near contract fixtures | Explicit pinned cross-repository reviews |
+| Ownership/discovery | Clear package subtree and docs boundary needed | Dedicated Angular entry and ownership |
+| Build independence | Isolated APF workflow/lock/consumer tests | Own APF workflow/lock/consumer tests |
+| Dependency risk | Avoid depending on sibling private contract/demo source | Avoid unpinned contract/AUR dependencies |
+| Maintenance cost | Shared governance; segregated CI | Separate governance, CI and coordination |
+| Demo relationship | Installed APF, never package source | Installed APF across repositories |
+| Evidence/provenance | Record repository SHA plus package subtree/archive hashes | Record repo SHA and archive hashes |
+| Later relocation | Preserve public imports and provenance if moved | Preserve public imports and provenance if moved |
+
+Both locations can provide independent APF consumption, public AUR peer dependencies and separate demo builds;
+repository separation alone does not prove that independence. C's language-neutral contract authority must not be
+confused with Angular implementation authority if co-located. A separate repository must not duplicate contract
+specifications to compensate for distance. Choose only after agreeing maintainership, CI scope, contract pinning,
+package documentation home and version/provenance policy. This correction deliberately withdraws the earlier
+single-location recommendation; package name and architectural dependency direction remain unchanged.
+The minimal documentation layout is location-neutral (section 13.6).
 
 Use one APF package initially, with internal modules rather than speculative public subpackages:
 
@@ -681,7 +700,7 @@ explicitly approved contract/profile references; no endpoint invented by extract
 interoperability criteria distinguish demo/experimental versus approved profiles. Dependencies: CAP-BASE-001.
 Excludes implicitly promoting demo HTTP, backend implementation and formalizing all future ARP features at once.
 
-**ARP-ANGULAR-PACK-001 — Independent package scaffold.** Target proposed repository, only after location approval.
+**ARP-ANGULAR-PACK-001 — Independent package scaffold.** Target approved package location, after explicit approval.
 Scope: APF/public entry/peer dependencies and disposable consumer build. Preconditions: approved location and
 first profile. API: bootstrap/ports for that slice only. Tests: one AUR/Angular instance, installed APF exports,
 no source aliases, themes registered by consumer. Dependencies: required U tranches, ARP-PROFILE-001.
@@ -856,7 +875,7 @@ should agree; isolated codec/unit success cannot certify persistence, transactio
    adoption and installed-package compatibility are mandatory; no version change is authorized by this inventory.
 3. **Semantic parity:** E v0.14 integers, exact JSON tokens, contextual exclusions, relations/actions and immutable
    semantics differ from ARP candidate/UI neutral models. Mapping needs explicit unsupported/deferred results.
-4. **Library location:** Separate repo is recommended, not approved. Initial peer/version support and optional ERBAS
+4. **Library location:** Both locations in section 7 remain undecided. Peer/version support and optional ERBAS
    compatibility entry point need decisions before package scaffolding. Avoid a speculative generic protocol framework.
 5. **Visual completeness:** Lossless editing is not yet full themed semantic widget support. Objects/custom insertion,
    dialog/summary reuse and list interaction ports need scoped proof, not parallel app implementations.
@@ -901,3 +920,262 @@ Executed on this documentation branch: the reference/hash checker passed with 27
 documents; both documentation unit tests passed. The checker inventories 21 external URLs without fetching them.
 Cross-repository source revisions were inspected separately; no external URL availability or backend conformance
 is implied by the offline checker. Formatting and diff checks must also pass before the local commit.
+
+## 13. Documentation inventory and simplification proposal
+
+**Correction scope:** Documentation inspection on `docs/aur-capabilities-001`, starting at
+`77acb1c2f274ce0523f4c2445b16a9c2ea8e82e9`. The branch and inspected working trees were clean.
+Sections 2–3's thirty-capability inventory remains intact. This section supplements the original inspection;
+it does not retroactively extend its runtime or execution evidence.
+
+The simplification requirements are one discoverable entry per audience, minimal operational guides, explicit
+status/ownership, links instead of copied specifications, and preservation of approved decisions and original
+execution evidence. These requirements guide future cleanup; they do not authorize cleanup in this correction.
+They implement the approved layer boundaries in section 2 and ARP-UI-BOUNDARIES-001 without making demo HTTP normative.
+No separate documentation policy or location approval is inferred from that architectural decision.
+
+### 13.1 Classification and preservation rules
+
+Use the following labels in the inventory. They classify documents by function, not by age or filename:
+
+- **AUTH — Current authoritative:** The current source for its stated subject and revision. Authority over a
+  candidate specification, local implementation or application policy does not mean an approved/released protocol.
+- **OPS — Operational:** Reproducible setup, build, test, host lifecycle and troubleshooting instructions.
+- **HIST — Historical:** Dated decisions, reviews, execution evidence and provenance. Preserve original identities,
+  commands/results, limitations, source links and any manifest hashes; do not restate them as current runs.
+- **DUP — Duplicated or superseded:** A repeated explanation/entry point, or a statement with an explicit successor.
+  This is not permission to delete. Supersession is limited to its stated subject, not the whole source document.
+- **CONS — Candidate for consolidation:** Current explanatory/operational material can be linked or consolidated
+  in a later approved task. Preserve evidence separately and add a source-to-destination/anchor map first.
+
+Labels can coexist within one document. A mixed current guide/historical report must not be classified wholesale
+as obsolete. An archived specification may still supply governing rules at a pinned revision. Redirects are useful
+compatibility entry points, not redundant documents to remove. Neither archiving nor this inventory revokes contracts.
+
+### 13.2 arp-contract root and shared documentation
+
+The following paths are C-relative. Groups list the exact relevant documents rather than proposing mass deletion.
+The root README should route readers to authority, development, demo operation and history, not duplicate each guide.
+
+| Document or group | Classification | Proposed treatment |
+| --- | --- | --- |
+| `README.md` | AUTH entry; CONS | Short scope/status/navigation; link detailed sources |
+| `AGENTS.md` | AUTH working rules | Retain repository-specific instructions |
+| `CHANGELOG.md`, `releases/README.md` | AUTH release governance | Preserve release/publication distinction |
+| `releases/v0.1.0.md` | HIST prepared inventory | Retain; preparation is not proof of publication |
+| `docs/dictionary.md` | AUTH active candidate | Keep specification and explicit INTEGER precedence |
+| `docs/features/arp-integer-001.md` | AUTH candidate scope; HIST evidence | Link semantics; keep evidence |
+| `docs/features/arp-crud-001a.md` | AUTH review candidate | Keep candidate status; no wire approval |
+| `docs/contract-v1-draft.md` | AUTH pending proposal | Label unactivated scope; link exceptions |
+| `docs/decisions/ARP-UI-BOUNDARIES-001.md` | AUTH approved direction | Preserve unchanged; link from current entry |
+| `docs/review-contract-v1.md` | HIST; CONS navigation | Retain review/results and INTEGER update |
+| `docs/ARP-hoja-de-ruta-primer-CRUD-2026-11-21.md` | HIST proposal; CONS | Link dated plan; old gaps are dated |
+| `docs/aur-capabilities-001.md` | AUTH inventory/proposal only | Keep separate from contract authority |
+| `docs/history/README.md`, `2026-11-20-pre-v1.md` | AUTH historical index | Keep original revision/archive navigation |
+| `docs/history/manifest.json`, archived Markdown | HIST integrity evidence | Keep original mappings/hashes |
+
+Existing compatibility entry points, including those with overlapping titles, need explicit classification:
+
+- `docs/architecture.md`, `docs/versioning.md`, `docs/release-process.md`: **AUTH entry points, HIST targets**.
+  They route to preserved architecture/governance; use their rules within original scope and current decisions.
+  They are not automatically superseded by the unactivated 1.0 draft.
+- `docs/compatibility.md`, `docs/dictionary-checks.md`, `docs/dictionary-check-results.md`,
+  `docs/dictionary-portability-002.md`: **HIST/OPS entry points**. Link exact conformance/check evidence;
+  old type/adoption statements are scoped by current INTEGER documents, not rewritten in historical copies.
+- `docs/ARP_CDS_acuerdos_aprobados_2026-11-15.md`,
+  `docs/ARP_CDS_modelo_semantico_primera_integracion_Angular.md`,
+  `docs/ARP_reorientacion_arquitectura_funcional.md`, and the corresponding latter two paths in
+  `docs/decisions/`: **HIST, DUP entry explanations, CONS navigation**. Retain every stable path and original
+  decision identity; a future index should explain their relationship without merging or deleting originals.
+- `docs/features/arp-dict-001.md`, `arp-res-001-borrador-especificacion.md`, `arp-cds-001.md`,
+  `arp-cds-phy-001-borrador.md`, `arp-cds-read-001.md`, `arp-cds-listget-001.md`,
+  `arp-cds-001-compatibility-and-historical-data.md`, `arp-services-001.md`, `arp-services-002.md`,
+  `arp-modules-001.md`, `arp-menus-001.md`: **HIST specification entry points**, retaining their candidate/approval
+  scope and current INTEGER overlays. No blanket supersession or wire compatibility follows from their filenames.
+- `docs/features/arp-cds-001-checks.md` and the corresponding archived check/review reports: **HIST** execution
+  evidence. Preserve reported counts, fixtures, revisions and limits. Link from one current verification index.
+
+The short archive notices are **DUP text, useful stable navigation**. Consolidation should reduce reader-facing
+entry lists and copied status explanations, not alter normative text, approved decisions, fixtures or the archive.
+No new “current specification” should be generated by concatenating candidates and historical agreements.
+
+### 13.3 Current Angular demo documentation
+
+All paths below are D-relative; the demo remains C:`demo/client/angular`, regardless of package-location choice.
+
+| Document | Classification | Proposed treatment |
+| --- | --- | --- |
+| `README.md` | OPS current entry; CONS | Quick start, limits, host/evidence links |
+| `INVENTORY.md` | HIST mixed snapshots; current PHP note; CONS | Keep snapshots; link current index here |
+| `VALIDATION.md` | HIST immutable run evidence | Keep dated runs/pins/counts; do not turn into living status |
+| `CRUD-PHP.md` | OPS PHP integration; demo protocol description | Link host-owned setup; keep client lifecycle/limits |
+| `MULTIRUNTIME-HOSTS.md` | OPS dictionary integration; CONS | Canonical client multihost commands and prerequisites |
+| `DOTNET-HOST.md` | OPS earlier .NET path; HIST scope; DUP/CONS | Link current workflow; retain original scope |
+
+`DOTNET-HOST.md` is not a second general Angular setup guide. Its earlier .NET-only scope and the later shared
+`integration-dotnet`/multiruntime behavior must remain distinguishable. `CRUD-PHP.md` and multiruntime dictionary
+operation are not duplicate protocols; do not merge their capability claims. README's ES/EN/storage behavior belongs
+to the demo guide, not the future adapter API. Keep backend credentials/origin/cleanup instructions owned by each host.
+Repeated copied commands are consolidation candidates only after verifying they invoke the same workflow.
+
+### 13.4 erbas-client documentation
+
+All paths below are E-relative, inspected at the E revision in section 1. No ERBAS document is changed here.
+
+| Document | Classification | Proposed treatment |
+| --- | --- | --- |
+| `README.md` | OPS app entry; CONS | App setup/checks; link runtime/development |
+| `AGENTS.md` | AUTH application/working policy | Retain scope, authorization and validation requirements |
+| `docs/client-runtime-001.md` | AUTH current consumer behavior; HIST proofs; CONS | Generic CRUD/navigation chapter |
+| `docs/client-runtime-002.md` | AUTH current static presentation; HIST proofs; CONS | Layout/action chapter |
+| `docs/resource-presentation-001.md` | AUTH contexts; HIST proofs; CONS | Context chapter; keep v0.14 identities |
+| `docs/core-fe-theme-runtime.md` | AUTH installed AUR integration; OPS; CONS | Consumer adaptation; link provider API |
+| `docs/client-demo-001.md` | AUTH app UI; HIST verification; CONS | App workspace/Assistant, not library docs |
+| `docs/full-stack-development.md` | OPS environment; HIST proofs; CONS | Operations guide; link original evidence |
+| `docs/qa/aur-integration-002.md` | HIST QA evidence | Keep pin, developer results, visual limits |
+| `app/vendor/README.md` | AUTH installed provenance; OPS; HIST old adoption | Canonical provenance and history |
+
+`contract.revision` and `app/vendor/aur-integration-002-provenance.json` are authoritative provenance companions,
+not prose to reproduce in multiple guides. Keep exact release/tag/source identities and documented backend limits.
+The published ERBAS contract remains the HTTP authority; local guides describe consumption, not new protocol rules.
+
+Overlaps eligible for **CONS/DUP explanation** are generic-CRUD policy across README/runtime/development guides,
+layout/context explanations across CLIENT-RUNTIME-002 and RESOURCE-PRESENTATION-001, setup commands across README
+and full-stack development, and theme/package descriptions across core-fe and vendor docs. Their subjects are not
+entirely equivalent. Preserve contextual absence/empty/404 semantics, specialized overrides, MANY_TO_ONE, action scopes,
+auth/backend changes and all historical proofs before consolidating any prose. Separate mock results, developer
+reported validation and live-backend evidence rather than combining counts or implying new Java compatibility.
+
+### 13.5 ARP runtime documentation boundaries
+
+Supplementary read-only documentation inspection used clean local runtime checkouts at the following HEADs.
+These are local documentation revisions, not newly verified remote-main/adoption or conformance claims:
+
+| Repository | Documentation checkout |
+| --- | --- |
+| arp-dotnet | `2e6aa2ca2ba17b148b1f0873c58fcd2b38ddd6df` |
+| arp-java | `91b5212aba176f97c37366166cb90fc7ae786bfb` |
+| arp-php | `51c57cfbbe3953d460896d1a2e30b196329b5f58` |
+
+For all three, `AGENTS.md` is **AUTH working policy**; `README.md` and `docs/architecture.md` are **AUTH implementation
+entry/API architecture, OPS, CONS**. They describe each runtime's actual supported contract refs, native API and
+limits. They must link shared ARP semantics instead of redefining them, and must not host Angular API/theme guides.
+The .NET/Java seventeen-type descriptions and PHP's current INTEGER adoption are different implementation states.
+Documentation cleanup must not erase that difference or change pins to make it appear resolved.
+
+Runtime-specific classification, with paths relative to each named repository:
+
+- **arp-dotnet:** `docs/cds-read-002.md`, `cds-read-003.md`, `listget-001.md`, `sql-providers-dotnet-001.md`,
+  `sql-refactor-dotnet-001.md` are **OPS implementation scope plus HIST task records, CONS live-guide material**.
+  `docs/cds-read-003-audit.md`, `listget-001-review.md`, `contract-review.md`, `conformance.md`,
+  `rc1-conformance.md` are **HIST**. `conformance.md` explicitly points to RC1 evidence: its older run is superseded
+  only as the latest acceptance reference, not rewritten. `demo/README.md` is **OPS demo-host authority**;
+  `demo/VALIDATION.md` is **HIST**.
+- **arp-java:** `docs/cds-read-002.md`, `cds-read-003.md`, `listget-001.md`, `sql-refactor-java-001.md`,
+  `sql-providers-java-002.md` are **OPS implementation scope plus HIST task records, CONS live-guide material**.
+  `docs/cds-read-003-audit.md`, `listget-001-review.md`, `contract-feedback.md`, `conformance.md` are **HIST**.
+  `demo/README.md` is **OPS demo-host authority**, explicitly dictionary-only; `demo/VALIDATION.md` is **HIST**.
+- **arp-php:** `docs/integer-002.md` is **AUTH current implementation/adoption reference plus HIST evidence**.
+  `docs/cds-read-002.md`, `cds-read-003.md`, `sql-php-001.md`, `sql-php-002.md`, `crud-001b.md`,
+  `conformance.md` explicitly preserve **HIST pre-INTEGER evidence** with scoped successor links; do not promote
+  their old counts to current acceptance. `docs/cds-read-003-audit.md` is **HIST**; `test-001.md` is **HIST,
+  superseded gap status**, while `test-002.md` records the later closure, **HIST evidence/current reference for
+  that closure**. `docs/seed-001.md` is **OPS seed procedure plus HIST implementation evidence, CONS**.
+  `demo/README.md` and `demo/CRUD.md` are **OPS distinct dictionary/CRUD host profiles**, not normative ARP HTTP;
+  `demo/VALIDATION.md` is **HIST dictionary evidence**, not a CRUD certificate.
+
+Machine-readable conformance matrices, contract refs, fixture hashes and original reports stay with the producing
+runtime at their original identities. A shared index may link them, never copy a matrix as a new current result.
+Runtime demo docs own host build/start/stop, ports/origins/credentials, physical databases, disposal and host protocol
+limits. The Angular demo owns client installation/interaction and how to invoke its integration scripts.
+Future ARP Angular package docs own Angular adapter API/support profiles, not host administration or business policy.
+Current runtime reports mixing procedure and evidence are **CONS** for new live instructions only; preserve originals.
+
+### 13.6 Minimal final documentation structure
+
+This is a proposed reader-facing structure, not a file-move plan. Existing contracts/decisions/history/provenance
+remain at stable paths. Add a document only for a distinct audience; use README sections when the material is small.
+No new milestone-named guide is needed for each implementation task.
+
+| Area | Minimal maintained entry | Detail and preserved evidence |
+| --- | --- | --- |
+| Contract repository | Root `README.md`: scope/status/map | Existing specs, decisions, history |
+| Shared development | One linked check/contribution section or guide | Exact tools; existing release/version policies |
+| Current Angular demo | D `README.md`: run/use/capabilities | One integration guide; original evidence links |
+| Future Angular package | `<package-root>/README.md`: install/peers | API/adapter guide; support/test index |
+| ERBAS application | E `README.md`: application entry | Runtime guide, operations guide, provenance, QA |
+| Each runtime | Its `README.md`: native API/supported refs | Implementation/operations guide and evidence index |
+
+For D, the minimal end state is README plus **one current integration guide** with separate dictionary and PHP CRUD
+chapters. Link host-owned setup and exact runtime revisions; retain profile distinctions and client commands,
+ES/EN behavior, state/credential lifetime and cleanup obligations. Preserve `INVENTORY.md`, `VALIDATION.md`,
+`DOTNET-HOST.md`, `MULTIRUNTIME-HOSTS.md` and `CRUD-PHP.md` as dated originals/stable links when a later task
+introduces the current guide. Do not edit evidence sections to match a new command or turn old files into fabricated
+new execution logs. New proof reports should carry a run identity under an evidence location, linked once.
+
+For the future package, `<package-root>` means either C:`client/angular` or the separate repository root, depending
+on a later explicit decision (section 7). Its README covers installation/compatible peers, supported profile status,
+minimal AUR composition and links. One API/adapter guide covers metadata mapping, exact values/presence,
+CRUD/recovery/diagnostics and injected application boundaries. A compact support/test index links actual host and
+consumer evidence. Generated API references may supplement this guide later, but must not become a second manual
+contract. Package docs never duplicate AUR component/theme specifications or claim a protocol without approval.
+No future package docs belong under the demonstration application's README as their sole public source.
+
+For E, consolidate current behavior into one resource-runtime guide with CRUD/navigation, static/contextual layout,
+relations/actions and compatibility chapters. Keep application workspace/domain policy separate from generic adapter
+usage. One development guide owns Docker/proxy/environment instructions; vendor provenance and original QA/live
+proofs remain separately linked. This is editorial consolidation, not removal of features or migration of their code.
+
+### 13.7 Ordered DOCS cleanup tasks
+
+These tasks are separate from section 8's implementation backlog. Each requires its own authorization and small
+reviewed commit; none is executed by this correction. Documentation work must not change behavioral contracts,
+fixtures, versions, historical files or original test results. Link corrections must preserve old destinations.
+
+**DOCS-BASE-001 — Freeze the documentation map.** Target C; first cleanup task. Scope: record exact document
+classification, original anchors, revision/evidence destinations and reader audiences from this inventory.
+Precondition: this correction reviewed. Deliverable: concise documentation navigation in the current entry point,
+linking existing approved/candidate/history sources. Acceptance: every relevant source has a destination and status,
+no authority promoted, original files/hashes unchanged, offline link/anchor checks pass. Dependencies: none.
+Excludes moving specs/decisions/reports and rewriting the thirty-capability inventory.
+
+**DOCS-DEMO-001 — One current Angular demo guide.** Target C/D. Scope: current README navigation and one integrated
+client operations guide, linking each host's own procedure. Preconditions: DOCS-BASE-001 and commands verified
+against current scripts/pins. Acceptance: clean-checkout reader can distinguish dictionary versus CRUD support,
+run appropriate workflow, understand credentials/cleanup and find original evidence. Dependencies: DOCS-BASE-001.
+Excludes package creation, host protocol changes, deletion/editing of historical reports and merging evidence counts.
+Preserve old document/anchor destinations with an explicit mapping; no invented successful run.
+
+**DOCS-RUNTIMES-001 — Native/runtime documentation ownership.** Targets arp-dotnet, arp-java and arp-php in
+separate commits. Scope: current README/operations navigation, shared-contract references and links to original
+conformance/host evidence; deduplicate only live explanatory instructions. Preconditions: each runtime's docs/refs
+verified at its exact revision. Acceptance: current versus historical/type-adoption scopes explicit, native host
+commands have one owner, no Angular API duplication. Dependencies: DOCS-BASE-001; coordinate links with DOCS-DEMO-001.
+Excludes backend changes, contract adoption, updating historical matrices and treating PHP proof as Java/.NET proof.
+
+**DOCS-PACKAGE-001 — Location-neutral package documentation plan, then actual API guide.** Target approved package
+location only after a separate decision. Scope: adopt the minimal README/API/support-index structure in 13.6 using
+only actually implemented public exports and approved supported profiles. Preconditions: location approval and the
+corresponding section 8 package/API tranche; no empty documentation package now. Acceptance: installed-APF examples,
+explicit peers/profile limitations, AUR/host links instead of copied contracts, standalone demo link and attributable
+proofs. Dependencies: DOCS-BASE-001, location decision, actual package API. Excludes choosing location by documentation,
+creating a speculative protocol, second renderer/state engine or claiming planned functionality implemented.
+
+**DOCS-ERBAS-001 — Consolidate current consumer guidance.** Target E. Scope: reduce repeated current setup/policy/
+layout prose into runtime and operations guides, keeping app policy, published contract and vendor provenance clear.
+Preconditions: source-to-destination/anchor map and behavior cross-check at E's current revision.
+Acceptance: all current CRUD/layout/action/lookup/override/auth workflows discoverable; v0.14 and backend limits,
+archive hashes and historical proof links preserved; repository documentation checks pass.
+Dependencies: DOCS-BASE-001; package-specific instructions wait for DOCS-PACKAGE-001 and actual consumer adoption.
+Excludes changing application code/protocol, deleting original QA/live evidence or anticipating a completed migration.
+
+**DOCS-TRACE-001 — Final cross-repository documentation audit.** Targets affected repositories, separate reviewed
+changes if needed. Scope: verify all stable paths/anchors, authority/status wording, operational-command ownership,
+package/demo separation and original evidence links after approved cleanup tasks. Preconditions: relevant tasks above
+complete; unimplemented package work remains explicitly pending. Acceptance: local documentation/format checks,
+historical manifest/hash checks, no copied divergent API/wire definitions and no unsupported conformance claims.
+Dependencies: completed cleanup tranches, not permission to force the package or migration into existence.
+Excludes deleting history because a link works elsewhere, rewriting old evidence and unrelated editorial reformatting.
+
+The first DOCS task is DOCS-BASE-001; the first production implementation proposal remains AUR-EDITOR-ENUM-001.
+The two backlogs are independent: approving simpler docs does not approve extracting code or selecting a package home.
