@@ -86,6 +86,8 @@ for (const language of ["es", "en"]) {
             await page.getByTestId("crud-save").click();
             await expect(page.getByTestId("crud-result")).toContainText("CONCURRENT_CHANGE");
             await expect(page.getByTestId("crud-save")).toBeDisabled();
+            await expect(page.locator('[data-input="rating"]')).toHaveValue("7");
+            await expect(page.locator('[data-input="code"]')).toHaveValue("WEB-Á");
             await page.getByTestId("crud-reload").click();
             await expect(page.locator('[data-detail="rating"]')).toHaveText("8");
             await page.getByTestId("crud-cancel").click();
@@ -164,3 +166,48 @@ test("disconnect, URL changes and a real HTTP authorization rejection clear the 
     await expect(page.getByTestId("crud-token")).toHaveValue("");
     await expect(page.getByTestId("crud-row")).toHaveCount(0);
 });
+
+
+test("real committed CREATE with lost response retains draft, blocks replay and permits explicit readback",
+    async ({ page, request }, info) => {
+        const id = info.project.name === "desktop" ? "90011" : "90012";
+        const writes = [];
+        try {
+            await enter(page);
+            await expect(page.getByTestId("crud-row")).toHaveCount(10);
+            await page.getByTestId("crud-create").click();
+            await page.locator('[data-input="id"]').fill(id);
+            await page.locator('[data-input="code"]').fill("LOST-Á");
+            await page.locator('[data-input="rating"]').fill("4");
+            await page.route("**/demo/crud/invoke", async route => {
+                const body = route.request().postDataJSON();
+                if (body.operation !== "CREATE") { await route.continue(); return; }
+                writes.push(body);
+                const response = await route.fetch(); // The real PHP/MariaDB write happens exactly once.
+                expect(response.status()).toBe(200);
+                expect((await response.json()).status).toBe("success");
+                await route.abort("failed"); // Deliberately lose only the response delivered to the browser.
+            });
+            await page.getByTestId("crud-save").click();
+            await expect(page.getByTestId("crud-issue")).toBeVisible();
+            await expect(page.getByTestId("crud-save")).toBeDisabled();
+            await expect(page.locator('[data-input="id"]')).toHaveValue(id);
+            await expect(page.locator('[data-input="code"]')).toHaveValue("LOST-Á");
+            await expect(page.locator('[data-input="rating"]')).toHaveValue("4");
+            await page.getByTestId("crud-save").dispatchEvent("click");
+            expect(writes).toHaveLength(1);
+            const found = await invoke(request, "GET", { key: key(id) });
+            expect(found.status).toBe(200);
+            expect(found.body.output.record.values).toEqual({ id, code: "LOST-Á", rating: "4" });
+            // Inspection is explicit; the client never silently replays an uncertain CREATE.
+            await page.getByTestId("crud-cancel").click();
+            await page.getByTestId("crud-refresh").click();
+            for (let index = 0; index < 3; index++) await page.getByTestId("crud-next").click();
+            await row(page, id).getByTestId("crud-get").click();
+            await expect(page.locator('[data-detail="code"]')).toHaveText("LOST-Á");
+            expect(writes).toHaveLength(1);
+        } finally {
+            const found = (await invoke(request, "GET", { key: key(id) })).body.output;
+            if (found?.found) await invoke(request, "DELETE", { key: key(id), confirmedValues: found.record.values });
+        }
+    });
