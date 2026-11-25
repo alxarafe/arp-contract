@@ -4,6 +4,8 @@ Cliente local y privado de demostración en `arp-contract/demo/client/angular/`.
 El [inventario](INVENTORY.md) identifica las revisiones inspeccionadas y los adaptadores pendientes por repositorio.
 No es una prueba de conformidad de runtime ni un protocolo nuevo de ARP.
 
+Current regression baseline: [CAP-BASE-001A — verified results and gaps](CAP-BASE-001A.md).
+
 ## CRUD PHP/MariaDB
 
 El CRUD real desde el navegador, su arranque y sus pruebas se documentan en [CRUD-PHP.md](CRUD-PHP.md).

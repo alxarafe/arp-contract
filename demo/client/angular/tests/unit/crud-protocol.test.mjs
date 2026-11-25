@@ -48,3 +48,25 @@ test("records preserve exact scalar kinds and partial changes exclude keys and u
     assert.deepEqual(changes(fields, original, { ...original, serial: "1", amount: null }), { amount: null });
     assert.deepEqual(changes(fields, original, { ...original }), {});
 });
+
+
+test("missing record fields are rejected instead of becoming nullable null or empty text", () => {
+    const values = { serial: "1", amount: null, active: false };
+    assert.deepEqual(record({ key: {}, values }, fields).values, values);
+    assert.deepEqual(record({ key: {}, values: { ...values, amount: "" } }, fields).values.amount, "");
+    const { amount, ...absent } = values;
+    assert.throws(() => record({ key: {}, values: absent }, fields));
+    assert.throws(() => record({ key: {}, values: { ...values, serial: null } }, fields));
+    assert.throws(() => record({ key: {}, values: { ...values, active: "false" } }, fields));
+});
+
+test("sparse change omission, explicit null, empty text, false and lexical numeric edits remain distinct", () => {
+    const original = { serial: "9223372036854775807", amount: "1.00", active: true };
+    assert.deepEqual(changes(fields, original, { ...original }), {});
+    assert.deepEqual(changes(fields, original, { ...original, amount: null }), { amount: null });
+    assert.deepEqual(changes(fields, original, { ...original, amount: "" }), { amount: "" });
+    assert.deepEqual(changes(fields, original, { ...original, active: false }), { active: false });
+    // The current demo compares lexical strings; preserve that baseline, not a new numeric equality policy.
+    assert.deepEqual(changes(fields, original, { ...original, amount: "1.0" }), { amount: "1.0" });
+    assert.equal(JSON.stringify({ changes: changes(fields, original, original) }), '{"changes":{}}');
+});
